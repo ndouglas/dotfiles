@@ -4,8 +4,9 @@
 developer_flags:
 
   # Deploy dotfiles to a temporary directory instead of the user's home.
-  deploy_to_temporary_directory: yes
+  deploy_to_temporary_directory: no
 
+# Base URL of whence we retrieve MOTD files.
 motd_base_url: "https://raw.githubusercontent.com/ndouglas/asoiaf-noble-house-images/master/utf8/40"
 
 hostname_emoji:
