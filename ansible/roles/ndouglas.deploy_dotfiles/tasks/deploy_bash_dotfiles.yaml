@@ -1,0 +1,81 @@
+---
+
+- name: 'Set user and group.'
+  ansible.builtin.include: 'set_dotfiles_user.yaml'
+  when: 'user is not defined'
+
+- name: 'Set dotfiles_home directory.'
+  ansible.builtin.include: 'set_dotfiles_home_directory.yaml'
+  when: 'dotfiles_home is not defined'
+
+- name: 'Copy Bash dotfiles to destination.'
+  ansible.builtin.include: 'copy_bash_dotfiles.yaml'
+  vars:
+    source: "{{ role_path }}/files/bash/{{ bash_dotfiles[name].source_path_segment }}"
+    dest: "{{ dotfiles_home }}/.bash.{{ bash_dotfiles[name].destination_path_segment }}.d"
+  loop: "{{ bash_dotfiles | flatten(levels=1) }}"
+  loop_control:
+    index_var: 'index'
+    loop_var: 'name'
+
+- name: 'Create .bash_common file.'
+  ansible.builtin.template:
+    backup: yes
+    force: yes
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    mode: '0755'
+    dest: "{{ dotfiles_home }}/.bash_common"
+    src: "{{ role_path }}/files/bash/bash_common.sh.j2"
+
+- name: 'Create .bash_logout file.'
+  ansible.builtin.template:
+    backup: yes
+    force: yes
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    mode: '0755'
+    dest: "{{ dotfiles_home }}/.bash_logout"
+    src: "{{ role_path }}/files/bash/bash_logout.sh.j2"
+
+- name: 'Create .bash_prompt file.'
+  ansible.builtin.template:
+    backup: yes
+    force: yes
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    mode: '0755'
+    dest: "{{ dotfiles_home }}/.bash_prompt"
+    src: "{{ role_path }}/files/bash/bash_prompt.sh.j2"
+
+- name: 'Create .bash_prompt_local file.'
+  ansible.builtin.template:
+    backup: yes
+    force: no
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    mode: '0755'
+    dest: "{{ dotfiles_home }}/.bash_prompt_local"
+    src: "{{ role_path }}/files/bash/bash_prompt_local.sh.j2"
+  vars:
+    prompt_hostname: "{{ ansible_hostname | lower }}"
+
+- name: 'Create .bash_profile file.'
+  ansible.builtin.template:
+    backup: yes
+    force: yes
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    mode: '0755'
+    dest: "{{ dotfiles_home }}/.bash_profile"
+    src: "{{ role_path }}/files/bash/bash_profile.sh.j2"
+
+- name: 'Create .bashrc file.'
+  ansible.builtin.template:
+    backup: yes
+    force: yes
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    mode: '0755'
+    dest: "{{ dotfiles_home }}/.bashrc"
+    src: "{{ role_path }}/files/bash/bashrc.sh.j2"

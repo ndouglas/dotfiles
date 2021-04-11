@@ -1,0 +1,12 @@
+# ~/.bashrc: executed by bash(1) for non-login shells.
+
+dotfiles_home="{{ dotfiles_home }}";
+
+# Include bash_common.
+source "${dotfiles_home}/.bash_common";
+
+# Exit if non-interactive.
+[[ $- != *i* ]] && return;
+
+# Create prompt.
+source "${dotfiles_home}/.bash_prompt";

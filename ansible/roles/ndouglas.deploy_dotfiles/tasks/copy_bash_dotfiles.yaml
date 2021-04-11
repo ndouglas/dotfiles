@@ -1,0 +1,39 @@
+---
+
+- name: 'Set user and group.'
+  ansible.builtin.include: 'set_dotfiles_user.yaml'
+  when: 'user is not defined'
+
+- name: 'Set dotfiles_home directory.'
+  ansible.builtin.include: 'set_dotfiles_home_directory.yaml'
+  when: 'dotfiles_home is not defined'
+
+- name: 'Create Bash dotfiles directory.'
+  ansible.builtin.file:
+    path: "{{ dest }}"
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    mode: '0700'
+    force: yes
+    state: 'directory'
+
+- name: 'Copy Bash static dotfiles.'
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: "{{ dest }}"
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    mode: '0600'
+    force: yes
+  with_fileglob:
+    - "{{ source }}/*.sh"
+
+- name: 'Copy Bash template dotfiles.'
+  ansible.builtin.template:
+    src: "{{ item }}"
+    dest: "{{ dest }}/{{ item | basename }}.sh"
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    mode: '0600'
+  with_fileglob:
+    - "{{ source }}/*.j2"

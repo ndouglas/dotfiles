@@ -1,0 +1,12 @@
+---
+
+- name: 'Set user and group.'
+  ansible.builtin.include: 'set_dotfiles_user.yaml'
+  when: 'user is not defined or group is not defined'
+
+- name: 'Set dotfiles_home directory.'
+  ansible.builtin.include: 'set_dotfiles_home_directory.yaml'
+  when: 'dotfiles_home is not defined'
+
+- name: 'Deploy Bash dotfiles.'
+  ansible.builtin.include: 'deploy_bash_dotfiles.yaml'

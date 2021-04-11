@@ -1,0 +1,14 @@
+---
+- name: 'Create temporary base directory if appropriate.'
+  ansible.builtin.tempfile:
+    state: directory
+  when: 'developer_flags.deploy_to_temporary_directory'
+  register: temporary_base_directory
+
+- name: 'Set dotfiles_home fact.'
+  ansible.builtin.set_fact:
+    dotfiles_home: "{{ temporary_base_directory.path if developer_flags.deploy_to_temporary_directory else ansible_env.HOME }}"
+
+- name: 'Print dotfiles home directory path.'
+  ansible.builtin.debug:
+    msg: "dotfiles_home: {{ dotfiles_home }}"

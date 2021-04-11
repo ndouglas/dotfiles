@@ -1,0 +1,12 @@
+---
+
+- name: 'Deploy Dotfiles'
+  hosts: 'localhost'
+  vars:
+    ansible_connection: local
+  tasks:
+
+    - name: 'Deploy dotfiles.'
+      include_role:
+        name: 'ndouglas.deploy_dotfiles'
+

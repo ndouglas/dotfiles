@@ -1,0 +1,26 @@
+# ~/.bash_common: executed all the time because stupid systems are inconsistent.
+
+# This file contains common functionality for use by Bash shells, whether login
+# or non-login, interactive or non-interactive.
+
+# General scripts.
+bash_segments="{{ bash_ordered_segments }}";
+dotfiles_home="{{ dotfiles_home }}";
+for bash_dir in ${bash_ordered_segments}; do
+  dotfiles_dir="${dotfiles_home}/.bash.${bash_dir}.d";
+  if test -n "$(shopt -s nullglob; echo "${dotfiles_dir}"/*.sh)"; then
+    for file in "${dotfiles_dir}"/*.sh; do
+      source "${file}";
+    done;
+    unset file;
+  fi;
+done;
+
+# General script stuff.
+set -o pipefail;
+set +o errexit;
+
+# Source local modifications.
+if [ -e "${dotfiles_home}"/.bash_local ]; then
+  source "${dotfiles_home}"/.bash_local;
+fi;

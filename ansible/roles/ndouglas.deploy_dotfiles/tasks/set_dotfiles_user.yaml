@@ -1,0 +1,23 @@
+---
+- name: 'Set a fact for the user.'
+  ansible.builtin.set_fact:
+    user: "{{ lookup('env', 'USER') }}"
+  become: no
+  when: 'user is not defined'
+
+- name: 'Run a command to determine the user''s group.'
+  ansible.builtin.command:
+    cmd: "id -gn"
+  register: 'group_command'
+  when: 'group is not defined'
+
+- name: 'Set a fact for the group.'
+  ansible.builtin.set_fact:
+    group: "{{ group_command.stdout }}"
+  when: 'group is not defined and group_command is defined'
+
+- name: 'Print dotfiles user and group.'
+  ansible.builtin.debug:
+    msg: |
+      user: {{ user }}
+      group: {{ group }}
