@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+{% for item in hostvars %}
+nd_on_{{ item }}() {
+  {% if item == ansible_hostname %}
+  "${@}";
+  {% else %}
+  ssh {{item}} "${@}";
+  {% endif %}
+}
+{% endfor %}

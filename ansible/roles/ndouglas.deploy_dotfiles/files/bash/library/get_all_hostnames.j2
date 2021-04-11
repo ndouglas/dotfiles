@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+# Get all hostnames.
+nd_get_all_hostnames() {
+  for i in {% for item in hostvars %} {{ item }} {% endfor %}; do
+    echo "${i}";
+  done;
+}

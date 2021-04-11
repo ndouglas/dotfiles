@@ -1,5 +1,29 @@
 ---
 
+###############################################################################
+# A FACT-FINDING MISSION
+###############################################################################
+
+- name: 'Detect Synology.'
+  stat:
+    path: /etc/synoinfo.conf
+  register: synology_info_file
+  when: '(ansible_distribution == "OtherLinux")'
+
+- name: 'Detect Proxmox VE.'
+  stat:
+    path: /etc/pve
+  register: proxmox_pve_directory
+  when: '(ansible_distribution == "Debian")'
+
+- name: 'Set dotfiles facts.'
+  ansible.builtin.set_fact:
+    host_is_debian: "{{ ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu' }}"
+    host_is_mac: "{{ ansible_distribution == 'MacOSX' }}"
+    host_is_proxmox: "{{ ansible_distribution == 'Debian' and proxmox_pve_directory.stat.exists }}"
+    host_is_synology: "{{ ansible_distribution == 'OtherLinux' and synology_info_file.stat.exists }}"
+    bash_ordered_segments: 'options path env library comics aliases'
+
 - name: 'Set user and group.'
   ansible.builtin.include: 'set_dotfiles_user.yaml'
   when: 'user is not defined'
@@ -8,74 +32,203 @@
   ansible.builtin.include: 'set_dotfiles_home_directory.yaml'
   when: 'dotfiles_home is not defined'
 
-- name: 'Copy Bash dotfiles to destination.'
+###############################################################################
+# ALIASES
+###############################################################################
+
+- name: 'Copy Bash aliases dotfiles to destination.'
+  block:
+
+    - name: 'Copy Bash Aliases dotfiles to destination.'
+      ansible.builtin.include: 'copy_bash_dotfiles.yaml'
+      vars:
+        source: "{{ role_path }}/files/bash/aliases"
+        dest: "{{ dotfiles_home }}/.bash.aliases.d"
+
+    - name: 'Set Mac-Specific Aliases'
+      block:
+
+        - name: 'Create aliases for various BSD tools to the GNU equivalents.'
+          ansible.builtin.copy:
+            dest: "{{ dotfiles_home }}/.bash.aliases.d/{{ item }}.sh"
+            content: |
+              #!/usr/bin/env bash
+
+              # Detect if we have a g{{ item }}.
+              if [ -x "$(command -v g{{ item }})" ]; then
+                alias {{ item }}="g{{ item }}";
+              fi
+          loop:
+            - 'date'
+            - 'du'
+            - 'echo'
+            - 'sed'
+            - 'stat'
+
+        - name: 'Create alias for md5sum.'
+          ansible.builtin.copy:
+            dest: "{{ dotfiles_home }}/.bash.aliases.d/md5sum.sh"
+            content: |
+              #!/usr/bin/env bash
+
+              alias md5sum="md5";
+
+      when: 'host_is_mac'
+
+###############################################################################
+# BEETS
+###############################################################################
+
+- name: 'Copy Bash Beets dotfiles to destination.'
+  block:
+
+    - name: 'Copy Bash Beets dotfiles to destination.'
+      ansible.builtin.include: 'copy_bash_dotfiles.yaml'
+      vars:
+        source: "{{ role_path }}/files/bash/beets"
+        dest: "{{ dotfiles_home }}/.bash.beets.d"
+
+    - name: 'Set BEETSDIR environment variable.'
+      ansible.builtin.copy:
+        dest: "{{ dotfiles_home }}/.bash.env.d/beetsdir.sh"
+        content: |
+          #!/usr/bin/env bash
+
+          export BEETSDIR="/volume1/Music/beets";
+
+  when: "{{ host_is_synology }}"
+
+###############################################################################
+# COMICS
+###############################################################################
+
+- name: 'Copy Bash Comics dotfiles to destination.'
   ansible.builtin.include: 'copy_bash_dotfiles.yaml'
   vars:
-    source: "{{ role_path }}/files/bash/{{ bash_dotfiles[name].source_path_segment }}"
-    dest: "{{ dotfiles_home }}/.bash.{{ bash_dotfiles[name].destination_path_segment }}.d"
-  loop: "{{ bash_dotfiles | flatten(levels=1) }}"
-  loop_control:
-    index_var: 'index'
-    loop_var: 'name'
+    source: "{{ role_path }}/files/bash/comics"
+    dest: "{{ dotfiles_home }}/.bash.comics.d"
+  when: "{{ host_is_synology and ansible_hostname == 'dayne' }}"
 
-- name: 'Create .bash_common file.'
-  ansible.builtin.template:
-    backup: yes
-    force: yes
-    owner: "{{ user }}"
-    group: "{{ group }}"
-    mode: '0755'
-    dest: "{{ dotfiles_home }}/.bash_common"
-    src: "{{ role_path }}/files/bash/bash_common.sh.j2"
+###############################################################################
+# LIBRARY
+###############################################################################
 
-- name: 'Create .bash_logout file.'
-  ansible.builtin.template:
-    backup: yes
-    force: yes
-    owner: "{{ user }}"
-    group: "{{ group }}"
-    mode: '0755'
-    dest: "{{ dotfiles_home }}/.bash_logout"
-    src: "{{ role_path }}/files/bash/bash_logout.sh.j2"
-
-- name: 'Create .bash_prompt file.'
-  ansible.builtin.template:
-    backup: yes
-    force: yes
-    owner: "{{ user }}"
-    group: "{{ group }}"
-    mode: '0755'
-    dest: "{{ dotfiles_home }}/.bash_prompt"
-    src: "{{ role_path }}/files/bash/bash_prompt.sh.j2"
-
-- name: 'Create .bash_prompt_local file.'
-  ansible.builtin.template:
-    backup: yes
-    force: no
-    owner: "{{ user }}"
-    group: "{{ group }}"
-    mode: '0755'
-    dest: "{{ dotfiles_home }}/.bash_prompt_local"
-    src: "{{ role_path }}/files/bash/bash_prompt_local.sh.j2"
+- name: 'Copy Bash Library dotfiles to destination.'
+  ansible.builtin.include: 'copy_bash_dotfiles.yaml'
   vars:
-    prompt_hostname: "{{ ansible_hostname | lower }}"
+    source: "{{ role_path }}/files/bash/library"
+    dest: "{{ dotfiles_home }}/.bash.library.d"
 
-- name: 'Create .bash_profile file.'
-  ansible.builtin.template:
-    backup: yes
-    force: yes
-    owner: "{{ user }}"
-    group: "{{ group }}"
-    mode: '0755'
-    dest: "{{ dotfiles_home }}/.bash_profile"
-    src: "{{ role_path }}/files/bash/bash_profile.sh.j2"
+###############################################################################
+# ENVIRONMENT
+###############################################################################
 
-- name: 'Create .bashrc file.'
-  ansible.builtin.template:
-    backup: yes
-    force: yes
-    owner: "{{ user }}"
-    group: "{{ group }}"
-    mode: '0755'
-    dest: "{{ dotfiles_home }}/.bashrc"
-    src: "{{ role_path }}/files/bash/bashrc.sh.j2"
+- name: 'Copy Bash Env dotfiles to destination.'
+  ansible.builtin.include: 'copy_bash_dotfiles.yaml'
+  vars:
+    source: "{{ role_path }}/files/bash/env"
+    dest: "{{ dotfiles_home }}/.bash.env.d"
+
+###############################################################################
+# OPTIONS
+###############################################################################
+
+- name: 'Copy Bash Options dotfiles to destination.'
+  ansible.builtin.include: 'copy_bash_dotfiles.yaml'
+  vars:
+    source: "{{ role_path }}/files/bash/options"
+    dest: "{{ dotfiles_home }}/.bash.options.d"
+
+###############################################################################
+# PATH
+###############################################################################
+
+- name: 'Copy Bash path dotfiles to destination.'
+  block:
+
+    - name: 'Copy Bash Path dotfiles to destination.'
+      ansible.builtin.include: 'copy_bash_dotfiles.yaml'
+      vars:
+        source: "{{ role_path }}/files/bash/path"
+        dest: "{{ dotfiles_home }}/.bash.path.d"
+
+    - name: 'Syno-CLI Path Components'
+      ansible.builtin.copy:
+        dest: "{{ bash_path_path }}/syno-cli.sh"
+        content: |
+         #!/usr/bin/env bash
+
+          # Syno-CLI provides nano, tput, etc.
+          if [ -d "/volume1/@appstore/synocli-file/bin" ]; then
+            PATH="${PATH}:/volume1/@appstore/synocli-file/bin";
+          fi
+      when: 'host_is_synology'
+
+###############################################################################
+# CORE
+###############################################################################
+
+- name: 'Copy Bash core dotfiles to destination.'
+  block:
+
+    - name: 'Create .bash_common file.'
+      ansible.builtin.template:
+        backup: yes
+        force: yes
+        owner: "{{ user }}"
+        group: "{{ group }}"
+        mode: '0755'
+        dest: "{{ dotfiles_home }}/.bash_common"
+        src: "{{ role_path }}/files/bash/bash_common.sh.j2"
+
+    - name: 'Create .bash_logout file.'
+      ansible.builtin.template:
+        backup: yes
+        force: yes
+        owner: "{{ user }}"
+        group: "{{ group }}"
+        mode: '0755'
+        dest: "{{ dotfiles_home }}/.bash_logout"
+        src: "{{ role_path }}/files/bash/bash_logout.sh.j2"
+
+    - name: 'Create .bash_prompt file.'
+      ansible.builtin.template:
+        backup: yes
+        force: yes
+        owner: "{{ user }}"
+        group: "{{ group }}"
+        mode: '0755'
+        dest: "{{ dotfiles_home }}/.bash_prompt"
+        src: "{{ role_path }}/files/bash/bash_prompt.sh.j2"
+
+    - name: 'Create .bash_prompt_local file.'
+      ansible.builtin.template:
+        backup: yes
+        force: no
+        owner: "{{ user }}"
+        group: "{{ group }}"
+        mode: '0755'
+        dest: "{{ dotfiles_home }}/.bash_prompt_local"
+        src: "{{ role_path }}/files/bash/bash_prompt_local.sh.j2"
+      vars:
+        prompt_hostname: "{{ ansible_hostname | lower }}"
+
+    - name: 'Create .bash_profile file.'
+      ansible.builtin.template:
+        backup: yes
+        force: yes
+        owner: "{{ user }}"
+        group: "{{ group }}"
+        mode: '0755'
+        dest: "{{ dotfiles_home }}/.bash_profile"
+        src: "{{ role_path }}/files/bash/bash_profile.sh.j2"
+
+    - name: 'Create .bashrc file.'
+      ansible.builtin.template:
+        backup: yes
+        force: yes
+        owner: "{{ user }}"
+        group: "{{ group }}"
+        mode: '0755'
+        dest: "{{ dotfiles_home }}/.bashrc"
+        src: "{{ role_path }}/files/bash/bashrc.sh.j2"

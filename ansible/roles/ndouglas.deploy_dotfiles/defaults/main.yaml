@@ -6,15 +6,6 @@ developer_flags:
   # Deploy dotfiles to a temporary directory instead of the user's home.
   deploy_to_temporary_directory: yes
 
-# Bash dotfiles data structure:
-bash_dotfiles:
-  aliases:
-    source_path_segment: 'aliases'
-    destination_path_segment: 'aliases'
-
-# Bash dotfiles directories _in the order in which their contents should be included_.
-bash_ordered_segments: 'aliases'
-
 hostname_emoji:
   algood: '🌿'
   allyrion: '✋'
