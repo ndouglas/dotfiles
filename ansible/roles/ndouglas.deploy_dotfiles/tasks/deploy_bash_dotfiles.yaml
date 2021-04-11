@@ -22,7 +22,7 @@
     host_is_mac: "{{ ansible_distribution == 'MacOSX' }}"
     host_is_proxmox: "{{ ansible_distribution == 'Debian' and proxmox_pve_directory.stat.exists }}"
     host_is_synology: "{{ ansible_distribution == 'OtherLinux' and synology_info_file.stat.exists }}"
-    bash_ordered_segments: 'options path env library beets comics kasa aliases'
+    bash_ordered_segments: 'options path env library ansible beets comics kasa proxmox aliases'
 
 - name: 'Set user and group.'
   ansible.builtin.include: 'set_dotfiles_user.yaml'
@@ -74,6 +74,16 @@
               alias md5sum="md5";
 
       when: 'host_is_mac'
+
+###############################################################################
+# ANSIBLE
+###############################################################################
+
+- name: 'Copy Bash Ansible dotfiles to destination.'
+  ansible.builtin.include: 'copy_bash_dotfiles.yaml'
+  vars:
+    source: "{{ role_path }}/files/bash/ansible"
+    dest: "{{ dotfiles_home }}/.bash.ansible.d"
 
 ###############################################################################
 # BEETS
@@ -173,6 +183,16 @@
             PATH="${PATH}:/volume1/@appstore/synocli-file/bin";
           fi
       when: 'host_is_synology'
+
+###############################################################################
+# PROXMOX
+###############################################################################
+
+- name: 'Copy Bash Proxmox dotfiles to destination.'
+  ansible.builtin.include: 'copy_bash_dotfiles.yaml'
+  vars:
+    source: "{{ role_path }}/files/bash/proxmox"
+    dest: "{{ dotfiles_home }}/.bash.proxmox.d"
 
 ###############################################################################
 # CORE

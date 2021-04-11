@@ -1,38 +1,19 @@
+# This should always be 'python3' because it's 2021.
 ansible_python_interpreter: 'python3'
+
+# My domains that I use for stupid things.
 domains:
   personal: 'bitterbridge.net'
   public: 'darkdell.net'
   private: 'hellholt.net'
+
+# Calculated FQDNs for the current hostname.
 fqdns:
-  personal: "{{ ansible.hostname }}.{{ domains.personal }}"
-  public: "{{ ansible.hostname }}.{{ domains.public }}"
-  private: "{{ ansible.hostname }}.{{ domains.private }}"
-bash_library_names:
-  - aliases
-  - ansible
-  - comics
-  - docker
-  - env
-  - internals
-  - library
-  - path
-  - proxmox
-docker_host_template: 'dayne-proxmox:vztmpl/ubuntu-20.10-standard_20.10-1_amd64.tar.gz'
+  personal: "{{ ansible_hostname }}.{{ domains.personal }}"
+  public: "{{ ansible_hostname }}.{{ domains.public }}"
+  private: "{{ ansible_hostname }}.{{ domains.private }}"
+
+# Calculated IPv4 address.  Doesn't always work, usually does.
 ipv4_address: "{{ ansible_default_ipv4.address | default(ansible_all_ipv4_addresses[0]) }}"
-proxmox_api_host: 'ryswell'
-proxmox_api_password: "{{ password }}"
-acme_email_address: 'letsencrypt@tenesm.us'
-traefik_api_user: 'nathan'
-traefik_api_password: "{{ password }}"
-traefik_dir: "/var/www/traefik"
-basic_auth_seed: '012345678901234567890O'
-ssh_public_key: "{{ hostvars['fossoway'].ssh_public_key }}"
-gitconfig:
-  core.editor: 'nano'
-  user.name: 'Nathan Douglas'
-  user.email: 'github@tenesm.us'
-  pull.rebase: no
-github_ssh_key_name: 'github'
+
 vault_password_file: '~/.ansible_vault_password'
-dotfiles_repo: 'git@github.com:/ndouglas/dotfiles.git'
-dotfiles_destination: "{{ ansible_env.HOME }}/.dotfiles"

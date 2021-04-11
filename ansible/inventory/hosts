@@ -1,0 +1,6 @@
+all:
+  children:
+    proxmox_nodes:
+      hosts:
+        celtigar:
+        ryswell:
