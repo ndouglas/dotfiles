@@ -1,0 +1,9 @@
+---
+- name: 'Set the MOTD.'
+  ansible.builtin.get_url:
+    url: "{{ motd_base_url }}/{{ ansible_hostname | lower }}.txt"
+    dest: '/etc/motd'
+    force: no
+    owner: 'root'
+    mode: '0644'
+  become: yes

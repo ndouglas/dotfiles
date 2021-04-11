@@ -22,7 +22,7 @@
     host_is_mac: "{{ ansible_distribution == 'MacOSX' }}"
     host_is_proxmox: "{{ ansible_distribution == 'Debian' and proxmox_pve_directory.stat.exists }}"
     host_is_synology: "{{ ansible_distribution == 'OtherLinux' and synology_info_file.stat.exists }}"
-    bash_ordered_segments: 'options path env library comics aliases'
+    bash_ordered_segments: 'options path env library beets comics kasa aliases'
 
 - name: 'Set user and group.'
   ansible.builtin.include: 'set_dotfiles_user.yaml'
@@ -108,6 +108,16 @@
     source: "{{ role_path }}/files/bash/comics"
     dest: "{{ dotfiles_home }}/.bash.comics.d"
   when: "{{ host_is_synology and ansible_hostname == 'dayne' }}"
+
+###############################################################################
+# KASA
+###############################################################################
+
+- name: 'Copy Bash Kasa dotfiles to destination.'
+  ansible.builtin.include: 'copy_bash_dotfiles.yaml'
+  vars:
+    source: "{{ role_path }}/files/bash/kasa"
+    dest: "{{ dotfiles_home }}/.bash.kasa.d"
 
 ###############################################################################
 # LIBRARY

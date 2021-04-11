@@ -8,7 +8,7 @@
   ansible.builtin.include: 'set_dotfiles_home_directory.yaml'
   when: 'dotfiles_home is not defined'
 
-- name: 'Create Bash dotfiles directory.'
+- name: "Create Bash dotfiles directory {{ dest }}."
   ansible.builtin.file:
     path: "{{ dest }}"
     owner: "{{ user }}"
@@ -17,7 +17,7 @@
     force: yes
     state: 'directory'
 
-- name: 'Copy Bash static dotfiles.'
+- name: "Copy Bash static dotfiles {{ source }} -> {{ dest }}."
   ansible.builtin.copy:
     src: "{{ item }}"
     dest: "{{ dest }}"
@@ -28,7 +28,7 @@
   with_fileglob:
     - "{{ source }}/*.sh"
 
-- name: 'Copy Bash template dotfiles.'
+- name: "Copy Bash template dotfiles {{ source }} -> {{ dest }}."
   ansible.builtin.template:
     src: "{{ item }}"
     dest: "{{ dest }}/{{ item | basename }}.sh"

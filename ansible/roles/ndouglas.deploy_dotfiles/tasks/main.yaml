@@ -10,3 +10,6 @@
 
 - name: 'Deploy Bash dotfiles.'
   ansible.builtin.include: 'deploy_bash_dotfiles.yaml'
+
+- name: 'Set the MOTD.'
+  ansible.builtin.include: 'set_motd.yaml'
