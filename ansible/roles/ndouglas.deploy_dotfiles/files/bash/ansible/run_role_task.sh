@@ -9,7 +9,7 @@ ans_run_role_task() {
   pushd "${DOTFILES_ANSIBLE_PATH}" >> /dev/null;
   ansible-playbook "${@:4}" /dev/stdin <<END
 ---
-- hosts: '$host_expression'
+- hosts: $host_expression
   tasks:
 
   - name: 'Execute $role_name:$task_file'
@@ -19,5 +19,3 @@ ans_run_role_task() {
 END
   popd > /dev/null;
 }
-
-

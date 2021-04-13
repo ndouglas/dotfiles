@@ -22,7 +22,7 @@
     host_is_mac: "{{ ansible_distribution == 'MacOSX' }}"
     host_is_proxmox: "{{ ansible_distribution == 'Debian' and proxmox_pve_directory.stat.exists }}"
     host_is_synology: "{{ ansible_distribution == 'OtherLinux' and synology_info_file.stat.exists }}"
-    bash_ordered_segments: 'options path env library ansible beets comics kasa proxmox aliases'
+    bash_ordered_segments: 'options path env library ansible beets comics kasa proxmox r53 aliases'
 
 - name: 'Set user and group.'
   ansible.builtin.include: 'set_dotfiles_user.yaml'
@@ -193,6 +193,16 @@
   vars:
     source: "{{ role_path }}/files/bash/proxmox"
     dest: "{{ dotfiles_home }}/.bash.proxmox.d"
+
+###############################################################################
+# ROUTE 53
+###############################################################################
+
+- name: 'Copy Bash Route 53 dotfiles to destination.'
+  ansible.builtin.include: 'copy_bash_dotfiles.yaml'
+  vars:
+    source: "{{ role_path }}/files/bash/r53"
+    dest: "{{ dotfiles_home }}/.bash.r53.d"
 
 ###############################################################################
 # CORE

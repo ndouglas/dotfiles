@@ -30,7 +30,9 @@ function nd_require() {
 
 function nd_check_requirements() {
   echo "Checking requirements...";
+  nd_require ssh;
   nd_require git;
+  nd_require pip3;
   nd_require ansible;
   echo "All requirements satisfied.";
 }
