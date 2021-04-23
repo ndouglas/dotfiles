@@ -43,7 +43,7 @@ function nd_check_requirements() {
 
 function nd_clone_repository() {
   echo "Cloning repository...";
-  git clone "${repository_remote_ssh_url}" "${repository_local_path}";
+  git clone "${repository_remote_http_url}" "${repository_local_path}";
 }
 
 function nd_cleanup() {
