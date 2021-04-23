@@ -1,0 +1,9 @@
+# RetroPie
+{% for host in groups['retropie'] %}
+  # {{ host }}
+  Host {{ host }}
+    User pi
+    Hostname %h.hellholt.net
+    IdentityFile ~/.ssh/id_rsa
+
+{% endfor %}

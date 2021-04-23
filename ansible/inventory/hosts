@@ -11,6 +11,9 @@ all:
     opnsense:
       hosts:
         marbrand:
+    retropie:
+      hosts:
+        peat:
     synology:
       hosts:
         dayne:

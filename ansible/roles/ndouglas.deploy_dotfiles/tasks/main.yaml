@@ -4,6 +4,10 @@
   ansible.builtin.include: 'set_dotfiles_user.yaml'
   when: 'user is not defined or group is not defined'
 
+- name: 'Create a normal user.'
+  ansible.builtin.include: 'create_normal_user.yaml'
+  when: 'user == "root"'
+
 - name: 'Set dotfiles_home directory.'
   ansible.builtin.include: 'set_dotfiles_home_directory.yaml'
   when: 'dotfiles_home is not defined'

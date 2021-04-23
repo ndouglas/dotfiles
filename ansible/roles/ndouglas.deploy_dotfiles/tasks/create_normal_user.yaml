@@ -1,0 +1,7 @@
+---
+- name: 'Create normal user account.'
+  ansible.builtin.user:
+    name: "{{ my.name.lower }}"
+    shell: '/bin/bash'
+    append: yes
+    create_home: yes
