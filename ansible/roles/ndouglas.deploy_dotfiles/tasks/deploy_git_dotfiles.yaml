@@ -1,0 +1,8 @@
+---
+- name: 'Setup .gitconfig'
+  community.general.git_config:
+    name: "{{ item.key }}"
+    scope: 'global'
+    value: "{{ item.value }}"
+  loop:
+    "{{ gitconfig | dict2items }}"

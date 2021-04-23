@@ -1,13 +1,16 @@
 all:
   children:
-    pve_nodes:
+    pve:
       hosts:
         celtigar:
         lefford:
         ryswell:
-    pbs_nodes:
+    pbs:
       hosts:
         lefford:
+    opnsense:
+      hosts:
+        marbrand:
     synology:
       hosts:
         dayne:
@@ -61,7 +64,6 @@ all:
 
   hosts:
     ahlaq:
-    algood:
     amber:
     antaryon:
     arryn:
@@ -72,7 +74,6 @@ all:
     baratheon:
     belaerys:
     belgrave:
-    belmore:
     bigglestone:
     blackberry:
     blackfyre:

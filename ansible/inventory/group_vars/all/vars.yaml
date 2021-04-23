@@ -16,4 +16,19 @@ fqdns:
 # Calculated IPv4 address.  Doesn't always work, usually does.
 ipv4_address: "{{ ansible_default_ipv4.address | default(ansible_all_ipv4_addresses[0]) }}"
 
-vault_password_file: '~/.ansible_vault_password'
+vault_password_file: "{{ ansible_env.HOME }}/.dotfiles_vault_password"
+
+my:
+  name:
+    short: 'Nathan'
+    lower: 'nathan'
+    full: 'Nathan Douglas'
+  email:
+    github: 'github@tenesm.us'
+
+# My Gitconfig.
+gitconfig:
+  core.editor: 'nano'
+  user.name: "{{ my.name.full }}"
+  user.email: "{{ my.email.github }}"
+  pull.rebase: 'true'

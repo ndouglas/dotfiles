@@ -8,11 +8,14 @@
   ansible.builtin.include: 'set_dotfiles_home_directory.yaml'
   when: 'dotfiles_home is not defined'
 
-#- name: 'Deploy Bash dotfiles.'
-#  ansible.builtin.include: 'deploy_bash_dotfiles.yaml'
+- name: 'Deploy Bash dotfiles.'
+  ansible.builtin.include: 'deploy_bash_dotfiles.yaml'
 
 - name: 'Deploy SSH dotfiles.'
   ansible.builtin.include: 'deploy_ssh_dotfiles.yaml'
+
+- name: 'Deploy Git dotfiles.'
+  ansible.builtin.include: 'deploy_git_dotfiles.yaml'
 
 - name: 'Set the MOTD.'
   ansible.builtin.include: 'set_motd.yaml'
