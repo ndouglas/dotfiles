@@ -8,6 +8,31 @@
   ansible.builtin.include: 'set_dotfiles_home_directory.yaml'
   when: 'dotfiles_home is not defined'
 
+- name: "Create temporary directory."
+  ansible.builtin.tempfile:
+    state: 'directory'
+  register: 'temporary_directory'
+
+- name: "Copy Bash static dotfiles {{ source }} -> temporary directory."
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: "{{ temporary_directory.path }}"
+  with_fileglob:
+    - "{{ source }}/*.sh"
+
+- name: "Copy Bash template dotfiles {{ source }} -> temporary directory."
+  ansible.builtin.template:
+    src: "{{ item }}"
+    dest: "{{ temporary_directory.path }}/{{ item | basename }}.sh"
+  with_fileglob:
+    - "{{ source }}/*.j2"
+
+- name: "Remove Bash dotfiles directory {{ dest }}."
+  ansible.builtin.file:
+    path: "{{ dest }}"
+    force: yes
+    state: absent
+
 - name: "Create Bash dotfiles directory {{ dest }}."
   ansible.builtin.file:
     path: "{{ dest }}"
@@ -17,7 +42,7 @@
     force: yes
     state: 'directory'
 
-- name: "Copy Bash static dotfiles {{ source }} -> {{ dest }}."
+- name: "Copy Bash dotfiles temporary directory -> {{ dest }}."
   ansible.builtin.copy:
     src: "{{ item }}"
     dest: "{{ dest }}"
@@ -26,14 +51,4 @@
     mode: '0600'
     force: yes
   with_fileglob:
-    - "{{ source }}/*.sh"
-
-- name: "Copy Bash template dotfiles {{ source }} -> {{ dest }}."
-  ansible.builtin.template:
-    src: "{{ item }}"
-    dest: "{{ dest }}/{{ item | basename }}.sh"
-    owner: "{{ user }}"
-    group: "{{ group }}"
-    mode: '0600'
-  with_fileglob:
-    - "{{ source }}/*.j2"
+    - "{{ temporary_directory.path }}/*.sh"

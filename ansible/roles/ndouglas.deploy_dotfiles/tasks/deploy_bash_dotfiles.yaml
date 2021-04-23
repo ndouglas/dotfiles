@@ -42,6 +42,7 @@
     - name: 'Copy Bash Aliases dotfiles to destination.'
       ansible.builtin.include: 'copy_bash_dotfiles.yaml'
       vars:
+        id: 'aliases'
         source: "{{ role_path }}/files/bash/aliases"
         dest: "{{ dotfiles_home }}/.bash.aliases.d"
 
@@ -82,6 +83,7 @@
 - name: 'Copy Bash Ansible dotfiles to destination.'
   ansible.builtin.include: 'copy_bash_dotfiles.yaml'
   vars:
+    id: 'ansible'
     source: "{{ role_path }}/files/bash/ansible"
     dest: "{{ dotfiles_home }}/.bash.ansible.d"
 
@@ -95,6 +97,7 @@
     - name: 'Copy Bash Beets dotfiles to destination.'
       ansible.builtin.include: 'copy_bash_dotfiles.yaml'
       vars:
+        id: 'beets'
         source: "{{ role_path }}/files/bash/beets"
         dest: "{{ dotfiles_home }}/.bash.beets.d"
 
@@ -115,6 +118,7 @@
 - name: 'Copy Bash Comics dotfiles to destination.'
   ansible.builtin.include: 'copy_bash_dotfiles.yaml'
   vars:
+    id: 'comics'
     source: "{{ role_path }}/files/bash/comics"
     dest: "{{ dotfiles_home }}/.bash.comics.d"
   when: "{{ host_is_synology and ansible_hostname == 'dayne' }}"
@@ -126,6 +130,7 @@
 - name: 'Copy Bash Kasa dotfiles to destination.'
   ansible.builtin.include: 'copy_bash_dotfiles.yaml'
   vars:
+    id: 'kasa'
     source: "{{ role_path }}/files/bash/kasa"
     dest: "{{ dotfiles_home }}/.bash.kasa.d"
 
@@ -136,6 +141,7 @@
 - name: 'Copy Bash Library dotfiles to destination.'
   ansible.builtin.include: 'copy_bash_dotfiles.yaml'
   vars:
+    id: 'library'
     source: "{{ role_path }}/files/bash/library"
     dest: "{{ dotfiles_home }}/.bash.library.d"
 
@@ -146,6 +152,7 @@
 - name: 'Copy Bash Env dotfiles to destination.'
   ansible.builtin.include: 'copy_bash_dotfiles.yaml'
   vars:
+    id: 'env'
     source: "{{ role_path }}/files/bash/env"
     dest: "{{ dotfiles_home }}/.bash.env.d"
 
@@ -156,6 +163,7 @@
 - name: 'Copy Bash Options dotfiles to destination.'
   ansible.builtin.include: 'copy_bash_dotfiles.yaml'
   vars:
+    id: 'options'
     source: "{{ role_path }}/files/bash/options"
     dest: "{{ dotfiles_home }}/.bash.options.d"
 
@@ -169,6 +177,7 @@
     - name: 'Copy Bash Path dotfiles to destination.'
       ansible.builtin.include: 'copy_bash_dotfiles.yaml'
       vars:
+        id: 'path'
         source: "{{ role_path }}/files/bash/path"
         dest: "{{ dotfiles_home }}/.bash.path.d"
 
@@ -191,6 +200,7 @@
 - name: 'Copy Bash Proxmox dotfiles to destination.'
   ansible.builtin.include: 'copy_bash_dotfiles.yaml'
   vars:
+    id: 'proxmox'
     source: "{{ role_path }}/files/bash/proxmox"
     dest: "{{ dotfiles_home }}/.bash.proxmox.d"
 
@@ -201,6 +211,7 @@
 - name: 'Copy Bash Route 53 dotfiles to destination.'
   ansible.builtin.include: 'copy_bash_dotfiles.yaml'
   vars:
+    id: 'r53'
     source: "{{ role_path }}/files/bash/r53"
     dest: "{{ dotfiles_home }}/.bash.r53.d"
 

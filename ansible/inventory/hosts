@@ -1,9 +1,13 @@
 all:
   children:
-    proxmox_nodes:
+    pve_nodes:
       hosts:
         celtigar:
+        lefford:
         ryswell:
+    pbs_nodes:
+      hosts:
+        lefford:
     synology:
       hosts:
         dayne:
