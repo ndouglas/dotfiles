@@ -6,7 +6,7 @@
 # General scripts.
 bash_segments="{{ bash_ordered_segments }}";
 dotfiles_home="{{ dotfiles_home }}";
-for bash_dir in ${bash_ordered_segments}; do
+for bash_dir in ${bash_segments}; do
   dotfiles_dir="${dotfiles_home}/.bash.${bash_dir}.d";
   if test -n "$(shopt -s nullglob; echo "${dotfiles_dir}"/*.sh)"; then
     for file in "${dotfiles_dir}"/*.sh; do

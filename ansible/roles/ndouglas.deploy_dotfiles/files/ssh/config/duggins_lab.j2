@@ -1,0 +1,8 @@
+# Duggins Lab
+{% for host in groups['duggins_lab'] %}
+  # {{ host }}
+  Host {{ host }}
+    User pi
+    Hostname %h.hellholt.net
+    IdentityFile ~/.ssh/id_rsa
+{% endfor %}

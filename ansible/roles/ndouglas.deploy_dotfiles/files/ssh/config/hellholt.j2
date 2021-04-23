@@ -1,0 +1,8 @@
+# Hellholt
+{% for host in groups['pve_clusters']  %}
+  # {{ host }}
+  Host {{ host }}
+    User {{ hostvars[host].ansible_user | default(user) }}
+    Hostname %h.hellholt.net
+    IdentityFile ~/.ssh/id_rsa
+{% endfor %}

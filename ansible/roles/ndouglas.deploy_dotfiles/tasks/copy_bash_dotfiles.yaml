@@ -23,7 +23,7 @@
 - name: "Copy Bash template dotfiles {{ source }} -> temporary directory."
   ansible.builtin.template:
     src: "{{ item }}"
-    dest: "{{ temporary_directory.path }}/{{ item | basename }}.sh"
+    dest: "{{ temporary_directory.path }}/{{ item | basename | splitext | first }}.sh"
   with_fileglob:
     - "{{ source }}/*.j2"
 

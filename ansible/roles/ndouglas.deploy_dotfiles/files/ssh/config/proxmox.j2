@@ -1,0 +1,9 @@
+# Proxmox
+{% for host in groups['pve_nodes'] %}
+  # {{ host }}
+  Host {{ host }}
+    User root
+    Hostname %h.hellholt.net
+    IdentityFile ~/.ssh/id_rsa
+
+{% endfor %}

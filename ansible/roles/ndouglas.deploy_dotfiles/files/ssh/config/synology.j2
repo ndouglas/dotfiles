@@ -1,0 +1,8 @@
+# Synology
+{% for host in groups['synology'] %}
+  # {{ host }}
+  Host {{ host }}
+    User {{ user }}
+    Hostname %h.hellholt.net
+    IdentityFile ~/.ssh/id_rsa
+{% endfor %}
