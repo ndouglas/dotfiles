@@ -51,6 +51,7 @@
     group: "{{ group }}"
     mode: '0600'
     backup: yes
+    force: yes
 
 - name: "Copy SSH dotfiles temporary directory -> {{ ssh_config_dir }}."
   ansible.builtin.copy:
