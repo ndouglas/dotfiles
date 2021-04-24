@@ -10,6 +10,7 @@
     update_cache: yes
   loop:
     - 'curl'
+    - 'git'
     - 'python3'
     - 'python3-pip'
     - 'rsync'
