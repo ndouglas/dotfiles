@@ -1,5 +1,6 @@
 ---
 - name: 'Install Apt packages.'
+  become: yes
   ansible.builtin.apt:
     name:
       - 'curl'
@@ -12,6 +13,7 @@
   when: 'host_uses_apt'
 
 - name: 'Install Homebrew packages.'
+  become: yes
   community.general.homebrew:
     name:
       - "jq"
@@ -21,6 +23,7 @@
   when: 'host_uses_homebrew'
 
 - name: 'Install Pip packages.'
+  become: yes
   ansible.builtin.pip:
     name:
       - 'ansible'
