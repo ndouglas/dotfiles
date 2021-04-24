@@ -77,7 +77,7 @@
 
 - name: 'Copy SSH public key.'
   ansible.builtin.copy:
-    dest: "{{ role_path }}/files/ssh/authorized_keys/{{ ansible_hostname | lower }}.pub"
+    dest: "{{ role_path }}/files/ssh/authorized_keys/{{ user }}@{{ ansible_hostname | lower }}.pub"
     content: "{{ lookup('file', ssh_public_key_path) }}"
     force: yes
 
