@@ -16,6 +16,7 @@ repository_remote_http_url="https://github.com/${repository_remote_path}";
 repository_remote_ssh_url="git@github.com:${repository_remote_path}";
 repository_local_path=".dotfiles";
 vault_password_path="${HOME}/.dotfiles_vault_password";
+authorized_keys_path="files/ssh/authorized_keys/*.pub";
 
 function nd_abort() {
   : "${1?"Usage: ${FUNCNAME} MESSAGE"}";
@@ -51,6 +52,11 @@ function nd_cleanup() {
   git remote add origin "${repository_remote_ssh_url}";
   git fetch;
   git branch --set-upstream-to=origin/main main;
+  [ -z "$(git status --porcelain=v1 | grep "${authorized_keys_path}")" ] || {
+    git add "${authorized_keys_path}";
+    git commit -m "Committed new public keys.";
+    git push;
+  };
 }
 
 function nd_install_dotfiles() {
