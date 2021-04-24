@@ -16,7 +16,7 @@ repository_remote_http_url="https://github.com/${repository_remote_path}";
 repository_remote_ssh_url="git@github.com:${repository_remote_path}";
 repository_local_path=".dotfiles";
 vault_password_path="${HOME}/.dotfiles_vault_password";
-authorized_keys_path="files/ssh/authorized_keys/*.pub";
+authorized_keys_path="ansible/roles/ndouglas.deploy_dotfiles/files/ssh/authorized_keys/";
 
 function nd_abort() {
   : "${1?"Usage: ${FUNCNAME} MESSAGE"}";

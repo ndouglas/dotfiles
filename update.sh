@@ -5,6 +5,8 @@
 
 set -e;
 
+authorized_keys_path="ansible/roles/ndouglas.deploy_dotfiles/files/ssh/authorized_keys/";
+
 function nd_abort() {
   : "${1?"Usage: ${FUNCNAME} MESSAGE"}";
   message="${1}";
@@ -22,6 +24,11 @@ nd_update() {
   git pull --quiet;
   git push --quiet;
   ./deploy.sh;
+  [ -z "$(git status --porcelain=v1 | grep "${authorized_keys_path}")" ] || {
+    git add "${authorized_keys_path}";
+    git commit -m "Committed new public keys.";
+    git push;
+  };
 }
 
 nd_update;
