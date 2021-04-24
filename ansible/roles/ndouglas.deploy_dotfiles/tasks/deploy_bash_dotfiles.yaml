@@ -8,13 +8,13 @@
   stat:
     path: /etc/synoinfo.conf
   register: synology_info_file
-  when: '(ansible_distribution == "OtherLinux")'
+  when: 'ansible_distribution == "OtherLinux"'
 
 - name: 'Detect Proxmox VE.'
   stat:
     path: /etc/pve
   register: proxmox_pve_directory
-  when: '(ansible_distribution == "Debian")'
+  when: 'ansible_distribution == "Debian"'
 
 - name: 'Set dotfiles facts.'
   ansible.builtin.set_fact:
@@ -109,7 +109,7 @@
 
           export BEETSDIR="/volume1/Music/beets";
 
-  when: "{{ host_is_synology }}"
+  when: "host_is_synology"
 
 ###############################################################################
 # COMICS
@@ -121,7 +121,7 @@
     id: 'comics'
     source: "{{ role_path }}/files/bash/comics"
     dest: "{{ dotfiles_home }}/.bash.comics.d"
-  when: "{{ host_is_synology and ansible_hostname == 'dayne' }}"
+  when: "host_is_synology and ansible_hostname == 'dayne'"
 
 ###############################################################################
 # KASA
