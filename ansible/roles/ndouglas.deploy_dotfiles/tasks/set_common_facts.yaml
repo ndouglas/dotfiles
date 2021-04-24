@@ -15,7 +15,7 @@
   ansible.builtin.set_fact:
     host_uses_apt: "{{ ansible_distribution == 'Debian' }}"
     host_uses_homebrew: "{{ ansible_distribution == 'MacOSX' }}"
-    host_is_raspbian: "{{ ansible_distribution == 'Debian' and ansible_lsb.id == 'Raspbian' }}"
+    host_is_raspbian: "{{ ansible_distribution == 'Debian' and ansible_lsb.has_key('id') and ansible_lsb.id == 'Raspbian' }}"
     host_is_debian: "{{ ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu' }}"
     host_is_mac: "{{ ansible_distribution == 'MacOSX' }}"
     host_is_proxmox: "{{ ansible_distribution == 'Debian' and proxmox_pve_directory.stat.exists }}"
