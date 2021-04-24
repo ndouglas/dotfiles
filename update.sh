@@ -14,8 +14,7 @@ function nd_abort() {
 
 nd_check_work_tree() {
   git update-index -q --ignore-submodules --refresh;
-  git diff-files --quiet --ignore-submodules -- || nd_abort "You have unstaged changes.  Please commit or stash them.";
-  git diff-index --cached --quiet HEAD --ignore-submodules -- || nd_abort "You have uncommitted changes.  Please commit or stash them.";
+  [ -z "$(git status --porcelain=v1 2>/dev/null)" ] || nd_abort "You have unstaged or uncommitted changes.  Please commit or stash them.";
 }
 
 nd_update() {
