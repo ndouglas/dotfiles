@@ -5,3 +5,9 @@
     shell: '/bin/bash'
     append: yes
     create_home: yes
+
+- name: 'Enable Passwordless Sudo'
+  ansible.builtin.copy:
+    content: "{{ my.name.lower }} ALL=(ALL:ALL) NOPASSWD:ALL"
+    dest: "/etc/sudoers.d/{{ my.name.lower }}"
+    mode: 0440
