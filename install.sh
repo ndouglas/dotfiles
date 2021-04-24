@@ -18,20 +18,20 @@ repository_local_path=".dotfiles";
 vault_password_path="${HOME}/.dotfiles_vault_password";
 authorized_keys_path="ansible/roles/ndouglas.deploy_dotfiles/files/ssh/authorized_keys/";
 
-function nd_abort() {
+nd_abort() {
   : "${1?"Usage: ${FUNCNAME} MESSAGE"}";
   message="${1}";
   echo >&2 "${message}";
   exit 1;
 }
 
-function nd_require() {
+nd_require() {
   : "${1?"Usage: ${FUNCNAME} COMMAND"}";
   command="${1}";
   command -v "${command}" >/dev/null 2>&1 || nd_abort "I require ${command} but it is not installed.  Aborting.";
 }
 
-function nd_check_requirements() {
+nd_check_requirements() {
   echo "Checking requirements...";
   nd_require ssh;
   nd_require git;
@@ -42,16 +42,12 @@ function nd_check_requirements() {
   echo "All requirements satisfied.";
 }
 
-function nd_clone_repository() {
+nd_clone_repository() {
   echo "Cloning repository...";
   git clone "${repository_remote_http_url}" "${repository_local_path}";
 }
 
-function nd_cleanup() {
-  git remote rm origin;
-  git remote add origin "${repository_remote_ssh_url}";
-  git fetch;
-  git branch --set-upstream-to=origin/main main;
+nd_commit_changed_keys() {
   [ -z "$(git status --porcelain=v1 | grep "${authorized_keys_path}")" ] || {
     git add "${authorized_keys_path}";
     git commit -m "Committed new public keys.";
@@ -59,7 +55,15 @@ function nd_cleanup() {
   };
 }
 
-function nd_install_dotfiles() {
+nd_cleanup() {
+  git remote rm origin;
+  git remote add origin "${repository_remote_ssh_url}";
+  git fetch;
+  git branch --set-upstream-to=origin/main main;
+  nd_commit_changed_keys;
+}
+
+nd_install_dotfiles() {
   nd_check_requirements;
   nd_clone_repository;
   pushd "./${repository_local_path}" > /dev/null;
