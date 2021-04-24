@@ -23,3 +23,9 @@
 
 - name: 'Set the MOTD.'
   ansible.builtin.include: 'set_motd.yaml'
+
+- name: 'Install the update cronjob.'
+  ansible.builtin.cron:
+    name: 'update-dotfiles'
+    minute: '0'
+    job: "/bin/bash -lc 'pushd \"{{ dotfiles_home }}/.dotfiles\" > /dev/null; ./update.sh > /dev/null;'"
