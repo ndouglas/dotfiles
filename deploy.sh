@@ -6,5 +6,5 @@
 set -e;
 script_path="$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )";
 pushd "${script_path}/ansible" > /dev/null;
-ansible-playbook ./playbooks/deploy_dotfiles.yaml -v;
+ansible-playbook ./playbooks/deploy_dotfiles.yaml -v "${@}";
 popd > /dev/null;

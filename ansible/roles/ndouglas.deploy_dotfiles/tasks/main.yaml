@@ -1,4 +1,6 @@
 ---
+- name: 'Set common facts.'
+  ansible.builtin.include: 'set_common_facts.yaml'
 
 - name: 'Set user and group.'
   ansible.builtin.include: 'set_dotfiles_user.yaml'
@@ -7,6 +9,9 @@
 - name: 'Create a normal user.'
   ansible.builtin.include: 'create_normal_user.yaml'
   when: 'user == "root"'
+
+- name: 'Install some universally useful packages.'
+  ansible.builtin.include: 'install_common_packages.yaml'
 
 - name: 'Set dotfiles_home directory.'
   ansible.builtin.include: 'set_dotfiles_home_directory.yaml'

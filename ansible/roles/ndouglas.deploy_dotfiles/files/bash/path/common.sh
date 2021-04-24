@@ -2,6 +2,7 @@
 
 # A list of common paths that might not be in the PATH already.
 common_paths=(
+  '/usr/local/bin'
   '/usr/local/sbin'
   "$HOME/python3/bin"
 )

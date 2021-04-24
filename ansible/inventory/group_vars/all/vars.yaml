@@ -32,3 +32,6 @@ gitconfig:
   user.name: "{{ my.name.full }}"
   user.email: "{{ my.email.github }}"
   pull.rebase: 'true'
+
+software_versions:
+  python: '3.9'
