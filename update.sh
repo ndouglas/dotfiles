@@ -20,6 +20,7 @@ nd_check_work_tree() {
 nd_update() {
   nd_check_work_tree;
   git pull;
+  git push;
   ./deploy.sh;
 }
 
