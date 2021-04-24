@@ -29,6 +29,12 @@
 - name: 'Set the MOTD.'
   ansible.builtin.include: 'set_motd.yaml'
 
+- name: 'Set the email address appropriately for cron jobs.'
+  ansible.builtin.cron:
+    name: MAILTO
+    env: yes
+    job: "{{ ansible_hostname | lower }}@hellholt.net"
+
 - name: 'Install the update cronjob.'
   ansible.builtin.cron:
     name: 'update-dotfiles'
