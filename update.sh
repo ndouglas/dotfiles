@@ -23,7 +23,7 @@ nd_commit_changed_keys() {
   [ -z "$(git status --porcelain=v1 | grep "${authorized_keys_path}")" ] || {
     git add "${authorized_keys_path}";
     git commit -m "Committed new public keys.";
-    git push;
+    git push --quiet;
   };
 }
 
