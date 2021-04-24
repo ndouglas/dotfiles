@@ -2,7 +2,7 @@
 {% for host in groups['pve'] %}
   # {{ host }}
   Host {{ host }}
-    User root
+    User {{ user }}
     Hostname %h.hellholt.net
     IdentityFile ~/.ssh/id_rsa
 
