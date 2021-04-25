@@ -1,10 +1,10 @@
 ---
-- name: 'Set common facts.'
-  ansible.builtin.include: 'set_common_facts.yaml'
-
 - name: 'Set user and group.'
   ansible.builtin.include: 'set_dotfiles_user.yaml'
   when: 'user is not defined or group is not defined'
+
+- name: 'Set common facts.'
+  ansible.builtin.include: 'set_common_facts.yaml'
 
 - name: 'Create a normal user.'
   ansible.builtin.include: 'create_normal_user.yaml'
@@ -36,10 +36,10 @@
   ansible.builtin.cron:
     name: MAILTO
     env: yes
-    job: "{{ ansible_hostname | lower }}@hellholt.net"
+    job: "{{ hostname }}@hellholt.net"
 
 - name: 'Install the update cronjob.'
   ansible.builtin.cron:
     name: 'update-dotfiles'
-    minute: '0'
+    minute: "{{ 60 | random(seed=user_at_hostname) }}"
     job: "/bin/bash -lc 'pushd \"{{ dotfiles_home }}/.dotfiles\" > /dev/null; ./update.sh > /dev/null;'"

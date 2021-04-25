@@ -2,7 +2,7 @@
 
 {% for item in hostvars %}
 nd_to_{{ item }}() {
-  {% if item == ansible_hostname %}
+  {% if item == hostname %}
   "${@}";
   {% else %}
   ssh {{item}} -tt 'bash -l -c "${@}; bash;"';

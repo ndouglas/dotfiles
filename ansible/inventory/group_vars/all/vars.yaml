@@ -7,11 +7,14 @@ domains:
   public: 'darkdell.net'
   private: 'hellholt.net'
 
+# Lowercase hostname.
+hostname: "{{ ansible_hostname | lower }}"
+
 # Calculated FQDNs for the current hostname.
 fqdns:
-  personal: "{{ ansible_hostname }}.{{ domains.personal }}"
-  public: "{{ ansible_hostname }}.{{ domains.public }}"
-  private: "{{ ansible_hostname }}.{{ domains.private }}"
+  personal: "{{ hostname }}.{{ domains.personal }}"
+  public: "{{ hostname }}.{{ domains.public }}"
+  private: "{{ hostname }}.{{ domains.private }}"
 
 # Calculated IPv4 address.  Doesn't always work, usually does.
 ipv4_address: "{{ ansible_default_ipv4.address | default(ansible_all_ipv4_addresses[0]) }}"

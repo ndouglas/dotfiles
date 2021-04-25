@@ -1,5 +1,5 @@
 ---
-- name: "Create privately-resolvable DNS records for the host '{{ ansible_hostname }}'."
+- name: "Create privately-resolvable DNS records for the host '{{ hostname }}'."
   delegate_to: localhost
   community.aws.route53:
     overwrite: yes
@@ -11,7 +11,7 @@
     record: "{{ fqdns.private }}"
     value: "{{ ipv4_address }}"
 
-- name: "Create privately-resolvable wildcard DNS records for the host '{{ ansible_hostname }}'."
+- name: "Create privately-resolvable wildcard DNS records for the host '{{ hostname }}'."
   delegate_to: localhost
   community.aws.route53:
     alias: yes
@@ -25,7 +25,7 @@
     record: "*.{{ fqdns.private }}"
     value: "{{ fqdns.private }}"
 
-- name: "Create publicly-resolvable DNS records for the host '{{ ansible_hostname }}'."
+- name: "Create publicly-resolvable DNS records for the host '{{ hostname }}'."
   delegate_to: localhost
   community.aws.route53:
     alias: yes
@@ -39,7 +39,7 @@
     record: "{{ fqdns.personal }}"
     value: "{{ domains.personal }}"
 
-- name: "Create publicly-resolvable wildcard DNS records for the host '{{ ansible_hostname }}'."
+- name: "Create publicly-resolvable wildcard DNS records for the host '{{ hostname }}'."
   delegate_to: localhost
   community.aws.route53:
     alias: yes

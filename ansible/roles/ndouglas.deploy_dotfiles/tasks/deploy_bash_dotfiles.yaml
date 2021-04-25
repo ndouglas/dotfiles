@@ -4,24 +4,8 @@
 # A FACT-FINDING MISSION
 ###############################################################################
 
-- name: 'Detect Synology.'
-  stat:
-    path: /etc/synoinfo.conf
-  register: synology_info_file
-  when: 'ansible_distribution == "OtherLinux"'
-
-- name: 'Detect Proxmox VE.'
-  stat:
-    path: /etc/pve
-  register: proxmox_pve_directory
-  when: 'ansible_distribution == "Debian"'
-
 - name: 'Set dotfiles facts.'
   ansible.builtin.set_fact:
-    host_is_debian: "{{ ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu' }}"
-    host_is_mac: "{{ ansible_distribution == 'MacOSX' }}"
-    host_is_proxmox: "{{ ansible_distribution == 'Debian' and proxmox_pve_directory.stat.exists }}"
-    host_is_synology: "{{ ansible_distribution == 'OtherLinux' and synology_info_file.stat.exists }}"
     bash_ordered_segments: 'options path env library ansible beets comics kasa proxmox r53 aliases'
 
 - name: 'Set user and group.'
@@ -121,7 +105,7 @@
     id: 'comics'
     source: "{{ role_path }}/files/bash/comics"
     dest: "{{ dotfiles_home }}/.bash.comics.d"
-  when: "host_is_synology and ansible_hostname == 'dayne'"
+  when: "host_is_synology and hostname == 'dayne'"
 
 ###############################################################################
 # KASA
@@ -262,7 +246,7 @@
         dest: "{{ dotfiles_home }}/.bash_prompt_local"
         src: "{{ role_path }}/files/bash/bash_prompt_local.sh.j2"
       vars:
-        prompt_hostname: "{{ ansible_hostname | lower }}"
+        prompt_hostname: "{{ hostname }}"
 
     - name: 'Create .bash_profile file.'
       ansible.builtin.template:
