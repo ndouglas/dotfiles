@@ -37,6 +37,7 @@ nd_check_requirements() {
   nd_require git;
   nd_require pip3;
   nd_require ansible;
+  nd_require sudo;
   [ -d "${repository_local_path}" ] && nd_abort "There is already a ${repository_local_path} directory.  We can't install here.";
   [ ! -f "${vault_password_path}" ] && nd_abort "The vault password file was not found at ${vault_password_path}.";
   echo "All requirements satisfied.";
