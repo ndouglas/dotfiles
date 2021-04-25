@@ -2,8 +2,8 @@
 region={{ aws.defaults.region }}
 output={{ aws.defaults.output }}
 
-{% for profile in aws.profiles %}
-[profile {{ profile.id }}]
+{% for id, profile in aws.profiles.items() %}
+[profile {{ id }}]
 region={{ profile.region | default(aws.defaults.region) }}
 output={{ profile.output | default(aws.defaults.output) }}
 

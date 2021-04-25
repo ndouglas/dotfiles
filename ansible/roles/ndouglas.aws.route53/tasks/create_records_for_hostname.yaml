@@ -3,9 +3,9 @@
   delegate_to: localhost
   community.aws.route53:
     overwrite: yes
-    aws_access_key: "{{ route53.access_key }}"
-    aws_secret_key: "{{ route53.secret_key }}"
-    hosted_zone_id: "{{ route53.zone_ids.private }}"
+    aws_access_key: "{{ aws.profiles.route53.key_id }}"
+    aws_secret_key: "{{ aws.profiles.route53.secret_key }}"
+    hosted_zone_id: "{{ aws.profiles.route53.zone_ids.private }}"
     state: 'present'
     type: 'A'
     record: "{{ fqdns.private }}"
@@ -17,9 +17,9 @@
     alias: yes
     alias_hosted_zone_id: "{{ route53.zone_ids.private }}"
     overwrite: yes
-    aws_access_key: "{{ route53.access_key }}"
-    aws_secret_key: "{{ route53.secret_key }}"
-    hosted_zone_id: "{{ route53.zone_ids.private }}"
+    aws_access_key: "{{ aws.profiles.route53.key_id }}"
+    aws_secret_key: "{{ aws.profiles.route53.secret_key }}"
+    hosted_zone_id: "{{ aws.profiles.route53.zone_ids.private }}"
     state: 'present'
     type: 'A'
     record: "*.{{ fqdns.private }}"
@@ -31,9 +31,9 @@
     alias: yes
     alias_hosted_zone_id: "{{ route53.zone_ids.personal }}"
     overwrite: yes
-    aws_access_key: "{{ route53.access_key }}"
-    aws_secret_key: "{{ route53.secret_key }}"
-    hosted_zone_id: "{{ route53.zone_ids.personal }}"
+    aws_access_key: "{{ aws.profiles.route53.key_id }}"
+    aws_secret_key: "{{ aws.profiles.route53.secret_key }}"
+    hosted_zone_id: "{{ aws.profiles.route53.zone_ids.personal }}"
     state: 'present'
     type: 'A'
     record: "{{ fqdns.personal }}"
@@ -45,9 +45,9 @@
     alias: yes
     alias_hosted_zone_id: "{{ route53.zone_ids.personal }}"
     overwrite: yes
-    aws_access_key: "{{ route53.access_key }}"
-    aws_secret_key: "{{ route53.secret_key }}"
-    hosted_zone_id: "{{ route53.zone_ids.personal }}"
+    aws_access_key: "{{ aws.profiles.route53.key_id }}"
+    aws_secret_key: "{{ aws.profiles.route53.secret_key }}"
+    hosted_zone_id: "{{ aws.profiles.route53.zone_ids.personal }}"
     state: 'present'
     type: 'A'
     record: "*.{{ fqdns.personal }}"
