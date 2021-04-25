@@ -42,4 +42,4 @@
   ansible.builtin.cron:
     name: 'update-dotfiles'
     minute: "{{ 60 | random(seed=user_at_hostname) }}"
-    job: "/bin/bash -lc 'pushd \"{{ dotfiles_home }}/.dotfiles\" > /dev/null; ./update.sh > /dev/null;'"
+    job: "/bin/bash -lc 'pushd \"{{ dotfiles_home }}/.dotfiles\" > /dev/null; ./update.sh > \"{{ dotfiles_home }}\"/.dotfiles_update_log;'"
