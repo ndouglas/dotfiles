@@ -4,5 +4,5 @@
 ans_show_host_facts() {
   : "${1?"Usage: ${FUNCNAME} HOST"}";
   host="${1}";
-  ansible -i "${host}" -m ansible.builtin.setup;
+  ansible all -i "${host}," -m ansible.builtin.setup;
 }
