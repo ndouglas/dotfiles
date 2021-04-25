@@ -59,3 +59,7 @@ software_versions:
 #     - id: 'route53'
 #       key_id: 'some-access-key-id'
 #       secret_key: 'some-secret-key'
+#       zone_ids:
+#         personal: 'personal-domain-zone-id'
+#         public: 'public-domain-zone-id'
+#         private: 'private-domain-zone-id'
