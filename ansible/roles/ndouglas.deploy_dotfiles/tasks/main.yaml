@@ -26,6 +26,9 @@
 - name: 'Deploy Git dotfiles.'
   ansible.builtin.include: 'deploy_git_dotfiles.yaml'
 
+- name: 'Deploy AWS dotfiles.'
+  ansible.builtin.include: 'deploy_aws_dotfiles.yaml'
+
 - name: 'Set the MOTD.'
   ansible.builtin.include: 'set_motd.yaml'
 

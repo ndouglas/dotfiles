@@ -16,9 +16,10 @@
 - name: 'Install Homebrew packages.'
   community.general.homebrew:
     name:
-      - "jq"
+      - 'awscli'
+      - 'jq'
       - "python@{{ software_versions.python }}"
-      - "yq"
+      - 'yq'
     update_homebrew: yes
   when: 'host_uses_homebrew'
 

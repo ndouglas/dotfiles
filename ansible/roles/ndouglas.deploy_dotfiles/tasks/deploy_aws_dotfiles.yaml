@@ -1,0 +1,28 @@
+---
+- name: 'Set dotfiles_home directory.'
+  ansible.builtin.include: 'set_dotfiles_home_directory.yaml'
+  when: 'dotfiles_home is not defined'
+
+- name: 'Set facts for the AWS config file path.'
+  ansible.builtin.set_fact:
+    aws_config_path: "{{ dotfiles_home }}/.aws"
+
+- name: 'Delete the AWS config directory.'
+  ansible.builtin.file:
+    path: "{{ aws_config_path }}"
+    state: absent
+
+- name: 'Create the AWS config directory.'
+  ansible.builtin.file:
+    path: "{{ aws_config_path }}"
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    mode: '0700'
+    state: directory
+
+- name: "Copy AWS template dotfiles {{ role_path }}/files/aws/ -> {{ aws_config_path }}"
+  ansible.builtin.template:
+    src: "{{ item }}"
+    dest: "{{ aws_config_path }}/{{ item | basename | splitext | first }}"
+  with_fileglob:
+    - "{{ role_path }}/files/aws/*.j2"

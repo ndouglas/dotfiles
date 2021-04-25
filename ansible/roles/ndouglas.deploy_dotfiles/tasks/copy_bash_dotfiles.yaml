@@ -14,11 +14,10 @@
   register: 'temporary_directory'
 
 - name: "Copy Bash static dotfiles {{ source }} -> temporary directory."
-  ansible.builtin.copy:
-    src: "{{ item }}"
-    dest: "{{ temporary_directory.path }}"
-  with_fileglob:
-    - "{{ source }}/*.sh"
+  ansible.builtin.assemble:
+    src: "{{ source }}"
+    dest: "{{ temporary_directory.path }}/_{{ id }}.sh"
+    regexp: ".*\\.sh"
 
 - name: "Copy Bash template dotfiles {{ source }} -> temporary directory."
   ansible.builtin.template:
