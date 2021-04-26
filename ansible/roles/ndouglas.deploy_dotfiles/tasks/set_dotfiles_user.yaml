@@ -1,7 +1,7 @@
 ---
 - name: 'Set a fact for the user.'
   ansible.builtin.set_fact:
-    user: "{{ lookup('env', 'USER') }}"
+    user: "{{ ansible_env.USER | my.name.lower }}"
   become: no
   when: 'user is not defined'
 
