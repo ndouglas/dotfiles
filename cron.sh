@@ -7,4 +7,4 @@ set -e;
 directory="$(cd "$(dirname "${BASH_SOURCE[0]}")" &> /dev/null && pwd)";
 pushd "${directory}" > /dev/null;
 ./update.sh > "${directory}"/.last_log;
-date > "${directory}"/.last_updated;
+date +'%Y-%m-%d %H:%M:%S' > "${directory}"/.last_updated;
