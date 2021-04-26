@@ -69,3 +69,19 @@ software_versions:
 # filebot:
 #   license: 'filebot-license-string'
 
+# Reddit
+#
+# reddit:
+#   subreddits:
+#     - 'some-subreddit-name'
+
+# YouTube
+#
+# youtube:
+#   channels:
+#     - 'some-channel-name'
+#   playlists:
+#     - 'some-playlist-name'
+#   users:
+#     - 'some-user-name'
+#

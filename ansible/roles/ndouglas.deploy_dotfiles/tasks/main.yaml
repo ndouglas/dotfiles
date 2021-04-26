@@ -46,4 +46,4 @@
     name: 'update-dotfiles'
     minute: "{{ 60 | random(seed=user_at_hostname) }}"
     job: |
-      /bin/bash -lc 'pushd "{{ dotfiles_home }}"/.dotfiles > /dev/null && ./update.sh > "{{ dotfiles_home }}"/.dotfiles_update_log && date > "{{ dotfiles_home }}"/.dotfiles_last_updated;'
+      /bin/bash -lc '"{{ dotfiles_home }}"/.dotfiles/cron.sh;'
