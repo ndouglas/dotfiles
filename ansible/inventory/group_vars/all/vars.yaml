@@ -63,3 +63,9 @@ software_versions:
 #         personal: 'personal-domain-zone-id'
 #         public: 'public-domain-zone-id'
 #         private: 'private-domain-zone-id'
+
+# Filebot
+#
+# filebot:
+#   license: 'filebot-license-string'
+

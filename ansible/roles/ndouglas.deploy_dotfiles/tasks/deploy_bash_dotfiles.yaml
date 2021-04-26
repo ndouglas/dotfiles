@@ -108,6 +108,17 @@
   when: "host_is_synology and hostname == 'dayne'"
 
 ###############################################################################
+# COMPLETION
+###############################################################################
+
+- name: 'Copy Bash Completion dotfiles to destination.'
+  ansible.builtin.include: 'copy_bash_dotfiles.yaml'
+  vars:
+    id: 'completion'
+    source: "{{ role_path }}/files/bash/completion"
+    dest: "{{ dotfiles_home }}/.bash.completion.d"
+
+###############################################################################
 # KASA
 ###############################################################################
 
@@ -176,6 +187,18 @@
             PATH="${PATH}:/volume1/@appstore/synocli-file/bin";
           fi
       when: 'host_is_synology'
+
+###############################################################################
+# RASPBERRY PI
+###############################################################################
+
+- name: 'Copy Bash Raspberry Pi dotfiles to destination.'
+  ansible.builtin.include: 'copy_bash_dotfiles.yaml'
+  vars:
+    id: 'pi'
+    source: "{{ role_path }}/files/bash/pi"
+    dest: "{{ dotfiles_home }}/.bash.pi.d"
+  when: 'host_is_raspbian'
 
 ###############################################################################
 # PROXMOX

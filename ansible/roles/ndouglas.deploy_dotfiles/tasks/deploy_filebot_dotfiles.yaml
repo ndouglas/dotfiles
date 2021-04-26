@@ -1,0 +1,45 @@
+---
+
+- name: 'Set dotfiles_home directory.'
+  ansible.builtin.include: 'set_dotfiles_home_directory.yaml'
+  when: 'dotfiles_home is not defined'
+
+- name: 'Set facts for the Filebot config path.'
+  ansible.builtin.set_fact:
+    filebot_config_dir: "{{ dotfiles_home }}/.filebot"
+
+- name: "Create temporary directory."
+  ansible.builtin.tempfile:
+    state: 'directory'
+  register: 'temporary_directory'
+
+- name: "Copy Filebot template dotfiles {{ role_path }}/files/filebot/ -> temporary directory."
+  ansible.builtin.template:
+    src: "{{ item }}"
+    dest: "{{ temporary_directory.path }}/{{ ( ( item | basename | splitext )[:-1] | join('.') ) }}"
+  with_fileglob:
+    - "{{ role_path }}/files/filebot/*.j2"
+
+- name: 'Delete the Filebot config directory.'
+  ansible.builtin.file:
+    path: "{{ filebot_config_dir }}"
+    state: absent
+
+- name: 'Create the Filebot config directory.'
+  ansible.builtin.file:
+    path: "{{ filebot_config_dir }}"
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    mode: '0700'
+    state: directory
+
+- name: "Copy Filebot dotfiles temporary directory -> {{ filebot_config_dir }}."
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: "{{ filebot_config_dir }}"
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    mode: '0600'
+    force: yes
+  with_fileglob:
+    - "{{ temporary_directory.path }}/*"

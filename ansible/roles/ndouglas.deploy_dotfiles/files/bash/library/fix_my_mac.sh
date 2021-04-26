@@ -90,6 +90,17 @@ nd_fix_my_mac() {
   # Expand the print dialog by default
   defaults write com.google.Chrome PMPrintingExpandedStateForPrint2 -bool true;
   defaults write com.google.Chrome.canary PMPrintingExpandedStateForPrint2 -bool true;
+
+  # Use scroll gesture with the Ctrl (^) modifier key to zoom
+  defaults write com.apple.universalaccess closeViewScrollWheelToggle -bool true;
+  defaults write com.apple.universalaccess HIDScrollZoomModifierMask -int 262144;
+
+  # Follow the keyboard focus while zoomed in
+  defaults write com.apple.universalaccess closeViewZoomFollowsFocus -bool true;
+
+  # Stop iTunes from responding to the keyboard media keys
+  launchctl unload -w /System/Library/LaunchAgents/com.apple.rcd.plist 2> /dev/null
+
 }
 
 
