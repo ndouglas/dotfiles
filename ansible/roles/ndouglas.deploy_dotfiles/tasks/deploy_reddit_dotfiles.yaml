@@ -1,0 +1,33 @@
+---
+
+- name: 'Set dotfiles_home directory.'
+  ansible.builtin.include: 'set_dotfiles_home_directory.yaml'
+  when: 'dotfiles_home is not defined'
+
+- name: 'Set facts for the Reddit config file path.'
+  ansible.builtin.set_fact:
+    reddit_config_dir: "{{ dotfiles_home }}/.reddit.d"
+
+- name: 'Delete the Reddit config directory.'
+  ansible.builtin.file:
+    path: "{{ reddit_config_dir }}"
+    state: absent
+
+- name: 'Create the Reddit config directory.'
+  ansible.builtin.file:
+    path: "{{ reddit_config_dir }}"
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    mode: '0700'
+    state: directory
+
+
+- name: 'Deploy Reddit subreddits.txt'
+  ansible.builtin.copy:
+    src: "{{ role_path }}/files/reddit/subreddits.txt.vault"
+    dest: "{{ reddit_config_dir }}/subreddits.txt"
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    mode: '0600'
+    backup: yes
+    force: yes

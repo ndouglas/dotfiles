@@ -6,7 +6,7 @@
 
 - name: 'Set dotfiles facts.'
   ansible.builtin.set_fact:
-    bash_ordered_segments: 'options path env library ansible beets comics kasa proxmox r53 aliases'
+    bash_ordered_segments: 'options path env library ansible beets comics dotfiles kasa proxmox r53 reddit completion aliases'
 
 - name: 'Set user and group.'
   ansible.builtin.include: 'set_dotfiles_user.yaml'
@@ -119,6 +119,17 @@
     dest: "{{ dotfiles_home }}/.bash.completion.d"
 
 ###############################################################################
+# DOTFILES
+###############################################################################
+
+- name: 'Copy Bash Dotfiles dotfiles to destination.'
+  ansible.builtin.include: 'copy_bash_dotfiles.yaml'
+  vars:
+    id: 'dotfiles'
+    source: "{{ role_path }}/files/bash/dotfiles"
+    dest: "{{ dotfiles_home }}/.bash.dotfiles.d"
+
+###############################################################################
 # KASA
 ###############################################################################
 
@@ -189,6 +200,17 @@
       when: 'host_is_synology'
 
 ###############################################################################
+# PROXMOX
+###############################################################################
+
+- name: 'Copy Bash Proxmox dotfiles to destination.'
+  ansible.builtin.include: 'copy_bash_dotfiles.yaml'
+  vars:
+    id: 'proxmox'
+    source: "{{ role_path }}/files/bash/proxmox"
+    dest: "{{ dotfiles_home }}/.bash.proxmox.d"
+
+###############################################################################
 # RASPBERRY PI
 ###############################################################################
 
@@ -201,15 +223,15 @@
   when: 'host_is_raspbian'
 
 ###############################################################################
-# PROXMOX
+# REDDIT
 ###############################################################################
 
-- name: 'Copy Bash Proxmox dotfiles to destination.'
+- name: 'Copy Bash Reddit dotfiles to destination.'
   ansible.builtin.include: 'copy_bash_dotfiles.yaml'
   vars:
-    id: 'proxmox'
-    source: "{{ role_path }}/files/bash/proxmox"
-    dest: "{{ dotfiles_home }}/.bash.proxmox.d"
+    id: 'reddit'
+    source: "{{ role_path }}/files/bash/reddit"
+    dest: "{{ dotfiles_home }}/.bash.reddit.d"
 
 ###############################################################################
 # ROUTE 53
@@ -227,66 +249,13 @@
 ###############################################################################
 
 - name: 'Copy Bash core dotfiles to destination.'
-  block:
-
-    - name: 'Create .bash_common file.'
-      ansible.builtin.template:
-        backup: yes
-        force: yes
-        owner: "{{ user }}"
-        group: "{{ group }}"
-        mode: '0755'
-        dest: "{{ dotfiles_home }}/.bash_common"
-        src: "{{ role_path }}/files/bash/bash_common.sh.j2"
-
-    - name: 'Create .bash_logout file.'
-      ansible.builtin.template:
-        backup: yes
-        force: yes
-        owner: "{{ user }}"
-        group: "{{ group }}"
-        mode: '0755'
-        dest: "{{ dotfiles_home }}/.bash_logout"
-        src: "{{ role_path }}/files/bash/bash_logout.sh.j2"
-
-    - name: 'Create .bash_prompt file.'
-      ansible.builtin.template:
-        backup: yes
-        force: yes
-        owner: "{{ user }}"
-        group: "{{ group }}"
-        mode: '0755'
-        dest: "{{ dotfiles_home }}/.bash_prompt"
-        src: "{{ role_path }}/files/bash/bash_prompt.sh.j2"
-
-    - name: 'Create .bash_prompt_local file.'
-      ansible.builtin.template:
-        backup: yes
-        force: no
-        owner: "{{ user }}"
-        group: "{{ group }}"
-        mode: '0755'
-        dest: "{{ dotfiles_home }}/.bash_prompt_local"
-        src: "{{ role_path }}/files/bash/bash_prompt_local.sh.j2"
-      vars:
-        prompt_hostname: "{{ hostname }}"
-
-    - name: 'Create .bash_profile file.'
-      ansible.builtin.template:
-        backup: yes
-        force: yes
-        owner: "{{ user }}"
-        group: "{{ group }}"
-        mode: '0755'
-        dest: "{{ dotfiles_home }}/.bash_profile"
-        src: "{{ role_path }}/files/bash/bash_profile.sh.j2"
-
-    - name: 'Create .bashrc file.'
-      ansible.builtin.template:
-        backup: yes
-        force: yes
-        owner: "{{ user }}"
-        group: "{{ group }}"
-        mode: '0755'
-        dest: "{{ dotfiles_home }}/.bashrc"
-        src: "{{ role_path }}/files/bash/bashrc.sh.j2"
+  ansible.builtin.template:
+    backup: yes
+    force: yes
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    mode: '0755'
+    src: "{{ item }}"
+    dest: "{{ dotfiles_home }}/.{{ item | basename | splitext | first }}"
+  with_fileglob:
+    - "{{ role_path }}/files/bash/core/*.sh.j2"

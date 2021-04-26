@@ -69,6 +69,12 @@ software_versions:
 # filebot:
 #   license: 'filebot-license-string'
 
+# Podcasts
+#
+# podcasts:
+#   feeds:
+#     - 'some-feed'
+
 # Reddit
 #
 # reddit:

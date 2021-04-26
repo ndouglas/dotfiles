@@ -14,6 +14,7 @@
   become: yes
   community.general.timezone:
     name: America/New_York
+  ignore_errors: yes
 
 - name: 'Install some universally useful packages.'
   ansible.builtin.include: 'install_common_packages.yaml'
@@ -36,6 +37,9 @@
 
 - name: 'Deploy Filebot dotfiles.'
   ansible.builtin.include: 'deploy_filebot_dotfiles.yaml'
+
+- name: 'Deploy Reddit dotfiles.'
+  ansible.builtin.include: 'deploy_reddit_dotfiles.yaml'
 
 - name: 'Set the MOTD.'
   ansible.builtin.include: 'set_motd.yaml'

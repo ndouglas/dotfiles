@@ -1,10 +1,10 @@
 # ~/.bash_prompt_local: sourced from .bash_prompt to construct our prompt.
 
-prompt_hostname="{{ prompt_hostname }}";
-primary_color="$(tput setaf {{ hostname_primary_colors[prompt_hostname] }})";
-secondary_color="$(tput setaf {{ hostname_secondary_colors[prompt_hostname] }})";
-tertiary_color="$(tput setaf {{ hostname_tertiary_colors[prompt_hostname] }})";
-emoji_segment="{{ hostname_emoji[prompt_hostname] }}";
+prompt_hostname="{{ hostname }}";
+primary_color="$(tput setaf {{ hostname_primary_colors[hostname] }})";
+secondary_color="$(tput setaf {{ hostname_secondary_colors[hostname] }})";
+tertiary_color="$(tput setaf {{ hostname_tertiary_colors[hostname] }})";
+emoji_segment="{{ hostname_emoji[hostname] }}";
 username_segment="$(printf "\[$(tput sgr0)$(tput bold)\]${primary_color}\u\[$(tput sgr0)\]" 2> /dev/null)";
 atsign_segment="$(printf "\[$(tput sgr0)$(tput bold)\]@\[$(tput sgr0)\]")";
 hostname_segment="$(printf "\[$(tput sgr0)$(tput bold)\]${secondary_color}\h\[$(tput sgr0)\]")";
