@@ -6,6 +6,6 @@ dot_get_date_last_updated() {
   if [ -z "${host}" ]; then
     cat "${DOTFILES_ANSIBLE_PATH}"/../.last_updated;
   else
-    ssh "${host}" bash -lc 'cat ~/.dotfiles/.last_updated';
+    ssh "${host}" 'cat ~/.dotfiles/.last_updated';
   fi
 }
