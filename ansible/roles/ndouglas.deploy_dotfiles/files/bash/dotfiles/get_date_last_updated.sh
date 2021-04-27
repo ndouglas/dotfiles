@@ -4,7 +4,7 @@
 dot_get_date_last_updated() {
   host="${1}";
   if [ -z "${host}" ]; then
-    cat "${DOTFILES_ANSIBLE_PATH}"/.last_updated;
+    cat "${DOTFILES_ANSIBLE_PATH}"/../.last_updated;
   else
     nd_on_$host dot_get_date_last_updated;
   fi
