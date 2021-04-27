@@ -18,6 +18,7 @@
     name:
       - 'awscli'
       - 'jq'
+      - 'parallel'
       - "python@{{ software_versions.python }}"
       - 'yq'
     update_homebrew: yes
