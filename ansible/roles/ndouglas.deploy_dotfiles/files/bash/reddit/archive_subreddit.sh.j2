@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+# Archive a subreddit's top posts from several different periods.
+rdt_archive_subreddit() {
+  : "${1?"Usage: ${FUNCNAME} SUBREDDIT"}";
+  subreddit="${1}";
+  for time_period in all year month; do
+    python3 -m bdfr download \
+      --authenticate \
+      --config "${HOME}/.reddit.d/bdfr.config" \
+      --subreddit "${subreddit}" \
+      --directory "$(pwd)" \
+      --downloaded-posts "$(pwd)/metadata/${subreddit}_posts.txt" \
+      --sort top \
+      --time "${time_period}" \
+      --quit;
+  done;
+}
