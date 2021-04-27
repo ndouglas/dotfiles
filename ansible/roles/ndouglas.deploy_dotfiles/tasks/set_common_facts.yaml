@@ -20,5 +20,4 @@
     host_is_mac: "{{ ansible_distribution == 'MacOSX' }}"
     host_is_proxmox: "{{ ansible_distribution == 'Debian' and proxmox_pve_directory.stat.exists }}"
     host_is_synology: "{{ ansible_distribution == 'OtherLinux' and synology_info_file.stat.exists }}"
-    dotfiles_source: "{{ playbook_dir | dirname | dirname }}/dotfiles"
     user_at_hostname: "{{ ( user + '@' + hostname ) | lower }}"
