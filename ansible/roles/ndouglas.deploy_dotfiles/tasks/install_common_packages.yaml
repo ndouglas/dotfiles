@@ -17,6 +17,8 @@
   community.general.homebrew:
     name:
       - 'awscli'
+      - 'bat'
+      - 'fzf'
       - 'jq'
       - 'parallel'
       - "python@{{ software_versions.python }}"
