@@ -9,4 +9,3 @@
     - name: 'Deploy dotfiles.'
       include_role:
         name: 'ndouglas.deploy_dotfiles'
-

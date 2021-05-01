@@ -16,7 +16,7 @@
 - name: "Copy Filebot template dotfiles {{ role_path }}/files/filebot/ -> temporary directory."
   ansible.builtin.template:
     src: "{{ item }}"
-    dest: "{{ temporary_directory.path }}/{{ ( ( item | basename | splitext )[:-1] | join('.') ) }}"
+    dest: "{{ temporary_directory.path }}/{{ item | basename | splitext | first }}"
   with_fileglob:
     - "{{ role_path }}/files/filebot/*.j2"
 

@@ -17,12 +17,12 @@
   ansible.builtin.assemble:
     src: "{{ source }}"
     dest: "{{ temporary_directory.path }}/_{{ id }}.sh"
-    regexp: ".*\\.sh"
+    regexp: ".*\\.sh$"
 
 - name: "Copy Bash template dotfiles {{ source }} -> temporary directory."
   ansible.builtin.template:
     src: "{{ item }}"
-    dest: "{{ temporary_directory.path }}/{{ item | basename | splitext | first }}.sh"
+    dest: "{{ temporary_directory.path }}/{{ item | basename | splitext | first }}"
   with_fileglob:
     - "{{ source }}/*.j2"
 

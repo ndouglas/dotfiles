@@ -6,7 +6,7 @@
 
 - name: 'Set dotfiles facts.'
   ansible.builtin.set_fact:
-    bash_ordered_segments: 'options path env library ansi ansible beets comics dotfiles kasa proxmox r53 reddit completion aliases'
+    bash_ordered_segments: 'options path env library ansible beets comics dotfiles kasa proxmox r53 reddit completion aliases'
 
 - name: 'Set user and group.'
   ansible.builtin.include: 'set_dotfiles_user.yaml'
@@ -59,17 +59,6 @@
               alias md5sum="md5";
 
       when: 'host_is_mac'
-
-###############################################################################
-# ANSI
-###############################################################################
-
-- name: 'Copy Bash Ansi dotfiles to destination.'
-  ansible.builtin.include: 'copy_bash_dotfiles.yaml'
-  vars:
-    id: 'ansi'
-    source: "{{ role_path }}/files/bash/ansi"
-    dest: "{{ dotfiles_home }}/.bash.ansi.d"
 
 ###############################################################################
 # ANSIBLE
