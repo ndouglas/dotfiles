@@ -33,6 +33,21 @@
     - 'br_netfilter'
     - 'overlay'
 
+- name: 'Modify some settings to prepare for Kubernetes.'
+  ansible.builtin.copy:
+    dest: '/etc/sysctl.d/kubernetes.conf'
+    content: |
+      vm.swappiness=0
+      net.ipv4.ip_forward=1
+
+- name: 'Run all sysctl updates.'
+  ansible.builtin.shell:
+    cmd: 'sysctl --system'
+
+- name: 'Disable swap if not already disabled.'
+  ansible.builtin.shell:
+    cmd: 'swapoff -a'
+
 - name: 'Modprobe kernel modules.'
   community.general.modprobe:
     name: "{{ item }}"
