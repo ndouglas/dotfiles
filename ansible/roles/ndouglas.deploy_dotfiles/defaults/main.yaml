@@ -107,8 +107,13 @@ hostname_emoji:
   harroway: '🏰'
   herston: '🐔'
   hetherspoon: '🥄'
+  inchfield: '🏁'
+  ironmaker: '🗡️'
+  ironsmith: '🧲'
+  jast: '🦁'
+  jordayne: '🪶'
   justman: '⚖️'
-  karstark: '☼'
+  karstark: '🌟'
   kellington: '📘'
   kettleblack: '🍯'
   lefford: '☀️'
@@ -131,9 +136,18 @@ hostname_emoji:
   mormont: '🐻'
   mudd: '👑'
   mullendore: '🦋'
+  norcross: '➕'
+  norrey: '🌿'
+  norridge: '🏹'
+  oakheart: '🍂'
+  oldflowers: '✋'
+  orkwood: '🌲'
+  paege: '🐍'
   poole: '🔵'
   prester: '🐂'
+  qoherys: '💀'
   qorgyle: '🦂'
+  quagg: ''
   rambton: '🐏'
   redwyne: '🍇'
   reed: '🐊'
@@ -153,8 +167,14 @@ hostname_emoji:
   tudbury: '🐢'
   turnberry: '🍓'
   tyrell: '🏵️'
+  uffering: ''
   uller: '🔥'
+  umber: ''
+  upcliff: ''
   uthor: '🐌'
+  vaith: ''
+  vance: ''
+  varner: ''
   waxley: '🕯️'
   webber: '🕷️'
   wensington: '🎺'
@@ -296,6 +316,7 @@ hostname_primary_colors:
   hunter: 94
   hutcheson: 220
   inchfield: 102
+  ironmaker: 65
   ironsmith: 65
   jast: 11
   jordayne: 34
@@ -610,6 +631,7 @@ hostname_secondary_colors:
   hunter: 188
   hutcheson: 160
   inchfield: 59
+  ironmaker: 220
   ironsmith: 220
   jast: 58
   jordayne: 185
@@ -924,6 +946,7 @@ hostname_tertiary_colors:
   hunter: 145
   hutcheson: 94
   inchfield: 102
+  ironmaker: 22
   ironsmith: 22
   jast: 145
   jordayne: 70
