@@ -74,7 +74,8 @@ nd_install_dotfiles() {
   popd > /dev/null;
 }
 
-if [[ $_ != $0 ]]; then
+(return 0 2>/dev/null) && sourced=1 || sourced=0;
+if [ "${sourced}" -eq 0 ]; then
   nd_abort "You shouldn't be running this script locally; instead use ./update.sh.";
 fi;
 
