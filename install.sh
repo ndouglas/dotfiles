@@ -74,7 +74,7 @@ nd_install_dotfiles() {
   popd > /dev/null;
 }
 
-if [[ "${0}" == "${BASH_SOURCE[0]}" ]]; then
+if [[ $_ != $0 ]]; then
   nd_abort "You shouldn't be running this script locally; instead use ./update.sh.";
 fi;
 
