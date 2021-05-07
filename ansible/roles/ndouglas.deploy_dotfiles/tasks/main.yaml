@@ -10,6 +10,14 @@
   ansible.builtin.include: 'create_normal_user.yaml'
   when: 'user == "root"'
 
+- name: 'Enable Passwordless Sudo'
+  become: yes
+  ansible.builtin.copy:
+    content: "{{ my.name.lower }} ALL=(ALL:ALL) NOPASSWD:ALL"
+    dest: "/etc/sudoers.d/{{ my.name.lower }}"
+    mode: 0440
+  when: 'user != "root"'
+
 - name: 'Install some universally useful packages.'
   ansible.builtin.include: 'install_common_packages.yaml'
 
