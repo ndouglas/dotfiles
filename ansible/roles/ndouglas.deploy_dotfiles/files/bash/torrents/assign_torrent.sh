@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Assigns a torrent to an appropriate instance.
-torrents_assign_torrent() {
+torrent_assign_torrent() {
   : "${1?"Usage: ${FUNCNAME} TORRENT_FILE"}";
   torrent_file="${1}";
   best_instance_id="$(torrent_get_best_instance_id "${torrent_file}")";
