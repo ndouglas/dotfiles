@@ -24,6 +24,7 @@
 - name: 'Set the service FQDN.'
   ansible.builtin.set_fact:
     service_fqdn: "{{ service_name }}.{{ fqdns.private }}"
+    domain_fqdn: "{{ instance_domain }}.{{ fqdns.private }}"
 
 - name: 'Create instance root directory.'
   ansible.builtin.file:
@@ -80,7 +81,7 @@
      - "{{ instance_domain_data_path }}:/downloads2"
     labels:
       "traefik.enable": 'true'
-      "traefik.http.routers.{{ service_name }}.rule": 'Host(`{{ service_fqdn }}`)'
+      "traefik.http.routers.{{ service_name }}.rule": 'Host(`{{ service_fqdn }}`, `{{ domain_fqdn }}`)'
       "traefik.http.routers.{{ service_name }}.entrypoints": 'websecure'
       "traefik.http.routers.{{ service_name }}.tls": 'true'
       "traefik.http.routers.{{ service_name }}.tls.certresolver": 'hellholt'
