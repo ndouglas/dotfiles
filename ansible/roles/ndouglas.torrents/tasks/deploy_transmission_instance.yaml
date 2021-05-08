@@ -13,7 +13,7 @@
 - name: 'Set some useful facts.'
   ansible.builtin.set_fact:
     instance_storage_path: "{{ torrents_root_path }}/{{ instance_id }}"
-    transmission_peer_port: "{{ base_port + instance_id }}"
+    transmission_peer_port: "{{ base_port + ( instance_id | int ) }}"
 
 - name: 'Create instance root directory.'
   ansible.builtin.file:
