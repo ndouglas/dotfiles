@@ -20,14 +20,6 @@
     job: |
       /bin/bash -lc 'torrents_watch_torrents "{{ torrents_root_path }}/watch"'
 
-- name: 'Create instance root directory.'
-  ansible.builtin.file:
-    path: "{{ ansible_env.HOME }}/letsencrypt.json"
-    state: 'file'
-    mode: '0600'
-    owner: 'root'
-    group: 'root'
-
 - name: 'Create the Traefik container.'
   docker_container:
     name: 'traefik'
@@ -39,7 +31,7 @@
       - '80:80'
       - '443:443'
     volumes:
-      - "{{ ansible_env.HOME }}/letsencrypt.json:/etc/traefik/letsencrypt.json"
+      - "{{ ansible_env.HOME }}/traefik:/etc/traefik"
       - '/var/run/docker.sock:/var/run/docker.sock'
     command: |
       --api.dashboard=false
