@@ -4,5 +4,5 @@
 torrent_get_announce_domain() {
   : "${1?"Usage: ${FUNCNAME} FILE"}";
   torrent_file="${1}";
-  torrent_get_announce "${torrent_file}" | sed -e 's|^[^/]*//||' -e 's|/.*$||';
+  torrent_get_announce_url "${torrent_file}" | sed -e 's|^[^/]*//||' -e 's|/.*$||';
 }

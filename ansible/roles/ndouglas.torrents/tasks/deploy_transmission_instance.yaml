@@ -41,18 +41,21 @@
     path: "{{ instance_domain_path }}"
     src: "{{ instance_storage_path }}"
     state: 'link'
+    force: yes
 
 - name: 'Create symlink pointing to instance storage path from instance ID.'
   ansible.builtin.file:
     path: "{{ instance_id_path }}"
     src: "{{ instance_storage_path }}"
     state: 'link'
+    force: yes
 
 - name: 'Create symlink pointing to instance storage path from padded instance ID.'
   ansible.builtin.file:
     path: "{{ padded_instance_id_path }}"
     src: "{{ instance_storage_path }}"
     state: 'link'
+    force: yes
 
 - name: 'Create domain secondary destination path.'
   ansible.builtin.file:

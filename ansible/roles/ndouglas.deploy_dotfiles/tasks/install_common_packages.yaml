@@ -3,6 +3,7 @@
   become: yes
   ansible.builtin.apt:
     name:
+      - 'bc'
       - 'curl'
       - 'git'
       - 'jq'
