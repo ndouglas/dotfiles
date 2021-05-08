@@ -1,4 +1,5 @@
 .DS_Store
+.last_checked
 .last_updated
 .last_log
 __pycache__/
