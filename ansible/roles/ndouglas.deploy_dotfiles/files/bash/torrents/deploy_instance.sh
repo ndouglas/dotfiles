@@ -9,7 +9,7 @@ torrent_deploy_instance() {
   role_name='ndouglas.torrents';
   task_file='deploy_transmission_instance.yaml';
   pushd "${DOTFILES_ANSIBLE_PATH}" >> /dev/null;
-  ansible-playbook "${@:3}" /dev/stin <<END
+  ansible-playbook "${@:3}" /dev/stdin <<END
 ---
 - hosts: localhost
   tasks:
