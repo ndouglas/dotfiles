@@ -46,6 +46,12 @@
 - name: 'Deploy Kubernetes dotfiles.'
   ansible.builtin.include: 'deploy_kubernetes_dotfiles.yaml'
 
+- name: 'Deploy Torrents role.'
+  ansible.builtin.include_role:
+    name: 'ndouglas.torrents'
+    tasks_from: 'deploy_transmission.yaml'
+  when: 'hostname == "ambrose"'
+
 - name: 'Set the MOTD.'
   ansible.builtin.include: 'set_motd.yaml'
 

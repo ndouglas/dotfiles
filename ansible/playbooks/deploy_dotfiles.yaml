@@ -7,5 +7,5 @@
   tasks:
 
     - name: 'Deploy dotfiles.'
-      include_role:
+      ansible.builtin.include_role:
         name: 'ndouglas.deploy_dotfiles'

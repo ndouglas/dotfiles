@@ -1,0 +1,31 @@
+---
+- name: 'Set some important facts...'
+  ansible.builtin.set_fact:
+    storage_root_path: '/torrents'
+
+- name: 'Set instance root path.'
+  ansible.builtin.set_fact:
+    instance_storage_path: "{{ storage_root_path }}/{{ instance_id }}"
+
+- name: 'Create instance root directory.'
+  ansible.builtin.file:
+    path: "{{ instance_storage_path }}"
+    state: 'directory'
+    mode: '0755'
+
+- name: 'Create symlink pointing to instance ID from domain.'
+  ansible.builtin.file:
+    path: "{{ storage_root_dir }}/{{ tracker_domain }}"
+    src: "{{ instance_storage_path }}"
+    state: 'link'
+
+- name: 'Prepare directory structure.'
+  ansible.builtin.file:
+    path: "{{ instance_storage_path }}/{{ item }}"
+    state: 'directory'
+    mode: '0755'
+  loop:
+    - "config"
+    - "watch"
+    - "incomplete"
+    - "downloaded"

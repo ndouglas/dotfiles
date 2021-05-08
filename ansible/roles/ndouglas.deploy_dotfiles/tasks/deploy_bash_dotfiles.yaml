@@ -6,7 +6,7 @@
 
 - name: 'Set dotfiles facts.'
   ansible.builtin.set_fact:
-    bash_ordered_segments: 'options path env library ansible beets comics dotfiles kasa proxmox r53 reddit completion aliases'
+    bash_ordered_segments: 'options path env library ansible beets comics dotfiles host kasa proxmox r53 reddit torrents completion aliases'
 
 - name: 'Set user and group.'
   ansible.builtin.include: 'set_dotfiles_user.yaml'
@@ -130,6 +130,23 @@
     dest: "{{ dotfiles_home }}/.bash.dotfiles.d"
 
 ###############################################################################
+# HOSTS
+###############################################################################
+
+- name: 'Check for existence of Host dotfiles source.'
+  ansible.builtin.stat:
+    path: "{{ role_path }}/files/bash/{{ hostname }}"
+  register: host_dotfiles_path
+
+- name: 'Copy Bash Host-specific dotfiles to destination.'
+  ansible.builtin.include: 'copy_bash_dotfiles.yaml'
+  vars:
+    id: 'host'
+    source: "{{ role_path }}/files/bash/{{ hostname }}"
+    dest: "{{ dotfiles_home }}/.bash.host.d"
+  when: 'host_dotfiles_path.stat.exists'
+
+###############################################################################
 # KASA
 ###############################################################################
 
@@ -243,6 +260,17 @@
     id: 'r53'
     source: "{{ role_path }}/files/bash/r53"
     dest: "{{ dotfiles_home }}/.bash.r53.d"
+
+###############################################################################
+# TORRENTS
+###############################################################################
+
+- name: 'Copy Bash Torrent dotfiles to destination.'
+  ansible.builtin.include: 'copy_bash_dotfiles.yaml'
+  vars:
+    id: 'torrents'
+    source: "{{ role_path }}/files/bash/torrents"
+    dest: "{{ dotfiles_home }}/.bash.torrents.d"
 
 ###############################################################################
 # CORE
