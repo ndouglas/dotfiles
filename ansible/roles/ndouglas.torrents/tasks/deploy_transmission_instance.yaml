@@ -70,11 +70,11 @@
     image: 'linuxserver/transmission'
     state: 'started'
     restart: yes
-    devices:
-     - "{{ instance_storage_path }}/config:/config:rwm"
-     - "{{ instance_storage_path }}/watch:/watch:rwm"
-     - "{{ instance_storage_path }}/downloads:/downloads:rwm"
-     - "{{ torrents_root_path }}/data/{{ instance_domain }}:/downloads2:rwm"
+    volumes:
+     - "{{ instance_storage_path }}/config:/config"
+     - "{{ instance_storage_path }}/watch:/watch"
+     - "{{ instance_storage_path }}/downloads:/downloads"
+     - "{{ torrents_root_path }}/data/{{ instance_domain }}:/downloads2"
     labels:
       "traefik.enable": 'true'
       "traefik.http.routers.{{ service_name }}.rule": 'Host(`{{ service_fqdn }}`)'
