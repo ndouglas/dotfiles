@@ -92,7 +92,7 @@
     restart_policy: 'unless-stopped'
     recreate: yes
     volumes:
-      - "/torrents/watch:/media"
+      - "/torrents/watch:/data"
     env:
       USERNAME: "{{ user }}"
       PASSWORD: "{{ password }}"
