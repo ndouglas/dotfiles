@@ -23,7 +23,7 @@
       /bin/bash -lc 'torrent_watch_torrents "{{ torrents_root_path }}/watch"'
 
 - name: 'Create the Traefik container.'
-  docker_container:
+  community.general.docker_container:
     name: 'traefik'
     image: 'traefik:2.2'
     restart_policy: 'unless-stopped'
@@ -58,7 +58,7 @@
       AWS_SECRET_ACCESS_KEY: "{{ aws.profiles.route53.secret_key }}"
       AWS_HOSTED_ZONE_ID: "{{ aws.profiles.route53.zone_ids.private }}"
 
-- name: "Create privately-resolvable Route 53 records for the host."
+- name: 'Create privately-resolvable Route 53 records for the host.'
   community.aws.route53:
     overwrite: yes
     aws_access_key: "{{ aws.profiles.route53.key_id }}"
@@ -69,7 +69,7 @@
     record: "{{ fqdns.private }}"
     value: "{{ ipv4_address }}"
 
-- name: "Create privately-resolvable Route 53 wildcard records for the host."
+- name: 'Create privately-resolvable Route 53 wildcard records for the host.'
   community.aws.route53:
     overwrite: yes
     aws_access_key: "{{ aws.profiles.route53.key_id }}"
@@ -79,3 +79,37 @@
     type: 'A'
     record: "*.{{ fqdns.private }}"
     value: "{{ ipv4_address }}"
+
+- name: 'Create a WebDAV server to allow torrent uploads.'
+  community.general.docker_container:
+    name: 'webdav'
+    image: 'ugeek/webdav'
+    restart_policy: 'unless-stopped'
+    recreate: yes
+    volumes:
+      - "/torrents/watch:/media"
+    env:
+      USERNAME: "{{ user }}"
+      PASSWORD: "{{ password }}"
+      UID: "{{ uid }}"
+      GID: "{{ gid }}"
+      TZ: "America/New_York"
+    labels:
+      'traefik.enable': 'true'
+      'traefik.http.routers.webdav.entrypoints': "websecure"
+      'traefik.http.routers.webdav.rule': "Host(`webdav.{{ fqdns.private }}`)"
+      'traefik.http.routers.webdav.tls': 'true'
+      'traefik.http.routers.webdav.tls.certresolver': 'hellholt'
+      'traefik.http.routers.webdav.service': 'webdav'
+      'traefik.http.services.webdav.loadbalancer.server.port': '80'
+      'traefik.http.services.webdav.loadbalancer.server.scheme': 'http'
+      'traefik.http.middlewares.securedheaders.headers.forcestsheader': 'true'
+      'traefik.http.middlewares.securedheaders.headers.sslRedirect': 'true'
+      'traefik.http.middlewares.securedheaders.headers.STSPreload': 'true'
+      'traefik.http.middlewares.securedheaders.headers.ContentTypeNosniff': 'true'
+      'traefik.http.middlewares.securedheaders.headers.BrowserXssFilter': 'true'
+      'traefik.http.middlewares.securedheaders.headers.STSIncludeSubdomains': 'true'
+      'traefik.http.middlewares.securedheaders.headers.stsSeconds': 63072000
+      'traefik.http.middlewares.securedheaders.headers.frameDeny': 'true'
+      'traefik.http.middlewares.securedheaders.headers.browserXssFilter': 'true'
+      'traefik.http.middlewares.securedheaders.headers.contentTypeNosniff': 'true'
