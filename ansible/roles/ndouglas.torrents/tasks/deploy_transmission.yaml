@@ -68,7 +68,7 @@
 
 - name: "Create privately-resolvable Route 53 wildcard records for the host."
   community.aws.route53:
-    alias: true
+    alias: yes
     alias_hosted_zone_id: "{{ aws.profiles.route53.zone_ids.private }}"
     overwrite: yes
     aws_access_key: "{{ aws.profiles.route53.key_id }}"

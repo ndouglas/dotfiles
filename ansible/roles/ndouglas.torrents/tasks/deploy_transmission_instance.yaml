@@ -91,5 +91,3 @@
       PGID: "{{ gid }}"
       TZ: "America/New_York"
     restart_policy: 'unless-stopped'
-
-
