@@ -12,5 +12,5 @@ torrent_make_rpc_request() {
     --header "Content-Type: application/json" \
     --request POST \
     --data "${data}" \
-    "$(get_domain_rpc_url "${safe_domain}")";
+    "$(torrent_get_domain_rpc_url "${safe_domain}")";
 }
