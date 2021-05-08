@@ -31,4 +31,5 @@
     name:
       - 'ansible'
       - 'proxmoxer'
+      - 'pytp'
       - 'requests'
