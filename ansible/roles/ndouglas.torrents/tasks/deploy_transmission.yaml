@@ -1,4 +1,9 @@
 ---
+- name: 'Set some user/group facts...'
+  ansible.builtin.include_role:
+    name: 'ndouglas.deploy_dotfiles'
+    tasks_from: 'set_dotfiles_user.yaml'
+
 - name: 'Set some important facts...'
   ansible.builtin.set_fact:
     torrents_root_path: '/torrents'
