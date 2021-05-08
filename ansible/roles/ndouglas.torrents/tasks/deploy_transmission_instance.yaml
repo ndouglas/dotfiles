@@ -15,7 +15,9 @@
 
 - name: 'Set some useful facts.'
   ansible.builtin.set_fact:
-    instance_storage_path: "{{ torrents_root_path }}/{{ instance_id }}"
+    instance_storage_path: "{{ torrents_root_path }}/clients/{{ instance_id }}"
+    instance_domain_path: "{{ torrents_root_path }}/domains/{{ instance_domain }}"
+    instance_domain_data_path: "{{ torrents_root_path }}/data/{{ instance_domain }}"
     transmission_peer_port: "{{ base_port + ( instance_id | int ) }}"
     service_name: "{{ padded_instance_id }}{{ instance_domain }}"
 
@@ -33,13 +35,13 @@
 
 - name: 'Create symlink pointing to instance ID from domain.'
   ansible.builtin.file:
-    path: "{{ torrents_root_path }}/{{ instance_domain }}"
+    path: "{{ instance_domain_path }}"
     src: "{{ instance_storage_path }}"
     state: 'link'
 
 - name: 'Create domain secondary destination path.'
   ansible.builtin.file:
-    path: "{{ torrents_root_path }}/data/{{ instance_domain }}"
+    path: "{{ instance_domain_data_path }}"
     state: 'directory'
     mode: '0755'
     owner: "{{ user }}"
@@ -73,8 +75,9 @@
     volumes:
      - "{{ instance_storage_path }}/config:/config"
      - "{{ instance_storage_path }}/watch:/watch"
+     - "{{ instance_storage_path }}/incomplete:/incomplete"
      - "{{ instance_storage_path }}/downloads:/downloads"
-     - "{{ torrents_root_path }}/data/{{ instance_domain }}:/downloads2"
+     - "{{ instance_domain_data_path }}:/downloads2"
     labels:
       "traefik.enable": 'true'
       "traefik.http.routers.{{ service_name }}.rule": 'Host(`{{ service_fqdn }}`)'
@@ -85,7 +88,6 @@
       "traefik.http.services.{{ service_name }}.loadbalancer.server.port": '9091'
       "traefik.http.services.{{ service_name }}.loadbalancer.server.scheme": 'http'
     ports:
-      - "9091:9091"
       - "{{ transmission_peer_port }}:{{ transmission_peer_port }}"
       - "{{ transmission_peer_port }}:{{ transmission_peer_port }}/udp"
     memory: '1G'
