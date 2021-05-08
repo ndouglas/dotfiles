@@ -30,6 +30,7 @@
   ansible.builtin.pip:
     name:
       - 'ansible'
+      - 'boto3'
       - 'proxmoxer'
       - 'torrent_parser'
       - 'requests'
