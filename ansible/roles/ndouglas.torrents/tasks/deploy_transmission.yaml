@@ -18,3 +18,63 @@
     name: 'watch-torrents'
     job: |
       /bin/bash -lc 'torrents_watch_torrents "{{ torrents_root_path }}/watch"'
+
+- name: 'Create the Traefik container.'
+  docker_container:
+    name: 'traefik'
+    image: 'traefik:2.2'
+    restart_policy: 'unless-stopped'
+    recreate: yes
+    ports:
+      - '8080:8080'
+      - '80:80'
+      - '443:443'
+    volumes:
+      - "{{ ansible_env.HOME }}/letsencrypt.json:/etc/traefik/letsencrypt.json"
+      - '/var/run/docker.sock:/var/run/docker.sock'
+    command: |
+      --api.dashboard=false
+      --serversTransport.insecureskipverify=true
+      --providers.docker=true
+      --entryPoints.web
+      --entryPoints.web.address=':80'
+      --entryPoints.web.http
+      --entryPoints.web.http.redirections
+      --entryPoints.web.http.redirections.entryPoint
+      --entryPoints.web.http.redirections.entryPoint.to='websecure'
+      --entryPoints.web.http.redirections.entryPoint.scheme='https'
+      --entryPoints.web.forwardedHeaders.insecure
+      --entryPoints.websecure
+      --entryPoints.websecure.address=':443'
+      --certificatesResolvers.hellholt.acme.email="letsencrypt@tenesm.us"
+      --certificatesResolvers.hellholt.acme.storage='/etc/traefik/letsencrypt.json'
+      --certificatesResolvers.hellholt.acme.dnsChallenge
+      --certificatesResolvers.hellholt.acme.dnsChallenge.provider='route53'
+    env:
+      AWS_ACCESS_KEY_ID: "{{ aws.profiles.route53.key_id }}"
+      AWS_SECRET_ACCESS_KEY: "{{ aws.profiles.route53.secret_key }}"
+      AWS_HOSTED_ZONE_ID: "{{ aws.profiles.route53.zone_ids.private }}"
+
+- name: "Create privately-resolvable Route 53 records for the host."
+  community.aws.route53:
+    overwrite: yes
+    aws_access_key: "{{ aws.profiles.route53.key_id }}"
+    aws_secret_key: "{{ aws.profiles.route53.secret_key }}"
+    hosted_zone_id: "{{ aws.profiles.route53.zone_ids.private }}"
+    state: 'present'
+    type: 'A'
+    record: "{{ fqdns.private }}"
+    value: "{{ ipv4_address }}"
+
+- name: "Create privately-resolvable Route 53 wildcard records for the host."
+  community.aws.route53:
+    alias: true
+    alias_hosted_zone_id: "{{ route53.zone_ids.private }}"
+    overwrite: yes
+    aws_access_key: "{{ aws.profiles.route53.key_id }}"
+    aws_secret_key: "{{ aws.profiles.route53.secret_key }}"
+    hosted_zone_id: "{{ aws.profiles.route53.zone_ids.private }}"
+    state: 'present'
+    type: 'A'
+    record: "*.{{ fqdns.private }}"
+    value: "{{ fqdns.private }}"

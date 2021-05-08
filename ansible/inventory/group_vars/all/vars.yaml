@@ -56,7 +56,7 @@ software_versions:
 #     region: 'us-east-1'
 #     output: 'json'
 #   profiles:
-#     - id: 'route53'
+#     route53:
 #       key_id: 'some-access-key-id'
 #       secret_key: 'some-secret-key'
 #       zone_ids:
