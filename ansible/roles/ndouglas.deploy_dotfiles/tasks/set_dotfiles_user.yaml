@@ -30,12 +30,12 @@
 
 - name: 'Set a fact for the uid.'
   ansible.builtin.set_fact:
-    group: "{{ uid_command.stdout | int }}"
+    uid: "{{ uid_command.stdout | int }}"
   when: 'uid is not defined and uid_command is defined'
 
 - name: 'Set a fact for the gid.'
   ansible.builtin.set_fact:
-    group: "{{ gid_command.stdout | int }}"
+    gid: "{{ gid_command.stdout | int }}"
   when: 'gid is not defined and gid_command is defined'
 
 - name: 'Print dotfiles user and group.'
@@ -43,3 +43,5 @@
     msg: |
       user: {{ user }}
       group: {{ group }}
+      uid: {{ uid }}
+      gid: {{ gid }}
