@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+# Retrieve the "safe" (alphanumeric) domain of the announce URL of a specified torrent file.
+torrent_get_safe_announce_domain() {
+  : "${1?"Usage: ${FUNCNAME} TORRENT_FILE"}";
+  torrent_file="${1}";
+  safe_announce_domain="$(torrent_get_announce_domain "${torrent_file}" | tr -cd '[:alnum:]')";
+  {% for search, replace in torrents.announce_map.items() %}
+    if [ "${safe_announce_domain}" == "{{ search }}" ]; then
+      safe_announce_domain="{{ replace }}";
+    fi
+  {% endfor %}
+  echo "${safe_announce_domain}";
+}

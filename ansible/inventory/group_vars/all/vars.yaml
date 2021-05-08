@@ -81,6 +81,12 @@ software_versions:
 #   subreddits:
 #     - 'some-subreddit-name'
 
+# Torrents
+#
+# torrents:
+#   announce_map:
+#     some-domain-name: "some-replacement-domain-name"
+
 # YouTube
 #
 # youtube:
