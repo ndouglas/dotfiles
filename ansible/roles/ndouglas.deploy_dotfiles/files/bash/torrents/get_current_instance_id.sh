@@ -13,8 +13,10 @@ torrent_get_current_instance_id() {
     if [ -L "${safe_domain_path}" ]; then
       original="$(readlink -f "${safe_domain_path}")";
       echo "$(basename "${original}")" | bc;
+      return;
     else
       echo -1;
+      return;
     fi;
   fi
 }

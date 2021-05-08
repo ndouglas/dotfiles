@@ -5,10 +5,10 @@ torrent_assign_torrent() {
   : "${1?"Usage: ${FUNCNAME} TORRENT_FILE"}";
   torrent_file="${1}";
   best_instance_id="$(torrent_get_best_instance_id "${torrent_file}")";
-  if [ "${best_instance_id}" == -1 ]; then
+  if [ "${best_instance_id}" -eq "-1" ]; then
     torrent_deploy_next_instance "${torrent_file}";
     best_instance_id="$(torrent_get_best_instance_id "${torrent_file}")";
-    if [ "${best_instance_id}" == -1 ]; then
+    if [ "${best_instance_id}" -eq "-1" ]; then
       echo "Unable to find or create an appropriate instance for ${torrent_file} ." >&2;
       exit -1;
     fi
