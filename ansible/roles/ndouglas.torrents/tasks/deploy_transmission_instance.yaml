@@ -10,9 +10,10 @@
     name: 'ndouglas.deploy_dotfiles'
     tasks_from: 'set_common_facts.yaml'
 
-- name: 'Set instance root path.'
+- name: 'Set some useful facts.'
   ansible.builtin.set_fact:
     instance_storage_path: "{{ torrents_root_path }}/{{ instance_id }}"
+    transmission_peer_port: "{{ base_port + instance_id }}"
 
 - name: 'Create instance root directory.'
   ansible.builtin.file:
