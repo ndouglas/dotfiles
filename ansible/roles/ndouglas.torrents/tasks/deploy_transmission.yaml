@@ -13,6 +13,8 @@
     - "clients"
     - "domains"
     - "data"
+    - "ids"
+    - "padded_ids"
 
 - name: 'Install the watch cronjob.'
   ansible.builtin.cron:
