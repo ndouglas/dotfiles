@@ -50,7 +50,7 @@
   ansible.builtin.include_role:
     name: 'ndouglas.torrents'
     tasks_from: 'deploy_transmission.yaml'
-  when: 'hostname == "ambrose"'
+  when: 'hostname == "ambrose" and user != "root"'
 
 - name: 'Set the MOTD.'
   ansible.builtin.include: 'set_motd.yaml'
