@@ -20,7 +20,7 @@
   ansible.builtin.cron:
     name: 'watch-torrents'
     job: |
-      /bin/bash -lc 'torrents_watch_torrents "{{ torrents_root_path }}/watch"'
+      /bin/bash -lc 'torrent_watch_torrents "{{ torrents_root_path }}/watch"'
 
 - name: 'Create the Traefik container.'
   docker_container:
