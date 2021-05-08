@@ -31,5 +31,5 @@
     name:
       - 'ansible'
       - 'proxmoxer'
-      - 'pytp'
+      - 'torrent_parser'
       - 'requests'
