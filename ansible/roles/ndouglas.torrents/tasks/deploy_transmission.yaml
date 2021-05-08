@@ -114,7 +114,7 @@
       'traefik.http.middlewares.securedheaders.headers.ContentTypeNosniff': 'true'
       'traefik.http.middlewares.securedheaders.headers.BrowserXssFilter': 'true'
       'traefik.http.middlewares.securedheaders.headers.STSIncludeSubdomains': 'true'
-      'traefik.http.middlewares.securedheaders.headers.stsSeconds': 63072000
+      'traefik.http.middlewares.securedheaders.headers.stsSeconds': '63072000'
       'traefik.http.middlewares.securedheaders.headers.frameDeny': 'true'
       'traefik.http.middlewares.securedheaders.headers.browserXssFilter': 'true'
       'traefik.http.middlewares.securedheaders.headers.contentTypeNosniff': 'true'
