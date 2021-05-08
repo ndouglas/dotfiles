@@ -21,7 +21,7 @@
     transmission_peer_port: "{{ base_port + ( instance_id | int ) }}"
     service_name: "{{ padded_instance_id }}{{ instance_domain }}"
 
-- name: 'Set the service FQDN.'
+- name: 'Set some more service facts.'
   ansible.builtin.set_fact:
     service_fqdn: "{{ service_name }}.{{ fqdns.private }}"
     domain_fqdn: "{{ instance_domain }}.{{ fqdns.private }}"
@@ -79,15 +79,7 @@
      - "{{ instance_storage_path }}/incomplete:/incomplete"
      - "{{ instance_storage_path }}/downloads:/downloads"
      - "{{ instance_domain_data_path }}:/downloads2"
-    labels:
-      "traefik.enable": 'true'
-      "traefik.http.routers.{{ service_name }}.rule": 'Host(`{{ service_fqdn }}`, `{{ domain_fqdn }}`)'
-      "traefik.http.routers.{{ service_name }}.entrypoints": 'websecure'
-      "traefik.http.routers.{{ service_name }}.tls": 'true'
-      "traefik.http.routers.{{ service_name }}.tls.certresolver": 'hellholt'
-      "traefik.http.routers.{{ service_name }}.service": "{{ service_name }}"
-      "traefik.http.services.{{ service_name }}.loadbalancer.server.port": '9091'
-      "traefik.http.services.{{ service_name }}.loadbalancer.server.scheme": 'http'
+    labels: "{{ service_name | transmission_traefik_labels(service_fqdn, domain_fqdn) }}"
     ports:
       - "{{ transmission_peer_port }}:{{ transmission_peer_port }}"
       - "{{ transmission_peer_port }}:{{ transmission_peer_port }}/udp"
