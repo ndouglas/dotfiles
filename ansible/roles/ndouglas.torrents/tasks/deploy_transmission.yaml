@@ -88,7 +88,7 @@
 - name: 'Create a WebDAV server to allow torrent uploads.'
   community.general.docker_container:
     name: 'webdav'
-    image: 'ugeek/webdav'
+    image: 'ugeek/webdav:amd64-alpine'
     restart_policy: 'unless-stopped'
     recreate: yes
     volumes:
