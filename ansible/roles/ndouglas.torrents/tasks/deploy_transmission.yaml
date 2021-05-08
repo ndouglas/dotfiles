@@ -23,7 +23,7 @@
 - name: 'Create instance root directory.'
   ansible.builtin.file:
     path: "{{ ansible_env.HOME }}/letsencrypt.json"
-    state: 'present'
+    state: 'file'
     mode: '0600'
     owner: 'root'
     group: 'root'
