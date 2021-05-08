@@ -1,14 +1,14 @@
 ---
-- name: 'Set some basic facts...'
-  ansible.builtin.include_role:
-    name: 'ndouglas.deploy_dotfiles'
-    tasks_from: 'set_common_facts.yaml'
-
 - name: 'Set some important facts...'
   ansible.builtin.set_fact:
     torrents_root_path: '/torrents'
     user: "{{ my.name.lower }}"
     group: "{{ my.name.lower }}"
+
+- name: 'Set some basic facts...'
+  ansible.builtin.include_role:
+    name: 'ndouglas.deploy_dotfiles'
+    tasks_from: 'set_common_facts.yaml'
 
 - name: 'Set instance root path.'
   ansible.builtin.set_fact:
