@@ -6,7 +6,7 @@ torrent_get_best_instance() {
   best_instance_id="$(torrent_get_best_instance_id "${1}")";
   if [ "${best_instance_id}" -eq "-1" ]; then
     echo "Unable to find a current instance ID for ${1}." >&2;
-    exit -1;
+    return -1;
   fi
   best_instance_id_path="/torrents/ids/${best_instance_id}";
   if [ -L "${best_instance_id_path}" ]; then
@@ -14,6 +14,6 @@ torrent_get_best_instance() {
     echo "$(basename "${original}")";
   else
     echo "Unable to find an original instance for ID ${best_instance_id} ." >&2;
-    exit -1;
+    return -1;
   fi
 }

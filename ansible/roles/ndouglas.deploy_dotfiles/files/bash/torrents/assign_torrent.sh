@@ -10,7 +10,7 @@ torrent_assign_torrent() {
     best_instance_id="$(torrent_get_best_instance_id "${torrent_file}")";
     if [ "${best_instance_id}" -eq "-1" ]; then
       echo "Unable to find or create an appropriate instance for ${torrent_file} ." >&2;
-      exit -1;
+      return -1;
     fi
   fi
   torrent_domain="$(torrent_get_safe_announce_domain "${torrent_file}")";
