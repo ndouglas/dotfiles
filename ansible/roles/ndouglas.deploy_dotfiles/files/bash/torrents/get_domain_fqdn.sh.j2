@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+# Retrieve the FQDN for a torrent domain.
+torrent_get_domain_fqdn() {
+  : "${1?"Usage: ${FUNCNAME} SAFE_DOMAIN"}";
+  safe_domain="${1}";
+  echo "${safe_domain}.{{ fqdns.private }}";
+}
