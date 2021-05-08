@@ -22,6 +22,11 @@ all:
       hosts:
         beesbury:
         estermont:
+    kubernetes:
+      hosts:
+        karstark:
+        kellington:
+        kettleblack:
     pve_clusters:
       children:
         grey_garden:

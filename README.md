@@ -20,3 +20,6 @@ Once installed, the dotfiles are deployed via the [`deploy.sh`](/deploy.sh) scri
 ### Phase Three: Update
 At any future date, the dotfiles should be cleanly updatable via the [`update.sh`](/update.sh) script.
 
+## Bash
+I've been using Bash for about twenty years, and for better or worse I'm really invested in Bashisms.  I have a library of a few hundred functions, some general-purpose, some very specific to the dumb things I spend my time doing.
+
