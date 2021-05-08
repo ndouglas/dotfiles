@@ -1,21 +1,23 @@
 ---
 - name: 'Set some important facts...'
   ansible.builtin.set_fact:
-    storage_root_path: '/torrents'
+    torrents_root_path: '/torrents'
 
 - name: 'Set instance root path.'
   ansible.builtin.set_fact:
-    instance_storage_path: "{{ storage_root_path }}/{{ instance_id }}"
+    instance_storage_path: "{{ torrents_root_path }}/{{ instance_id }}"
 
 - name: 'Create instance root directory.'
   ansible.builtin.file:
     path: "{{ instance_storage_path }}"
     state: 'directory'
     mode: '0755'
+    owner: "{{ user }}"
+    group: "{{ group }}"
 
 - name: 'Create symlink pointing to instance ID from domain.'
   ansible.builtin.file:
-    path: "{{ storage_root_dir }}/{{ tracker_domain }}"
+    path: "{{ torrents_root_path }}/{{ instance_domain }}"
     src: "{{ instance_storage_path }}"
     state: 'link'
 
@@ -29,3 +31,11 @@
     - "watch"
     - "incomplete"
     - "downloaded"
+
+- name: "Copy Transmission template files {{ role_path }}/files/config/ -> {{ instance_storage_path }}/config/."
+  ansible.builtin.template:
+    src: "{{ item }}"
+    dest: "{{ instance_storage_path }}/config/{{ item | basename | splitext | first }}"
+    mode: '0755'
+  with_fileglob:
+    - "{{ role_path }}/files/config/*.j2"

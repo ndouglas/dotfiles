@@ -1,0 +1,8 @@
+#!/bin/sh
+TR_TORRENT_PATH="${TR_TORRENT_DIR}/${TR_TORRENT_NAME}";
+# Copy torrent download to additional destination.
+cp -R "${TR_TORRENT_PATH}" /downloads2/;
+# Change the owner and group of the additional destination.
+chown -R ${PUID}:${PGID} "/downloads2/${TR_TORRENT_NAME}";
+# Make the additional destination world-readable.
+chmod -R 777 "/downloads2/${TR_TORRENT_NAME}";
