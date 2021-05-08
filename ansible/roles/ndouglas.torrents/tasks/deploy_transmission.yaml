@@ -20,6 +20,14 @@
     job: |
       /bin/bash -lc 'torrents_watch_torrents "{{ torrents_root_path }}/watch"'
 
+- name: 'Create instance root directory.'
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/letsencrypt.json"
+    state: 'present'
+    mode: '0600'
+    owner: 'root'
+    group: 'root'
+
 - name: 'Create the Traefik container.'
   docker_container:
     name: 'traefik'
