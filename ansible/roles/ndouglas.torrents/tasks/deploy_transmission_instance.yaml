@@ -76,13 +76,13 @@
      - "{{ instance_storage_path }}/downloads:/downloads:rwm"
      - "{{ torrents_root_path }}/data/{{ instance_domain }}:/downloads2:rwm"
     labels:
-      "traefik.enable": true
+      "traefik.enable": 'true'
       "traefik.http.routers.{{ service_name }}.rule": 'Host(`{{ service_fqdn }}`)'
       "traefik.http.routers.{{ service_name }}.entrypoints": 'websecure'
-      "traefik.http.routers.{{ service_name }}.tls": true
+      "traefik.http.routers.{{ service_name }}.tls": 'true'
       "traefik.http.routers.{{ service_name }}.tls.certresolver": 'hellholt'
       "traefik.http.routers.{{ service_name }}.service": "{{ service_name }}"
-      "traefik.http.services.{{ service_name }}.loadbalancer.server.port": 9091
+      "traefik.http.services.{{ service_name }}.loadbalancer.server.port": '9091'
       "traefik.http.services.{{ service_name }}.loadbalancer.server.scheme": 'http'
     ports:
       - "9091:9091"
