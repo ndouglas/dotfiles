@@ -2,7 +2,7 @@
 - name: 'Create normal user account.'
   ansible.builtin.user:
     name: "{{ my.name.lower }}"
-    password: "{{ password }}"
+    password: "{{ password | password_hash('sha512', hostname) }}"
     shell: '/bin/bash'
     append: yes
     groups: 'sudo'
