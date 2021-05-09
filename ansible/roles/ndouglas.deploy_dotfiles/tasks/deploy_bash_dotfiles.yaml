@@ -130,19 +130,19 @@
     dest: "{{ dotfiles_home }}/.bash.dotfiles.d"
 
 ###############################################################################
-# HOSTS
+# HOST
 ###############################################################################
 
 - name: 'Check for existence of Host dotfiles source.'
   ansible.builtin.stat:
-    path: "{{ role_path }}/files/bash/{{ hostname }}"
+    path: "{{ role_path }}/files/bash/host/{{ hostname }}"
   register: host_dotfiles_path
 
 - name: 'Copy Bash Host-specific dotfiles to destination.'
   ansible.builtin.include: 'copy_bash_dotfiles.yaml'
   vars:
     id: 'host'
-    source: "{{ role_path }}/files/bash/{{ hostname }}"
+    source: "{{ role_path }}/files/bash/host/{{ hostname }}"
     dest: "{{ dotfiles_home }}/.bash.host.d"
   when: 'host_dotfiles_path.stat.exists'
 

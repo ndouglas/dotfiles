@@ -19,12 +19,18 @@
     dest: "{{ temporary_directory.path }}/_{{ id }}.sh"
     regexp: ".*\\.sh$"
 
+- name: 'Find template files in path.'
+  ansible.builtin.find:
+    paths: "{{ source }}"
+    patterns: "*.2"
+  register: 'template_files'
+  changed_when: no
+
 - name: "Copy Bash template dotfiles {{ source }} -> temporary directory."
   ansible.builtin.template:
-    src: "{{ item }}"
-    dest: "{{ temporary_directory.path }}/{{ item | basename | splitext | first }}"
-  with_fileglob:
-    - "{{ source }}/*.j2"
+    src: "{{ item.path }}"
+    dest: "{{ temporary_directory.path }}/{{ item.path | basename | splitext | first }}"
+  with_items: "{{ template_files.files }}"
 
 - name: "Remove Bash dotfiles directory {{ dest }}."
   ansible.builtin.file:
