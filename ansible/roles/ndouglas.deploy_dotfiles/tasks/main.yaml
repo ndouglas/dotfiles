@@ -10,7 +10,7 @@
   ansible.builtin.include: 'create_normal_user.yaml'
   when: 'user == "root"'
 
-- name: 'Enable Passwordless Sudo'
+- name: 'Enable passwordless sudo.'
   become: yes
   ansible.builtin.copy:
     content: "{{ my.name.lower }} ALL=(ALL:ALL) NOPASSWD:ALL"
