@@ -8,6 +8,15 @@
 # /bin/bash <(curl -sL "https://raw.githubusercontent.com/ndouglas/dotfiles/main/install.sh")
 #
 
+# This has a number of dependencies.  On Debian/Ubuntu/Raspberry Pi OS, the following should
+# suffice to install the dependencies:
+#
+# sudo apt-get update
+# sudo apt-get install -y curl git python3-pip sudo ssh
+# sudo pip3 install ansible
+# echo "my secret password" > ~/.dotfiles_vault_password
+#
+
 # Exit as soon as we encounter an error.
 set -e;
 
