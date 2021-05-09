@@ -6,7 +6,7 @@ This is all heavily customized to the way I do things.  You're welcome to poke a
 
 Among other things, it customizes a MOTD and Bash prompt based on the hostname (all hostnames are names of noble houses from _A Song of Ice and Fire_).
 
-![Algood](./images/algood_demo.png)
+![Kellington MOTD and Prompt](./images/kellington_demo.png)
 
 ## Ansible
 Ansible's my new favorite toy, and so my dotfiles are mostly implemented in Ansible playbooks, tasks, etc.  Ansible is used to install the dotfiles, deploy the dotfiles, and forms the basis of a lot of the more complex functionality made available in bash functions, etc.
