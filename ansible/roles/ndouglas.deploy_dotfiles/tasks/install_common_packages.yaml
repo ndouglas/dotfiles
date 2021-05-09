@@ -1,4 +1,20 @@
 ---
+- name: 'Install Apk packages.'
+  become: yes
+  ansible.builtin.apk:
+    name:
+      - 'bc'
+      - 'curl'
+      - 'git'
+      - 'jq'
+      - 'mailutils'
+      - 'python3'
+      - 'py3-pip'
+      - 'rsync'
+      - 'sudo'
+    update_cache: yes
+  when: 'host_uses_apk'
+
 - name: 'Install Apt packages.'
   become: yes
   ansible.builtin.apt:
