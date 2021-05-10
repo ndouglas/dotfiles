@@ -45,3 +45,6 @@ shopt -s histappend 2>/dev/null;
 
 # Enable case-insensitive path globbing.
 shopt -s nocaseglob 2>/dev/null;
+
+# Fail pipes ASAP.
+set -o pipefail;
