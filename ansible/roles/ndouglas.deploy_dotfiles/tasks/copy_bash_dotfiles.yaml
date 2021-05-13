@@ -22,7 +22,7 @@
 - name: 'Find template files in path.'
   ansible.builtin.find:
     paths: "{{ source }}"
-    patterns: "*.2"
+    patterns: "*.j2"
   register: 'template_files'
   changed_when: no
 
