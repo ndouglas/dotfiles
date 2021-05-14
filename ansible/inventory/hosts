@@ -29,6 +29,11 @@ all:
         karstark:
         kellington:
         kettleblack:
+    windows:
+      hosts:
+        langward:
+        spicer:
+        velaryon:
     pve_clusters:
       children:
         grey_garden:
