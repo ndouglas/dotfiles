@@ -15,7 +15,7 @@ torrent_remove_instance() {
     rm -rf "${padded_id_path}";
   fi
   if [ -d "${original_path}" ]; then
-    domain_path="$(basename "${original_path}" | sed -e 's|^[0-9]\+||'
+    domain_path="$(basename "${original_path}" | sed -e 's|^[0-9]\+||')";
     rm -rf "${domain_path}";
   fi;
 }
