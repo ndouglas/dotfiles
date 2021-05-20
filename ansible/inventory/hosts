@@ -20,9 +20,23 @@ all:
       hosts:
         dayne:
         uller:
+    aquaria:
+      hosts:
+        # Reef-Pi (End Table)
+        graceford:
+        # Reef-Pi (Credenza)
+        mertyns:
+    nates_office:
+      hosts:
+        # Home Assistant Client
+        bridges:
     duggins_lab:
       hosts:
+        # 3D Printer Controller
+        ashford:
+        # John's Pi 400 Desktop
         beesbury:
+        # Nate's Pi 400
         estermont:
     kubernetes:
       hosts:
@@ -31,8 +45,11 @@ all:
         kettleblack:
     windows:
       hosts:
+        # Workshop PC
         langward:
+        # John's PC
         spicer:
+        # VR Machine
         velaryon:
     pve_clusters:
       children:
