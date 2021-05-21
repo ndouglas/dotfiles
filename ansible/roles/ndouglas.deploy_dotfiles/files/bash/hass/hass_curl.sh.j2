@@ -2,14 +2,13 @@
 
 # Make a raw CURL request to the Home Assistant instance.
 hass_curl() {
-  : "${2?"Usage: ${FUNCNAME} METHOD HOSTNAME PATH [DATA]"}";
+  : "${2?"Usage: ${FUNCNAME} METHOD PATH [DATA]"}";
   request_method="${1}";
-  api_hostname="${2}";
-  api_path="${3:-}";
+  api_path="${2:-}";
   curl \
     -X "${request_method}" \
     -H "Authorization: Bearer {{ home_assistant.access_token }}" \
     -H "Content-Type: application/json" \
-    "${@:3}" \
-    "https://${api_hostname}/api/${api_path}";
+    "${@:2}" \
+    "{{ home_assistant.api_url }}/${api_path}";
 }
