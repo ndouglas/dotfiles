@@ -1,0 +1,23 @@
+{% for keycode in [
+  'KEY_ESC',
+  'KEY_TAB',
+  'KEY_BACKSPACE',
+  'KEY_KPSLASH',
+  'KEY_KPASTERISK',
+  'KEY_KPMINUS',
+  'KEY_KP7',
+  'KEY_KP8',
+  'KEY_KP9',
+  'KEY_KPPLUS',
+  'KEY_KP4',
+  'KEY_KP5',
+  'KEY_KP6',
+  'KEY_KP1',
+  'KEY_KP2',
+  'KEY_KP3',
+  'KEY_NUMLOCK',
+  'KEY_KPDOT',
+  'KEY_KP0',
+]%}
+{{ keycode }} 1 /bin/bash -lc 'hass_post_triggerhappy_event {{ keycode }}'
+{% endfor %}
