@@ -6,7 +6,7 @@
 
 - name: 'Set dotfiles facts.'
   ansible.builtin.set_fact:
-    bash_ordered_segments: 'options path env library ansible beets comics dotfiles host kasa proxmox r53 reddit torrents completion aliases'
+    bash_ordered_segments: 'options path env library ansible beets comics dotfiles hass host kasa proxmox r53 reddit torrents completion aliases'
 
 - name: 'Set user and group.'
   ansible.builtin.include: 'set_dotfiles_user.yaml'
