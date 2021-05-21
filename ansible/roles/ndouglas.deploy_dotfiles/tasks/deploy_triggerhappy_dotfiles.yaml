@@ -1,5 +1,6 @@
 ---
 - name: 'Set up the TriggerHappy config file with the defaults I like.'
+  become: yes
   ansible.builtin.template:
     src: "{{ role_path }}/files/triggerhappy/triggerhappy.conf.j2"
     dest: "/etc/triggerhappy/triggers.d/triggerhappy.conf"

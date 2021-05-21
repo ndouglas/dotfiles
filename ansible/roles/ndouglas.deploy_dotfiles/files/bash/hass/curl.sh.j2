@@ -9,6 +9,6 @@ hass_curl() {
     -X "${request_method}" \
     -H "Authorization: Bearer {{ home_assistant.access_token }}" \
     -H "Content-Type: application/json" \
-    "${@:2}" \
+    "${@:3}" \
     "{{ home_assistant.api_url }}/${api_path}";
 }
