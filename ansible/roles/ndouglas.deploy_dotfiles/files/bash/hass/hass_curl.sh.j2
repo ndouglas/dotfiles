@@ -7,7 +7,7 @@ hass_curl() {
   api_hostname="${2}";
   curl \
     -X "${request_method}" \
-    -H "Authorization: Bearer {{ home_assistant.access_key }}" \
+    -H "Authorization: Bearer {{ home_assistant.access_token }}" \
     -H "Content-Type: application/json" \
     "$@" \
     "https://${api_hostname}/api/${path}";
