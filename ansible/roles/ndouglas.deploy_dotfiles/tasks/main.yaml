@@ -52,6 +52,10 @@
     tasks_from: 'deploy_transmission.yaml'
   when: 'hostname == "ambrose" and user != "root"'
 
+- name: 'Deploy TriggerHappy role.'
+  ansible.builtin.include: 'deploy_triggerhappy_dotfiles.yaml'
+  when: 'hostname == "bridges" and user != "root"'
+
 - name: 'Set the MOTD.'
   ansible.builtin.include: 'set_motd.yaml'
 

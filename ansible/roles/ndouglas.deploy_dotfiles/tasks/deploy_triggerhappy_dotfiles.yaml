@@ -1,0 +1,12 @@
+---
+- name: 'Set up the TriggerHappy config file with the defaults I like.'
+  ansible.builtin.template:
+    src: "{{ role_path }}/files/triggerhappy/triggerhappy.conf.j2"
+    dest: "/etc/triggerhappy/triggers.d/triggerhappy.conf"
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    mode: '0600'
+    backup: yes
+    force: yes
+
+
