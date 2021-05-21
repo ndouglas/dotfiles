@@ -147,6 +147,17 @@
   when: 'host_dotfiles_path.stat.exists'
 
 ###############################################################################
+# HOME ASSISTANT
+###############################################################################
+
+- name: 'Copy Bash Home Assistant dotfiles to destination.'
+  ansible.builtin.include: 'copy_bash_dotfiles.yaml'
+  vars:
+    id: 'hass'
+    source: "{{ role_path }}/files/bash/hass"
+    dest: "{{ dotfiles_home }}/.bash.hass.d"
+
+###############################################################################
 # KASA
 ###############################################################################
 
