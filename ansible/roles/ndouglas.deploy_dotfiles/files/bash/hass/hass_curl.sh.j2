@@ -5,5 +5,10 @@ hass_curl() {
   : "${2?"Usage: ${FUNCNAME} METHOD HOSTNAME PATH [DATA]"}";
   request_method="${1}";
   api_hostname="${2}";
-  curl -X "${request_method}" "http://${api_hostname}:8123/api/${path}" "$@";
+  curl \
+    -X "${request_method}" \
+    -H "Authorization: Bearer {{ home_assistant.access_key }}" \
+    -H "Content-Type: application/json" \
+    "$@" \
+    "https://${api_hostname}/api/${path}";
 }
