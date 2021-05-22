@@ -17,8 +17,8 @@
   'KEY_KPENTER',
   'KEY_ESC',
   'KEY_TAB',
-  'KEY_NUMLOCK',
   'KEY_BACKSPACE',
+  'KEY_NUMLOCK',
 ]%}
 {{ keycode }} 1 /bin/bash -lc 'hass_post_triggerhappy_event {{ keycode }}'
 {% endfor %}
