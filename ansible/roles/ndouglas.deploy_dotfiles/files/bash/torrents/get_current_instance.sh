@@ -4,7 +4,7 @@
 torrent_get_current_instance() {
   : "${1?"Usage: ${FUNCNAME} TORRENT_FILE|DOMAIN"}";
   current_instance_id="$(torrent_get_current_instance_id "${1}")";
-  if [ "${current_instance_id}" -eq "-1" ]; then
+  if [ "$?" -eq "-1" ]; then
     echo "Unable to find a current instance ID for ${1}." >&2;
     return -1;
   fi
