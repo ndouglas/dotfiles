@@ -9,7 +9,7 @@ ffmpeg_get_subtitle_timestamp() {
   if [ ! -f "${subtitle_file}" ]; then
     ffmpeg_extract_subtitles "${video_file}";
   fi;
-  grep -B 1 "${expression}" "${subtitle_file}" -m 1 \
+  grep -B 2 "${expression}" "${subtitle_file}" -m 1 \
     | grep -oE '^[0-9]{2}:[0-9]{2}:[0-9]{2},[0-9]{3}' \
     | sed 's/,/./';
 }
