@@ -20,6 +20,7 @@
     name:
       - 'bc'
       - 'curl'
+      - 'ffmpeg'
       - 'git'
       - 'jq'
       - 'mailutils'
@@ -36,6 +37,7 @@
       - 'bat'
       - 'coreutils'
       - 'findutils'
+      - 'ffmpeg'
       - 'fzf'
       - 'gawk'
       - 'gnu-indent'

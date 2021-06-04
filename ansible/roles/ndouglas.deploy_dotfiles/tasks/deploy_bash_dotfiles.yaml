@@ -6,7 +6,7 @@
 
 - name: 'Set dotfiles facts.'
   ansible.builtin.set_fact:
-    bash_ordered_segments: 'options path env library ansible beets comics dotfiles hass host kasa proxmox r53 reddit torrents completion aliases'
+    bash_ordered_segments: 'options path env library ansible beets comics dotfiles ffmpeg hass host kasa proxmox r53 reddit torrents completion aliases'
 
 - name: 'Set user and group.'
   ansible.builtin.include: 'set_dotfiles_user.yaml'
@@ -128,6 +128,17 @@
     id: 'dotfiles'
     source: "{{ role_path }}/files/bash/dotfiles"
     dest: "{{ dotfiles_home }}/.bash.dotfiles.d"
+
+###############################################################################
+# FFMPEG
+###############################################################################
+
+- name: 'Copy Bash FFMpeg dotfiles to destination.'
+  ansible.builtin.include: 'copy_bash_dotfiles.yaml'
+  vars:
+    id: 'ffmpeg'
+    source: "{{ role_path }}/files/bash/ffmpeg"
+    dest: "{{ dotfiles_home }}/.bash.ffmpeg.d"
 
 ###############################################################################
 # HOST
