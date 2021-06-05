@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Get screenshot at timestamp with subtitle.
+# Upload screenshot at timestamp with subtitle.
 ffmpeg_upload_subtitle_screenshot() {
   : "${2?"Usage: ${FUNCNAME} VIDEO_FILE EXPRESSION"}";
   video_file="${1}";
