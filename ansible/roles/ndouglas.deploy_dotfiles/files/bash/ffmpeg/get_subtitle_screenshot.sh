@@ -8,7 +8,9 @@ ffmpeg_get_subtitle_screenshot() {
   subtitle_file="${video_file}.srt";
   destination_path="$(mktemp -d)";
   timestamp="$(ffmpeg_get_subtitle_timestamp "${video_file}" "${expression}")";
+  [ "$?" -eq 0 ] || return -1;
   full_line="$(ffmpeg_get_subtitle_line "${video_file}" "${expression}")";
+  [ "$?" -eq 0 ] || return -1;
   filename="$(echo "${timestamp}_${full_line}" | sed -e 's/[^A-Za-z0-9_]/_/g' -e 's/_\+/_/g').png";
   full_path="${destination_path}/${filename}";
   ffmpeg \
@@ -18,5 +20,6 @@ ffmpeg_get_subtitle_screenshot() {
     -vf subtitles="${subtitle_file}" \
     -vframes 1 \
     "${full_path}";
+  [ "$?" -eq 0 ] || return -1;
   echo "${full_path}";
 }

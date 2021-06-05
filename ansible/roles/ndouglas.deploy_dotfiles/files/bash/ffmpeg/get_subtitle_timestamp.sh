@@ -7,7 +7,7 @@ ffmpeg_get_subtitle_timestamp() {
   expression="${2}";
   subtitle_file="${video_file}.srt";
   if [ ! -f "${subtitle_file}" ]; then
-    ffmpeg_extract_subtitles "${video_file}";
+    ffmpeg_extract_subtitles "${video_file}" || return -1;
   fi;
   grep -i -B 2 "${expression}" "${subtitle_file}" -m 1 \
     | grep -oE '^[0-9]{2}:[0-9]{2}:[0-9]{2},[0-9]{3}' \
