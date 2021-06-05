@@ -12,6 +12,6 @@ ffmpeg_extract_subtitles() {
     -hide_banner \
     -loglevel error \
     -i "${video_file}" \
-    -map 0:s:m:language:eng \
+    -map 0:s:m:language:eng? \
     "${subtitle_file}";
 }

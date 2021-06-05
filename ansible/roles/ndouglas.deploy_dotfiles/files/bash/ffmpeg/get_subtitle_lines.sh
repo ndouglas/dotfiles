@@ -12,5 +12,6 @@ ffmpeg_get_subtitle_lines() {
   grep -A 1 -iE "${expression}" "${subtitle_file}" \
     | grep -v '^$' \
     | sed -e "s/\r//g" \
-    | awk '/--/{if (NR!=1) print "";next}{printf "%s ",$0} END{print "";}';
+    | awk '/^--$/{if (NR!=1) print "";next}{printf "%s ",$0} END{print "";}' \
+    | grep -v '^$';
 }
