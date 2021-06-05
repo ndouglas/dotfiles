@@ -8,5 +8,10 @@ ffmpeg_extract_subtitles() {
   if [ "$(ffmpeg -i "${video_file}" 2>&1 | grep -ic 'Subtitle')" -eq 0 ]; then
     return -1;
   fi;
-  ffmpeg -i "${video_file}" -map 0:s:m:language:eng "${subtitle_file}";
+  ffmpeg \
+    -hide_banner \
+    -loglevel error \
+    -i "${video_file}" \
+    -map 0:s:m:language:eng \
+    "${subtitle_file}";
 }

@@ -11,8 +11,7 @@ ffmpeg_upload_subtitle_screenshots() {
   while read -r filename; do
     filename_base="$(basename "${filename}")";
     destination_path="${video_file_safe}/${filename_base}";
-    aws --profile s3 \
-      s3 cp "${filename}" "s3://darkdell.ffss/${destination_path}";
-    echo "https://ffss.darkdell.net/${destination_path}";
+    aws --profile s3 s3 cp "${filename}" "s3://darkdell.ffss/${destination_path}" \
+      && echo "https://ffss.darkdell.net/${destination_path}";
   done < <(printf '%s\n' "${filenames}");
 }

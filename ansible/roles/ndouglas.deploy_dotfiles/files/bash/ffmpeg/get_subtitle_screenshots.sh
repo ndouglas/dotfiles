@@ -14,6 +14,8 @@ ffmpeg_get_subtitle_screenshots() {
     filename="$(echo "${timestamp}_${full_line}" | sed -e 's/[^A-Za-z0-9_]/_/g' -e 's/_\+/_/g').png";
     full_path="${destination_path}/${filename}";
     ffmpeg \
+      -hide_banner \
+      -loglevel error \
       -ss "${timestamp}" \
       -copyts \
       -i "${video_file}" \

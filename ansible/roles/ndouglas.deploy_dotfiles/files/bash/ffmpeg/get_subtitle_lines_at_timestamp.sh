@@ -12,5 +12,7 @@ ffmpeg_get_subtitle_lines_at_timestamp() {
   cat "${subtitle_file}" \
     | grep -A 2 "${timestamp}" \
     | grep -v "${timestamp}" \
-    | grep -v '^$';
+    | sed -e "s/\r//g" \
+    | grep -v '^$' \
+    | paste -sd ' ' -;
 }
