@@ -14,5 +14,7 @@ ffmpeg_get_subtitle_screenshot() {
     -copyts \
     -i "${video_file}" \
     -vf subtitles="${subtitle_file}" \
-    -vframes 1
+    -vframes 1 \
+    "${filename}";
+  echo "${filename}";
 }

@@ -33,7 +33,6 @@
 - name: 'Install Homebrew packages.'
   community.general.homebrew:
     name:
-      - 'awscli'
       - 'bat'
       - 'coreutils'
       - 'findutils'
@@ -56,6 +55,7 @@
   ansible.builtin.pip:
     name:
       - 'ansible'
+      - 'awscli'
       - 'boto3'
       - 'proxmoxer'
       - 'torrent_parser'

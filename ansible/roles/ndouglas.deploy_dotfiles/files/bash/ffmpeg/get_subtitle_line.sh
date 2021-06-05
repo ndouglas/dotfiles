@@ -9,5 +9,5 @@ ffmpeg_get_subtitle_line() {
   if [ ! -f "${subtitle_file}" ]; then
     ffmpeg_extract_subtitles "${video_file}";
   fi;
-  grep "${expression}" "${subtitle_file}" -m 1;
+  grep -i "${expression}" "${subtitle_file}" -m 1;
 }
