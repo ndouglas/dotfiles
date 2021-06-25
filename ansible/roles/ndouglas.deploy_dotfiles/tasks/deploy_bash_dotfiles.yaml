@@ -4,9 +4,30 @@
 # A FACT-FINDING MISSION
 ###############################################################################
 
+- name: 'Set some lists of Bash dotfile directories.'
+  ansible.builtin.set_fact:
+    bash_generic_items:
+      - 'ansible'
+      - 'dotfiles'
+      - 'ffmpeg'
+      - 'filebot'
+      - 'hass'
+      - 'kasa'
+      - 'proxmox'
+      - 'r53'
+      - 'reddit'
+      - 'torrents'
+    bash_special_items:
+      - 'options'
+      - 'path'
+      - 'env'
+      - 'library'
+      - 'completion'
+      - 'aliases'
+
 - name: 'Set dotfiles facts.'
   ansible.builtin.set_fact:
-    bash_ordered_segments: 'options path env library ansible beets comics dotfiles ffmpeg hass host kasa proxmox r53 reddit torrents completion aliases'
+    bash_ordered_segments: 'options path env library {{ bash_generic_items | join(" ") }} beets comics pi host completion aliases'
 
 - name: 'Set user and group.'
   ansible.builtin.include: 'set_dotfiles_user.yaml'
@@ -17,59 +38,52 @@
   when: 'dotfiles_home is not defined'
 
 ###############################################################################
+# GENERIC & SPECIAL UNIVERSAL ITEMS
+###############################################################################
+
+- name: 'Copy Bash {{ item | capitalize }} dotfiles to destination.'
+  ansible.builtin.include: 'copy_bash_dotfiles.yaml'
+  vars:
+    id: "{{ dotfile_id }}"
+    source: "{{ role_path }}/files/bash/{{ dotfile_id }}"
+    dest: "{{ dotfiles_home }}/.bash.{{ dotfile_id }}.d"
+  with_items: "{{ bash_generic_items + bash_special_items }}"
+  loop_control:
+    loop_var: 'dotfile_id'
+
+###############################################################################
 # ALIASES
 ###############################################################################
 
-- name: 'Copy Bash aliases dotfiles to destination.'
+- name: 'Set Mac-Specific Aliases'
   block:
 
-    - name: 'Copy Bash Aliases dotfiles to destination.'
-      ansible.builtin.include: 'copy_bash_dotfiles.yaml'
-      vars:
-        id: 'aliases'
-        source: "{{ role_path }}/files/bash/aliases"
-        dest: "{{ dotfiles_home }}/.bash.aliases.d"
+    - name: 'Create aliases for various BSD tools to the GNU equivalents.'
+      ansible.builtin.copy:
+        dest: "{{ dotfiles_home }}/.bash.aliases.d/{{ item }}.sh"
+        content: |
+          #!/usr/bin/env bash
 
-    - name: 'Set Mac-Specific Aliases'
-      block:
+          # Detect if we have a g{{ item }}.
+          if [ -x "$(command -v g{{ item }})" ]; then
+            alias {{ item }}="g{{ item }}";
+          fi
+      loop:
+        - 'date'
+        - 'du'
+        - 'echo'
+        - 'sed'
+        - 'stat'
 
-        - name: 'Create aliases for various BSD tools to the GNU equivalents.'
-          ansible.builtin.copy:
-            dest: "{{ dotfiles_home }}/.bash.aliases.d/{{ item }}.sh"
-            content: |
-              #!/usr/bin/env bash
+    - name: 'Create alias for md5sum.'
+      ansible.builtin.copy:
+        dest: "{{ dotfiles_home }}/.bash.aliases.d/md5sum.sh"
+        content: |
+          #!/usr/bin/env bash
 
-              # Detect if we have a g{{ item }}.
-              if [ -x "$(command -v g{{ item }})" ]; then
-                alias {{ item }}="g{{ item }}";
-              fi
-          loop:
-            - 'date'
-            - 'du'
-            - 'echo'
-            - 'sed'
-            - 'stat'
+          alias md5sum="md5";
 
-        - name: 'Create alias for md5sum.'
-          ansible.builtin.copy:
-            dest: "{{ dotfiles_home }}/.bash.aliases.d/md5sum.sh"
-            content: |
-              #!/usr/bin/env bash
-
-              alias md5sum="md5";
-
-      when: 'host_is_mac'
-
-###############################################################################
-# ANSIBLE
-###############################################################################
-
-- name: 'Copy Bash Ansible dotfiles to destination.'
-  ansible.builtin.include: 'copy_bash_dotfiles.yaml'
-  vars:
-    id: 'ansible'
-    source: "{{ role_path }}/files/bash/ansible"
-    dest: "{{ dotfiles_home }}/.bash.ansible.d"
+  when: 'host_is_mac'
 
 ###############################################################################
 # BEETS
@@ -108,39 +122,6 @@
   when: "host_is_synology and hostname == 'dayne'"
 
 ###############################################################################
-# COMPLETION
-###############################################################################
-
-- name: 'Copy Bash Completion dotfiles to destination.'
-  ansible.builtin.include: 'copy_bash_dotfiles.yaml'
-  vars:
-    id: 'completion'
-    source: "{{ role_path }}/files/bash/completion"
-    dest: "{{ dotfiles_home }}/.bash.completion.d"
-
-###############################################################################
-# DOTFILES
-###############################################################################
-
-- name: 'Copy Bash Dotfiles dotfiles to destination.'
-  ansible.builtin.include: 'copy_bash_dotfiles.yaml'
-  vars:
-    id: 'dotfiles'
-    source: "{{ role_path }}/files/bash/dotfiles"
-    dest: "{{ dotfiles_home }}/.bash.dotfiles.d"
-
-###############################################################################
-# FFMPEG
-###############################################################################
-
-- name: 'Copy Bash FFMpeg dotfiles to destination.'
-  ansible.builtin.include: 'copy_bash_dotfiles.yaml'
-  vars:
-    id: 'ffmpeg'
-    source: "{{ role_path }}/files/bash/ffmpeg"
-    dest: "{{ dotfiles_home }}/.bash.ffmpeg.d"
-
-###############################################################################
 # HOST
 ###############################################################################
 
@@ -158,73 +139,11 @@
   when: 'host_dotfiles_path.stat.exists'
 
 ###############################################################################
-# HOME ASSISTANT
-###############################################################################
-
-- name: 'Copy Bash Home Assistant dotfiles to destination.'
-  ansible.builtin.include: 'copy_bash_dotfiles.yaml'
-  vars:
-    id: 'hass'
-    source: "{{ role_path }}/files/bash/hass"
-    dest: "{{ dotfiles_home }}/.bash.hass.d"
-
-###############################################################################
-# KASA
-###############################################################################
-
-- name: 'Copy Bash Kasa dotfiles to destination.'
-  ansible.builtin.include: 'copy_bash_dotfiles.yaml'
-  vars:
-    id: 'kasa'
-    source: "{{ role_path }}/files/bash/kasa"
-    dest: "{{ dotfiles_home }}/.bash.kasa.d"
-
-###############################################################################
-# LIBRARY
-###############################################################################
-
-- name: 'Copy Bash Library dotfiles to destination.'
-  ansible.builtin.include: 'copy_bash_dotfiles.yaml'
-  vars:
-    id: 'library'
-    source: "{{ role_path }}/files/bash/library"
-    dest: "{{ dotfiles_home }}/.bash.library.d"
-
-###############################################################################
-# ENVIRONMENT
-###############################################################################
-
-- name: 'Copy Bash Env dotfiles to destination.'
-  ansible.builtin.include: 'copy_bash_dotfiles.yaml'
-  vars:
-    id: 'env'
-    source: "{{ role_path }}/files/bash/env"
-    dest: "{{ dotfiles_home }}/.bash.env.d"
-
-###############################################################################
-# OPTIONS
-###############################################################################
-
-- name: 'Copy Bash Options dotfiles to destination.'
-  ansible.builtin.include: 'copy_bash_dotfiles.yaml'
-  vars:
-    id: 'options'
-    source: "{{ role_path }}/files/bash/options"
-    dest: "{{ dotfiles_home }}/.bash.options.d"
-
-###############################################################################
 # PATH
 ###############################################################################
 
 - name: 'Copy Bash path dotfiles to destination.'
   block:
-
-    - name: 'Copy Bash Path dotfiles to destination.'
-      ansible.builtin.include: 'copy_bash_dotfiles.yaml'
-      vars:
-        id: 'path'
-        source: "{{ role_path }}/files/bash/path"
-        dest: "{{ dotfiles_home }}/.bash.path.d"
 
     - name: 'Syno-CLI Path Components'
       ansible.builtin.copy:
@@ -239,17 +158,6 @@
       when: 'host_is_synology'
 
 ###############################################################################
-# PROXMOX
-###############################################################################
-
-- name: 'Copy Bash Proxmox dotfiles to destination.'
-  ansible.builtin.include: 'copy_bash_dotfiles.yaml'
-  vars:
-    id: 'proxmox'
-    source: "{{ role_path }}/files/bash/proxmox"
-    dest: "{{ dotfiles_home }}/.bash.proxmox.d"
-
-###############################################################################
 # RASPBERRY PI
 ###############################################################################
 
@@ -260,39 +168,6 @@
     source: "{{ role_path }}/files/bash/pi"
     dest: "{{ dotfiles_home }}/.bash.pi.d"
   when: 'host_is_raspbian'
-
-###############################################################################
-# REDDIT
-###############################################################################
-
-- name: 'Copy Bash Reddit dotfiles to destination.'
-  ansible.builtin.include: 'copy_bash_dotfiles.yaml'
-  vars:
-    id: 'reddit'
-    source: "{{ role_path }}/files/bash/reddit"
-    dest: "{{ dotfiles_home }}/.bash.reddit.d"
-
-###############################################################################
-# ROUTE 53
-###############################################################################
-
-- name: 'Copy Bash Route 53 dotfiles to destination.'
-  ansible.builtin.include: 'copy_bash_dotfiles.yaml'
-  vars:
-    id: 'r53'
-    source: "{{ role_path }}/files/bash/r53"
-    dest: "{{ dotfiles_home }}/.bash.r53.d"
-
-###############################################################################
-# TORRENTS
-###############################################################################
-
-- name: 'Copy Bash Torrent dotfiles to destination.'
-  ansible.builtin.include: 'copy_bash_dotfiles.yaml'
-  vars:
-    id: 'torrents'
-    source: "{{ role_path }}/files/bash/torrents"
-    dest: "{{ dotfiles_home }}/.bash.torrents.d"
 
 ###############################################################################
 # CORE
