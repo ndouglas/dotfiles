@@ -56,6 +56,7 @@
     name:
       - 'ansible'
       - 'awscli'
+      - 'bdfr'
       - 'boto3'
       - 'proxmoxer'
       - 'torrent_parser'

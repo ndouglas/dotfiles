@@ -9,7 +9,7 @@ filebot_process_movie_item() {
   filebot \
     -script dev:amc \
     "${the_item}" \
-    --output /movies \
+    --output "${destination}" \
     --action move \
     -non-strict \
     --order Airdate \
