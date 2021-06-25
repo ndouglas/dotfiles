@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
-# Transfer a movie item to the movie destination.
-filebot_transfer_movie_item() {
+# Rename and move a movie item to the movie destination.
+filebot_process_movie_item() {
   : "${2?"Usage: ${FUNCNAME} FILE|DIRECTORY DESTINATION"}";
   the_item="${1}";
   destination="${2}";
-  echo "Transferring Movie Item: ${the_item} ..." >&2;
+  echo "Processing Movie Item: ${the_item} ..." >&2;
   filebot \
     -script dev:amc \
     "${the_item}" \
