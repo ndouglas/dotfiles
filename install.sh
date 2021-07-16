@@ -54,6 +54,7 @@ nd_check_requirements() {
 
 nd_clone_repository() {
   echo "Cloning repository...";
+  cd "$HOME";
   git clone "${repository_remote_http_url}" "${repository_local_path}";
 }
 
