@@ -14,7 +14,7 @@ torrent_get_best_instance_id() {
       return 255;
     fi
     total_count="$(torrent_get_total_torrent_count "${safe_domain}")";
-    if [ "${total_count}" -ge "1000" ]; then
+    if [ "${total_count:-1001}" -ge "1000" ]; then
       return 255;
     fi;
     echo "${current_instance_id}";
