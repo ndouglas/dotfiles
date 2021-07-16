@@ -41,7 +41,7 @@
 # GENERIC & SPECIAL UNIVERSAL ITEMS
 ###############################################################################
 
-- name: 'Copy Bash {{ item | capitalize }} dotfiles to destination.'
+- name: 'Copy Bash generic and special dotfiles to destination.'
   ansible.builtin.include: 'copy_bash_dotfiles.yaml'
   vars:
     id: "{{ dotfile_id }}"

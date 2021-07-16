@@ -25,6 +25,7 @@ filebot_process_movie_item() {
       minFileSize=100000000 \
       excludeList=.excludes \
       movieFormat="${destination}/{plex.tail}" \
+      exec='sudo chmod -R 777 {quote output}; sudo chown -R 998:users {quote output}' \
     --apply refresh \
     --log all \
     --log-file "${HOME}/filebot.log";
