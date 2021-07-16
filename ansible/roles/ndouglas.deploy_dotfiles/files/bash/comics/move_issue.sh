@@ -2,7 +2,7 @@
 
 # Move the issue to its destination.
 cmx_move_issue() {
-  : "${1?"Usage: ${FUNCNAME} FILE [METADATA]"}";
+  : "${1?"Usage: ${FUNCNAME[0]} FILE [METADATA]"}";
   the_filename="${1}";
   the_metadata="${2}";
   dupe_path="/volume1/Downloads/DuplicateComics";

@@ -8,7 +8,7 @@ set -e;
 authorized_keys_path="ansible/roles/ndouglas.deploy_dotfiles/files/ssh/authorized_keys/";
 
 nd_abort() {
-  : "${1?"Usage: ${FUNCNAME} MESSAGE"}";
+  : "${1?"Usage: ${FUNCNAME[0]} MESSAGE"}";
   message="${1}";
   echo >&2 "${message}";
   exit 1;

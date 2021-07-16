@@ -2,7 +2,7 @@
 
 # Get a specific prompt.
 nd_get_hostname_prompt() {
-  : "${1?"Usage: ${FUNCNAME} HOSTNAME"}";
+  : "${1?"Usage: ${FUNCNAME[0]} HOSTNAME"}";
   the_hostname="${1}";
   the_primary_color="$(nd_get_hostname_primary_color "${the_hostname}")";
   the_secondary_color="$(nd_get_hostname_secondary_color "${the_hostname}")";

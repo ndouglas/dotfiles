@@ -2,7 +2,7 @@
 
 # Toggle write value for a GPIO pin.
 pi_gpio_write_toggle() {
-  : "${1?"Usage: ${FUNCNAME} PIN"}";
+  : "${1?"Usage: ${FUNCNAME[0]} PIN"}";
   pin="${1}";
   gpio_root="/sys/class/gpio";
   gpio_pin_path="${gpio_root}/gpio${pin}";

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 cmx_clean_directory() {
-  : "${1?"Usage: ${FUNCNAME} DIRECTORY"}";
+  : "${1?"Usage: ${FUNCNAME[0]} DIRECTORY"}";
   the_directory="${1}";
   # Fake CBZs (actually CBR) -> valid CBZs
   cmx_convert_covert_cbrs "${the_directory}";

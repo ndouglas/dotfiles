@@ -2,7 +2,7 @@
 
 # Set the series of the specified issue.
 cmx_set_series() {
-  : "${2?"Usage: ${FUNCNAME} FILE|DIRECTORY SERIES"}";
+  : "${2?"Usage: ${FUNCNAME[0]} FILE|DIRECTORY SERIES"}";
   the_series="${2}";
   if [ -d "${1}" ]; then
     the_directory="${1}";

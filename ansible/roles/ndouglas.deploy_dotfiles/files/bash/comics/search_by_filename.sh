@@ -2,7 +2,7 @@
 
 # Search by providing metadata.
 cmx_search_by_filename() {
-  : "${1?"Usage: ${FUNCNAME} FILE|DIRECTORY"}";
+  : "${1?"Usage: ${FUNCNAME[0]} FILE|DIRECTORY"}";
   if [ -d "${1}" ]; then
     the_directory="${1}";
     find "${the_directory}" -type f -name '*.cbz' -print0 \

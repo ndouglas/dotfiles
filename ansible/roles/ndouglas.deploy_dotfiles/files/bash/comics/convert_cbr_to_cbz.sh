@@ -2,7 +2,7 @@
 
 # Convert a comic from CBR to CBZ format.
 cmx_convert_cbr_to_cbz() {
-  : "${1?"Usage: ${FUNCNAME} FILENAME|DIRECTORY"}";
+  : "${1?"Usage: ${FUNCNAME[0]} FILENAME|DIRECTORY"}";
   if [ -d "${1}" ]; then
     the_directory="${1}";
     find "${the_directory}" -type f -iname '*.cbr' -print0 \

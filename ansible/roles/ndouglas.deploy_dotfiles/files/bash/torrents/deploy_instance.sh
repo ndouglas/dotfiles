@@ -2,7 +2,7 @@
 
 # Deploy an instance of Transmission to handle a specific announce URL.
 torrent_deploy_instance() {
-  : "${2?"Usage: ${FUNCNAME} ID ANNOUNCE"}";
+  : "${2?"Usage: ${FUNCNAME[0]} ID ANNOUNCE"}";
   instance_id="${1}";
   instance_domain="${2}";
   padded_instance_id="$(printf "%04d" "${instance_id}")";

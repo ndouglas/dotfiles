@@ -2,7 +2,7 @@
 
 # Run tasks from a file in a specified role from the CLI.
 ans_run_role_task() {
-  : "${3?"Usage: ${FUNCNAME} HOST|GROUP ROLE TASKFILE"}";
+  : "${3?"Usage: ${FUNCNAME[0]} HOST|GROUP ROLE TASKFILE"}";
   host_expression="${1}";
   role_name="${2}";
   task_file="${3}";

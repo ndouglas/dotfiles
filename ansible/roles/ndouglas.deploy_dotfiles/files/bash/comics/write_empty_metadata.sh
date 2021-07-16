@@ -2,7 +2,7 @@
 
 # Write tags to the file if nothing else exists.
 cmx_write_empty_metadata() {
-  : "${1?"Usage: ${FUNCNAME} FILENAME|DIRECTORY"}";
+  : "${1?"Usage: ${FUNCNAME[0]} FILENAME|DIRECTORY"}";
   if [ -d "${1}" ]; then
     the_directory="${1}";
     find "${the_directory}" -type f -name '*.cbz' -print0 \

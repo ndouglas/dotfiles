@@ -2,7 +2,7 @@
 
 # Get Emoji for hostname.
 nd_get_hostname_emoji() {
-  : "${1?"Usage: ${FUNCNAME} HOSTNAME"}";
+  : "${1?"Usage: ${FUNCNAME[0]} HOSTNAME"}";
   the_hostname="${1}";
   case "${the_hostname}" in
     algood*)       emoji="🌿";;

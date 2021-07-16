@@ -2,7 +2,7 @@
 
 # Retrieve the instance name for an instance for the specified torrent
 torrent_get_best_instance() {
-  : "${1?"Usage: ${FUNCNAME} TORRENT_FILE|DOMAIN"}";
+  : "${1?"Usage: ${FUNCNAME[0]} TORRENT_FILE|DOMAIN"}";
   best_instance_id="$(torrent_get_best_instance_id "${1}")";
   if [ "$?" -eq "-1" ]; then
     echo "Unable to find a current instance ID for ${1}." >&2;

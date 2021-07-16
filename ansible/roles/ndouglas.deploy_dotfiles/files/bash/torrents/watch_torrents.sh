@@ -2,7 +2,7 @@
 
 # Given a watch directory, process any existing torrent files accordingly.
 torrent_watch_torrents() {
-  : "${1?"Usage: ${FUNCNAME} DIRECTORY"}";
+  : "${1?"Usage: ${FUNCNAME[0]} DIRECTORY"}";
   torrent_directory="${1}";
   if test -n "$(shopt -s nullglob; echo "${torrent_directory}"/*.torrent)"; then
     for torrent_file in "${torrent_directory}"/*.torrent; do

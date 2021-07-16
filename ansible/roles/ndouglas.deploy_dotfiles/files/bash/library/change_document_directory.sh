@@ -2,7 +2,7 @@
 
 # Change to a specified document directory.
 nd_change_document_directory() {
-  : "${1?"Usage: ${FUNCNAME} DIRECTORY"}";
+  : "${1?"Usage: ${FUNCNAME[0]} DIRECTORY"}";
   the_directory="${1}";
   nd_to_dayne /volume1/Documents/*/*/"${the_directory}"*;
 }

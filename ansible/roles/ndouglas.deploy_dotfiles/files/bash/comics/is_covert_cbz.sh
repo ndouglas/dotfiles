@@ -2,7 +2,7 @@
 
 # Determine if a non-CBZ file is secretly a CBZ.
 cmx_is_covert_cbz() {
-  : "${1?"Usage: ${FUNCNAME} FILE"}";
+  : "${1?"Usage: ${FUNCNAME[0]} FILE"}";
   the_filename="${1}";
   the_basename="$(basename "${the_filename}")";
   the_extension="${the_basename##*.}";

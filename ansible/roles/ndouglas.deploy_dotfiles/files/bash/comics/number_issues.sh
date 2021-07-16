@@ -2,7 +2,7 @@
 
 # Set the issue numbers of the specified issues.
 cmx_number_issues() {
-  : "${2?"Usage: ${FUNCNAME} START ISSUES..."}";
+  : "${2?"Usage: ${FUNCNAME[0]} START ISSUES..."}";
   the_counter="${1}";
   shift;
   for the_filename in "${@}"; do

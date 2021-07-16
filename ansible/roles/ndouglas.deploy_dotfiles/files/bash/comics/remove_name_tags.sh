@@ -2,7 +2,7 @@
 
 # Remove name tags from the file.
 cmx_remove_name_tags() {
-  : "${1?"Usage: ${FUNCNAME} FILE"}";
+  : "${1?"Usage: ${FUNCNAME[0]} FILE"}";
   if [ ! -f "${1}" ]; then
     echo "You need to specify an existing file." >&2;
     exit 1;

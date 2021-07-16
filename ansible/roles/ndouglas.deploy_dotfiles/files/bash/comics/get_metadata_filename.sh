@@ -2,7 +2,7 @@
 
 # Get the filename of the specified issue's cached metadata.
 cmx_get_metadata_filename() {
-  : "${1?"Usage: ${FUNCNAME} FILE"}";
+  : "${1?"Usage: ${FUNCNAME[0]} FILE"}";
   the_filename="${1}";
   the_basename="$(basename "${the_filename}" ".cbz")";
   echo ".${the_basename}.txt";

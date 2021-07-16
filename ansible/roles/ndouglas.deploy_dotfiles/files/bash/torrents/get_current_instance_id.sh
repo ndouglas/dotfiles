@@ -3,7 +3,7 @@
 # Retrieve the numeric instance ID for an instance for the specified torrent
 # Returns -1 if not found.
 torrent_get_current_instance_id() {
-  : "${1?"Usage: ${FUNCNAME} TORRENT_FILE|DOMAIN"}";
+  : "${1?"Usage: ${FUNCNAME[0]} TORRENT_FILE|DOMAIN"}";
   torrent_file="${1}";
   if [ -f "${torrent_file}" ]; then
     torrent_get_current_instance_id "$(torrent_get_safe_announce_domain "${torrent_file}")";

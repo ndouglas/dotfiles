@@ -2,7 +2,7 @@
 
 # Get the full text of a subtitle line at a specified timestamp.
 ffmpeg_get_subtitle_lines_at_timestamp() {
-  : "${2?"Usage: ${FUNCNAME} VIDEO_FILE TIMESTAMP"}";
+  : "${2?"Usage: ${FUNCNAME[0]} VIDEO_FILE TIMESTAMP"}";
   video_file="${1}";
   timestamp="${2}";
   subtitle_file="${video_file}.srt";

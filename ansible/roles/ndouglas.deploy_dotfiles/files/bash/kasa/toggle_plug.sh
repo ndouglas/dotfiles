@@ -2,7 +2,7 @@
 
 # Toggle the specified smart plug.
 kasa_toggle_plug() {
-  : "${1?"Usage: ${FUNCNAME} HOST"}";
+  : "${1?"Usage: ${FUNCNAME[0]} HOST"}";
   the_host="${1}";
   (
     set -e;

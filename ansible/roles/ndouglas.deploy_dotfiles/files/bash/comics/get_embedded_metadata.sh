@@ -2,7 +2,7 @@
 
 # Get ComicRack metadata of the specified issue.
 cmx_get_embedded_metadata() {
-  : "${1?"Usage: ${FUNCNAME} FILE"}";
+  : "${1?"Usage: ${FUNCNAME[0]} FILE"}";
   the_filename="${1}";
   comictagger -p -t cr "${the_filename}";
   if [ ! -z "${CMX_DEBUG_METADATA}" ]; then

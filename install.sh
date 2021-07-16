@@ -28,14 +28,14 @@ vault_password_path="${HOME}/.dotfiles_vault_password";
 authorized_keys_path="ansible/roles/ndouglas.deploy_dotfiles/files/ssh/authorized_keys/";
 
 nd_abort() {
-  : "${1?"Usage: ${FUNCNAME} MESSAGE"}";
+  : "${1?"Usage: ${FUNCNAME[0]} MESSAGE"}";
   message="${1}";
   echo >&2 "${message}";
   exit 1;
 }
 
 nd_require() {
-  : "${1?"Usage: ${FUNCNAME} COMMAND"}";
+  : "${1?"Usage: ${FUNCNAME[0]} COMMAND"}";
   command="${1}";
   command -v "${command}" >/dev/null 2>&1 || nd_abort "I require ${command} but it is not installed.  Aborting.";
 }

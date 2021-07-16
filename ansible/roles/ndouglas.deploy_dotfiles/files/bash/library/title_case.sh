@@ -2,7 +2,7 @@
 
 # Title-case some string.
 nd_title_case() {
-  : "${1?"Usage: ${FUNCNAME} TEXT..."}";
+  : "${1?"Usage: ${FUNCNAME[0]} TEXT..."}";
   the_text="${@}";
   sed 's/.*/\L&/; s/[a-z]*/\u&/g' <<< "${the_text}";
 }

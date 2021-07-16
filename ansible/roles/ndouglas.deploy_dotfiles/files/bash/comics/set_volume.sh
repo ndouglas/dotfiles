@@ -2,7 +2,7 @@
 
 # Set the volume of the specified issue(s).
 cmx_set_volume() {
-  : "${2?"Usage: ${FUNCNAME} FILE|DIRECTORY VOLUME"}";
+  : "${2?"Usage: ${FUNCNAME[0]} FILE|DIRECTORY VOLUME"}";
   the_volume="${2}";
   if [ -d "${1}" ]; then
     the_directory="${1}";

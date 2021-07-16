@@ -2,7 +2,7 @@
 
 # Get specified field from metadata.
 cmx_get_metadata_field() {
-  : "${1?"Usage: ${FUNCNAME} FILE FIELD [METADATA]"}";
+  : "${1?"Usage: ${FUNCNAME[0]} FILE FIELD [METADATA]"}";
   the_filename="${1}";
   the_field="${2}";
   the_metadata="${3}";

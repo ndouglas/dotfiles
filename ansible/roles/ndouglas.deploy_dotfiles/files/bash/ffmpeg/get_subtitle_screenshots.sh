@@ -2,7 +2,7 @@
 
 # Get screenshots with subtitle matching expression.
 ffmpeg_get_subtitle_screenshots() {
-  : "${2?"Usage: ${FUNCNAME} VIDEO_FILE EXPRESSION"}";
+  : "${2?"Usage: ${FUNCNAME[0]} VIDEO_FILE EXPRESSION"}";
   video_file="${1}";
   expression="${2}";
   subtitle_file="${video_file}.srt";

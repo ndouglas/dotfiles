@@ -2,7 +2,7 @@
 
 # Convert covert CBRs to CBZ.
 cmx_convert_covert_cbrs() {
-  : "${1?"Usage: ${FUNCNAME} DIRECTORY"}";
+  : "${1?"Usage: ${FUNCNAME[0]} DIRECTORY"}";
   the_directory="${1}";
   cmx_rename_covert_cbrs "${the_directory}" \
     | while read the_filename; do

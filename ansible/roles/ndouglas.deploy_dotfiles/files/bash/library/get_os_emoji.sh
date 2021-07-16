@@ -2,7 +2,7 @@
 
 # Get Emoji for OS.
 nd_get_os_emoji() {
-  : "${1?"Usage: ${FUNCNAME} OS"}";
+  : "${1?"Usage: ${FUNCNAME[0]} OS"}";
   the_os="${1}";
   case "${the_os}" in
     Linux*)     emoji="🐧";;

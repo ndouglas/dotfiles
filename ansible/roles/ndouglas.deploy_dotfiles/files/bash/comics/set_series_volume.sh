@@ -2,7 +2,7 @@
 
 # Set the series and volume of the specified issue.
 cmx_set_series_volume() {
-  : "${3?"Usage: ${FUNCNAME} FILE|DIRECTORY SERIES VOLUME"}";
+  : "${3?"Usage: ${FUNCNAME[0]} FILE|DIRECTORY SERIES VOLUME"}";
   the_series="${2}";
   the_volume="${3}";
   if [ -d "${1}" ]; then

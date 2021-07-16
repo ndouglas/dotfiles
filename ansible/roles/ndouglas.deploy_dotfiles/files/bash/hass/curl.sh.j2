@@ -2,7 +2,7 @@
 
 # Make a raw CURL request to the Home Assistant instance.
 hass_curl() {
-  : "${2?"Usage: ${FUNCNAME} METHOD PATH [DATA]"}";
+  : "${2?"Usage: ${FUNCNAME[0]} METHOD PATH [DATA]"}";
   request_method="${1}";
   api_path="${2:-}";
   curl \

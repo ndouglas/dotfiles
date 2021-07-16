@@ -2,7 +2,7 @@
 
 # Extract subtitles.
 ffmpeg_extract_subtitles() {
-  : "${1?"Usage: ${FUNCNAME} VIDEO_FILE"}";
+  : "${1?"Usage: ${FUNCNAME[0]} VIDEO_FILE"}";
   video_file="${1}";
   subtitle_file="${video_file}.srt";
   if [ "$(ffmpeg -i "${video_file}" 2>&1 | grep -ic 'Subtitle')" -eq 0 ]; then

@@ -2,7 +2,7 @@
 
 # Timeout a command after some number of seconds.
 function nd_timeout() {
-  : "${2?"Usage: ${FUNCNAME} TIMEOUT COMMAND..."}";
+  : "${2?"Usage: ${FUNCNAME[0]} TIMEOUT COMMAND..."}";
   timeout="${1}";
   command="${@:2}";
   (

@@ -2,7 +2,7 @@
 
 # Rename and move a movie item to the movie destination.
 filebot_process_movie_item() {
-  : "${2?"Usage: ${FUNCNAME} FILE|DIRECTORY DESTINATION"}";
+  : "${2?"Usage: ${FUNCNAME[0]} FILE|DIRECTORY DESTINATION"}";
   the_item="${1}";
   destination="${2}";
   echo "Processing Movie Item: ${the_item} ..." >&2;

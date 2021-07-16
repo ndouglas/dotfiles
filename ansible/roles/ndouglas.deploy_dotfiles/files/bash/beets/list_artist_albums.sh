@@ -2,7 +2,7 @@
 
 # List albums for the matching artists.
 beets_list_artist_albums() {
-  : "${1?"Usage: ${FUNCNAME} ARTIST_EXPRESSION"}";
+  : "${1?"Usage: ${FUNCNAME[0]} ARTIST_EXPRESSION"}";
   artist_expression="${@}";
   find "/volume1/Music/Main" -mindepth 2 -maxdepth 2 -type d -iname "*${artist_expression}*" -print \
     | sort -h \

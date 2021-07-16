@@ -2,7 +2,7 @@
 
 # Prints the missing issue numbers of a collection.
 cmx_get_missing_issue_numbers() {
-  : "${1?"Usage: ${FUNCNAME} DIRECTORY"}";
+  : "${1?"Usage: ${FUNCNAME[0]} DIRECTORY"}";
   the_directory="${1}";
   first_issue_number="$(cmx_get_first_issue_number "${the_directory}")";
   last_issue_number="$(cmx_get_last_issue_number "${the_directory}")";

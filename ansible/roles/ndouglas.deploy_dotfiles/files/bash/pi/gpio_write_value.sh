@@ -2,7 +2,7 @@
 
 # Set write value for a GPIO pin.
 pi_gpio_write_value() {
-  : "${2?"Usage: ${FUNCNAME} PIN VALUE"}";
+  : "${2?"Usage: ${FUNCNAME[0]} PIN VALUE"}";
   pin="${1}";
   value="${2}";
   gpio_root="/sys/class/gpio";

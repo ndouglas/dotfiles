@@ -2,7 +2,7 @@
 
 # Print a report of all missing comics.
 cmx_get_missing_comics_report() {
-  : "${1?"Usage: ${FUNCNAME} DIRECTORY"}";
+  : "${1?"Usage: ${FUNCNAME[0]} DIRECTORY"}";
   the_directory="${1}";
   IFS=$'\n' read -rd '' -a the_subdirectories <<< "$(nd_list_directories "${the_directory}")";
   for index in ${!the_subdirectories[@]}; do

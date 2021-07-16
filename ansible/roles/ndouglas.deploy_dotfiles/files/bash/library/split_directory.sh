@@ -2,7 +2,7 @@
 
 # Split the directory into subdirectories.
 nd_split_directory() {
-  : "${2?"Usage: ${FUNCNAME} DIRECTORY MAX_FILES"}";
+  : "${2?"Usage: ${FUNCNAME[0]} DIRECTORY MAX_FILES"}";
   the_directory="${1}";
   max_files="${2}";
   count_files="$(find "${the_directory}" -maxdepth 1 -type f | wc -l)";

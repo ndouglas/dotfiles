@@ -2,7 +2,7 @@
 
 # Send a command to the specified smart plug.
 kasa_send_plug_command() {
-  : "${2?"Usage: ${FUNCNAME} HOST COMMAND"}";
+  : "${2?"Usage: ${FUNCNAME[0]} HOST COMMAND"}";
   the_host="${1}";
   the_command="${2}";
   case "${the_command}" in

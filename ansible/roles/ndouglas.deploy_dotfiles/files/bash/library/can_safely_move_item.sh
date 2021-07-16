@@ -4,7 +4,7 @@
 #
 # Returns TRUE if the ITEM hasn't been modified within the last MARGIN minutes.
 nd_can_safely_move_item() {
-  : "${2?"Usage: ${FUNCNAME} FILE|DIRECTORY MARGIN"}";
+  : "${2?"Usage: ${FUNCNAME[0]} FILE|DIRECTORY MARGIN"}";
   the_item="${1}";
   the_margin="${2}";
   if [ -f "${the_item}" ]; then

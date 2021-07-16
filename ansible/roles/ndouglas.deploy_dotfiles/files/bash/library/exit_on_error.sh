@@ -2,7 +2,7 @@
 
 # Exit when we encounter an error.
 nd_exit_on_error() {
-  : "${1?"Usage: ${FUNCNAME} EXIT_CODE COMMAND"}";
+  : "${1?"Usage: ${FUNCNAME[0]} EXIT_CODE COMMAND"}";
   exit_code="${1}";
   last_command="${@:2}";
   if [ "${exit_code}" -ne 0 ]; then

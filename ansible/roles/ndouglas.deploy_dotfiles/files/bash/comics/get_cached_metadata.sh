@@ -2,7 +2,7 @@
 
 # Get metadata of the specified issue from a file.
 cmx_get_cached_metadata() {
-  : "${1?"Usage: ${FUNCNAME} FILE"}";
+  : "${1?"Usage: ${FUNCNAME[0]} FILE"}";
   the_filename="${1}";
   metadata_path="$(cmx_get_metadata_path "${the_filename}")";
   if [ -f "${metadata_path}" ]; then

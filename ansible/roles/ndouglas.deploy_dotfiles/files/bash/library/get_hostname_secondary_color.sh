@@ -2,7 +2,7 @@
 
 # Get the secondary color for the hostname.
 nd_get_hostname_secondary_color() {
-  : "${1?"Usage: ${FUNCNAME} HOSTNAME"}";
+  : "${1?"Usage: ${FUNCNAME[0]} HOSTNAME"}";
   the_hostname="${1}";
   case "${the_hostname}" in
     algood*)       color="$(tput setaf 19)";;

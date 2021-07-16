@@ -2,7 +2,7 @@
 
 # Query the specified smart plug.
 kasa_query_plug() {
-  : "${1?"Usage: ${FUNCNAME} HOST"}";
+  : "${1?"Usage: ${FUNCNAME[0]} HOST"}";
   (
     set -e;
     the_host="${1}";

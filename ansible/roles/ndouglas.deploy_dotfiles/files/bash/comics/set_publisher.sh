@@ -2,7 +2,7 @@
 
 # Set the publisher of the specified issue.
 cmx_set_publisher() {
-  : "${2?"Usage: ${FUNCNAME} FILE|DIRECTORY PUBLISHER"}";
+  : "${2?"Usage: ${FUNCNAME[0]} FILE|DIRECTORY PUBLISHER"}";
   the_publisher="${2}";
   if [ -d "${1}" ]; then
     the_directory="${1}";

@@ -5,7 +5,7 @@
 # Returns TRUE if no files in the DIRECTORY have been modified in the last
 # MARGIN minutes, otherwise FALSE.
 nd_can_safely_move_directory() {
-  : "${2?"Usage: ${FUNCNAME} DIRECTORY MARGIN"}";
+  : "${2?"Usage: ${FUNCNAME[0]} DIRECTORY MARGIN"}";
   the_directory="${1}";
   the_margin="${2}";
   items=($(find "${the_directory}" -mmin -"${the_margin}"));

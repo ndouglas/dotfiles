@@ -2,7 +2,7 @@
 
 # Remove clutter from directories.
 nd_declutter() {
-  : "${1?"Usage: ${FUNCNAME} DIRECTORY"}";
+  : "${1?"Usage: ${FUNCNAME[0]} DIRECTORY"}";
   the_directory="${1}";
   find "${the_directory}" -type f -name '.DS_Store' -delete;
   find "${the_directory}" -type f -name '._*' -delete;

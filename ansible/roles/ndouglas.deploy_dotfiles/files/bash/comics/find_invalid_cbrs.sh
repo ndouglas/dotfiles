@@ -2,7 +2,7 @@
 
 # Finds all of the broken files that claim they are RAR but aren't.
 cmx_find_invalid_cbrs() {
-  : "${1?"Usage: ${FUNCNAME} DIRECTORY"}";
+  : "${1?"Usage: ${FUNCNAME[0]} DIRECTORY"}";
   the_directory="${1}";
   find "${the_directory}" -type f -iname '*.cbr' -print0 \
     | while read -d $'\0' the_filename; do

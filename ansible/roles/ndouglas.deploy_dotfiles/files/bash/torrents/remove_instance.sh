@@ -2,7 +2,7 @@
 
 # Remove all traces of an existing instance
 torrent_remove_instance() {
-  : "${1?"Usage: ${FUNCNAME} INSTANCE_ID"}";
+  : "${1?"Usage: ${FUNCNAME[0]} INSTANCE_ID"}";
   instance_id="${1}";
   padded_id="$(printf "%04d" "${instance_id}")";
   id_path="/torrents/ids/${instance_id}";

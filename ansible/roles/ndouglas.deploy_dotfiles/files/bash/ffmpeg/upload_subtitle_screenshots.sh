@@ -2,7 +2,7 @@
 
 # Upload screenshots matching expression.
 ffmpeg_upload_subtitle_screenshots() {
-  : "${2?"Usage: ${FUNCNAME} VIDEO_FILE EXPRESSION"}";
+  : "${2?"Usage: ${FUNCNAME[0]} VIDEO_FILE EXPRESSION"}";
   video_file="${1}";
   expression="${2}";
   filenames="$(ffmpeg_get_subtitle_screenshots "${video_file}" "${expression}")";

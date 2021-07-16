@@ -2,7 +2,7 @@
 
 # Upload screenshot at timestamp with subtitle.
 ffmpeg_upload_subtitle_screenshot() {
-  : "${2?"Usage: ${FUNCNAME} VIDEO_FILE EXPRESSION"}";
+  : "${2?"Usage: ${FUNCNAME[0]} VIDEO_FILE EXPRESSION"}";
   video_file="${1}";
   expression="${2}";
   filename="$(ffmpeg_get_subtitle_screenshot "${video_file}" "${expression}")";

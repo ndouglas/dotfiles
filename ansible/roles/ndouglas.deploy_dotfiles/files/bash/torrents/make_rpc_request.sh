@@ -2,7 +2,7 @@
 
 # Make an RPC request to a specific site.
 torrent_make_rpc_request() {
-  : "${2?"Usage: ${FUNCNAME} SAFE_DOMAIN DATA"}";
+  : "${2?"Usage: ${FUNCNAME[0]} SAFE_DOMAIN DATA"}";
   safe_domain="${1}";
   data="${2}";
   session_id_header="$(torrent_get_session_id "${safe_domain}")";

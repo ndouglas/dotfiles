@@ -2,7 +2,7 @@
 
 # Renames covert CBZs so they are no longer covert.
 cmx_rename_covert_cbz() {
-  : "${1?"Usage: ${FUNCNAME} FILENAME"}";
+  : "${1?"Usage: ${FUNCNAME[0]} FILENAME"}";
   the_filename="${1}";
   the_dirname="$(dirname "${the_filename}")";
   the_basename="$(basename "${the_filename}" ".cbr")";

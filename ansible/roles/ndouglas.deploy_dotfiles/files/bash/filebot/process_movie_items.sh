@@ -2,7 +2,7 @@
 
 # Processes movie items in the specified source directory.
 filebot_process_movie_items() {
-  : "${1?"Usage: ${FUNCNAME} DIRECTORY DESTINATION"}";
+  : "${1?"Usage: ${FUNCNAME[0]} DIRECTORY DESTINATION"}";
   the_directory="${1}";
   the_destination="${2}";
   the_margin=5;

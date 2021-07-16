@@ -2,7 +2,7 @@
 
 # The kind of prompt we want.
 nd_get_prompt() {
-  : "${3?"Usage: ${FUNCNAME} HOSTNAME PRIMARY_COLOR SECONDARY_COLOR TERTIARY_COLOR"}";
+  : "${3?"Usage: ${FUNCNAME[0]} HOSTNAME PRIMARY_COLOR SECONDARY_COLOR TERTIARY_COLOR"}";
   the_hostname="${1}";
   the_primary_color="${2}";
   the_secondary_color="${3}";

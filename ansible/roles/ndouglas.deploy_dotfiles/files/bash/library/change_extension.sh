@@ -2,7 +2,7 @@
 
 # Change the extension of all matching files.
 nd_change_extension() {
-  : "${3?"Usage: ${FUNCNAME} DIRECTORY CURRENT NEW"}";
+  : "${3?"Usage: ${FUNCNAME[0]} DIRECTORY CURRENT NEW"}";
   the_directory="${1}";
   current_ext="${2}";
   new_ext="${3}";

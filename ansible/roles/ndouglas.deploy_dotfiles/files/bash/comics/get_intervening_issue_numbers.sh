@@ -2,7 +2,7 @@
 
 # Prints the intervening issue numbers of a collection.
 cmx_get_intervening_issue_numbers() {
-  : "${2?"Usage: ${FUNCNAME} NUMBER_X NUMBER_Y"}";
+  : "${2?"Usage: ${FUNCNAME[0]} NUMBER_X NUMBER_Y"}";
   start_number=$(( ${1} + 1 ));
   end_number=$(( ${2} - 1 ));
   if [ "${start_number}" -gt "${end_number}" ]; then

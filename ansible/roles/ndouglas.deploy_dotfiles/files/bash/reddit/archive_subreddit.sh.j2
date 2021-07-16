@@ -2,7 +2,7 @@
 
 # Archive a subreddit's top posts from several different periods.
 rdt_archive_subreddit() {
-  : "${1?"Usage: ${FUNCNAME} SUBREDDIT"}";
+  : "${1?"Usage: ${FUNCNAME[0]} SUBREDDIT"}";
   subreddit="${1}";
   for time_period in all year month; do
     python3 -m bdfr download \

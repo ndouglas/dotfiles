@@ -2,7 +2,7 @@
 
 # Get issue number.
 cmx_get_issue_number() {
-  : "${1?"Usage: ${FUNCNAME} FILENAME"}";
+  : "${1?"Usage: ${FUNCNAME[0]} FILENAME"}";
   the_filename="${1}";
   the_filename="$(basename "${1}")";
   shopt -s extglob;

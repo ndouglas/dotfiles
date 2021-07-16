@@ -2,7 +2,7 @@
 
 # The username, styled appropriately.
 nd_get_prompt_username() {
-  : "${1?"Usage: ${FUNCNAME} COLOR"}";
+  : "${1?"Usage: ${FUNCNAME[0]} COLOR"}";
   the_color="${1}";
   echo "$(printf "\[$(tput sgr0)$(tput bold)\]${the_color}\u\[$(tput sgr0)\]" 2> /dev/null)";
 }

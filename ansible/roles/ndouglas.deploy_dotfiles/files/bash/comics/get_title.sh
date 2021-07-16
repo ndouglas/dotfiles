@@ -2,7 +2,7 @@
 
 # Get title.
 cmx_get_title() {
-  : "${1?"Usage: ${FUNCNAME} FILE [METADATA]"}";
+  : "${1?"Usage: ${FUNCNAME[0]} FILE [METADATA]"}";
   the_filename="${1}";
   the_metadata="${2}";
   if [ -z "${the_metadata}" ]; then

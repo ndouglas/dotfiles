@@ -2,7 +2,7 @@
 
 # Set the publisher and series of the specified issue.
 cmx_set_publisher_series() {
-  : "${2?"Usage: ${FUNCNAME} FILE|DIRECTORY PUBLISHER SERIES"}";
+  : "${2?"Usage: ${FUNCNAME[0]} FILE|DIRECTORY PUBLISHER SERIES"}";
   the_publisher="${2}";
   the_series="${3}";
   if [ -d "${1}" ]; then

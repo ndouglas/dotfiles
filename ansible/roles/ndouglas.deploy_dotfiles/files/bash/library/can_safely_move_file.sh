@@ -5,7 +5,7 @@
 # Returns TRUE if the FILE has not been modified in the last MARGIN seconds,
 # otherwise FALSE.
 nd_can_safely_move_file() {
-  : "${2?"Usage: ${FUNCNAME} FILE MARGIN"}";
+  : "${2?"Usage: ${FUNCNAME[0]} FILE MARGIN"}";
   the_filename="${1}";
   the_margin="${2}";
   the_margin=$(( ${the_margin} * 60 ));

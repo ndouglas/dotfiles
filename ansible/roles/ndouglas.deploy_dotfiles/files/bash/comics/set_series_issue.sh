@@ -2,7 +2,7 @@
 
 # Set the series and issue number of the specified issue.
 cmx_set_series_issue() {
-  : "${3?"Usage: ${FUNCNAME} FILE SERIES ISSUE"}";
+  : "${3?"Usage: ${FUNCNAME[0]} FILE SERIES ISSUE"}";
   the_filename="${1}";
   the_series="${2}";
   the_issue="${3}";
