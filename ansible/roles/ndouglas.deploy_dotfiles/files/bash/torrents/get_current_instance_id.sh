@@ -12,9 +12,9 @@ torrent_get_current_instance_id() {
     safe_domain_path="/torrents/domains/${safe_domain}";
     if [ -L "${safe_domain_path}" ]; then
       original="$(readlink -f "${safe_domain_path}")";
-      echo "$(basename "${original}")" | grep -oE '[0-9]+' | bc;
+      basename "${original}" | grep -oE '[0-9]+' | bc;
     else
-      return -1;
+      return 255;
     fi;
   fi
 }
