@@ -4,11 +4,13 @@
 beets_list_artist() {
   : "${1?"Usage: ${FUNCNAME[0]} ARTIST_EXPRESSION"}";
   artist_expression="${@}";
-  find "/volume1/Music/Main" -mindepth 2 -maxdepth 2 -type d -iname "*${artist_expression}*" -print \
+  find "/Music" -mindepth 4 -maxdepth 4 -type d -iname "*${artist_expression}*" -print \
     | sort -h \
     | while read the_artist_path; do
         basename "${the_artist_path}";
-      done;
+      done \
+    | sort -h \
+    | uniq;
 }
 
 bla() {
