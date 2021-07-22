@@ -24,3 +24,16 @@ set +o errexit;
 if [ -e "{{ dotfiles_home }}/.bash_local" ]; then
   source "{{ dotfiles_home }}/.bash_local";
 fi;
+
+# Set up Python3 venv.
+if [ -x "$(command -v python3)" ]; then
+  if [ ! -d "${HOME}/.venv" ]; then
+    pushd "${HOME}" > /dev/null;
+    python3 -m venv .venv;
+    popd > /dev/null;
+  fi
+  export VIRTUAL_ENV_DISABLE_PROMPT=1;
+  if [ -e "${HOME}/.venv/bin/activate" ]; then
+    source "${HOME}/.venv/bin/activate";
+  fi;
+fi
