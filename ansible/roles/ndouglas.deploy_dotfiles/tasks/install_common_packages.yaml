@@ -17,6 +17,7 @@
 - name: 'Allow release-info to change for APT repositories.'
   become: yes
   ansible.builtin.command: 'apt-get update -y --allow-releaseinfo-change'
+    warn: no
 
 - name: 'Install Apt packages.'
   become: yes
