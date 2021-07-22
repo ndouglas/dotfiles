@@ -64,6 +64,8 @@
       - 'ansible'
       - 'awscli'
       - 'bdfr'
+      - 'borgbackup'
+      - 'borgmatic'
       - 'boto3'
       - 'proxmoxer'
       - 'torrent_parser'
