@@ -107,7 +107,7 @@
 
           export BEETSDIR="/volume1/Music/beets";
 
-  when: "host_is_synology"
+  when: "hostname == 'fenn' or hostname == 'harlton'"
 
 ###############################################################################
 # COMICS

@@ -6,7 +6,7 @@ beets_wrapper() {
   config_path="$(cd "${1}" && pwd)";
   music_path="$(cd "${2}" && pwd)";
   pending_path="$(cd "${3}" && pwd)";
-  docker run \
+  docker run -it \
     -e PUID=1000 \
     -e PGID=1000 \
     -e TZ=America/New_York \
