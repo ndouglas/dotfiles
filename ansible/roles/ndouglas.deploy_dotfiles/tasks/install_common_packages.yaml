@@ -14,6 +14,9 @@
     update_cache: yes
   when: 'host_uses_apk'
 
+- name: 'Allow release-info to change for APT repositories.'
+  command: 'apt-get update -y --allow-releaseinfo-change'
+
 - name: 'Install Apt packages.'
   become: yes
   ansible.builtin.apt:
