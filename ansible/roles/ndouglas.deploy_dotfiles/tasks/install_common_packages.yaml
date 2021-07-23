@@ -67,9 +67,15 @@
       - 'ansible'
       - 'awscli'
       - 'bdfr'
-      - 'borgbackup'
-      - 'borgmatic'
       - 'boto3'
       - 'proxmoxer'
       - 'torrent_parser'
       - 'requests'
+
+- name: 'Install non-Synology Pip packages.'
+  ansible.builtin.pip:
+    name:
+      - 'borgbackup'
+      - 'borgmatic'
+  when: '!host_is_synology'
+
