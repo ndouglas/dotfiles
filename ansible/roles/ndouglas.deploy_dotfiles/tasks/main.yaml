@@ -64,6 +64,7 @@
     name: MAILTO
     env: yes
     job: "{{ hostname }}@hellholt.net"
+  when: 'not host_is_synology'
 
 - name: 'Install the update cronjob.'
   ansible.builtin.cron:
@@ -71,3 +72,4 @@
     minute: "{{ 60 | random(seed=user_at_hostname) }}"
     job: |
       /bin/bash -lc '"{{ dotfiles_home }}"/.dotfiles/cron.sh;'
+  when: 'not host_is_synology'
