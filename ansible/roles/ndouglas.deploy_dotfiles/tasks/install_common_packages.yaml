@@ -77,5 +77,5 @@
     name:
       - 'borgbackup'
       - 'borgmatic'
-  when: '!host_is_synology'
+  when: 'not host_is_synology'
 
