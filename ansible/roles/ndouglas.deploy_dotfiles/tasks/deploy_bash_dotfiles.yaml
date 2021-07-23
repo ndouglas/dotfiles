@@ -147,7 +147,7 @@
 
     - name: 'Syno-CLI Path Components'
       ansible.builtin.copy:
-        dest: "{{ bash_path_path }}/syno-cli.sh"
+        dest: "{{ dotfiles_home }}/.bash.path.d/syno-cli.sh"
         content: |
          #!/usr/bin/env bash
 
