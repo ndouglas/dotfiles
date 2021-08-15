@@ -26,11 +26,13 @@
   become: yes
   ansible.builtin.apt:
     name:
+      - 'apt-file'
       - 'bc'
       - 'curl'
       - 'ffmpeg'
       - 'git'
       - 'jq'
+      - 'libacl1-dev'
       - 'libssl-dev'
       - 'mailutils'
       - 'python3'

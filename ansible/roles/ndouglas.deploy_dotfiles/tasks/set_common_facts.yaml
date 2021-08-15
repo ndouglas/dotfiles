@@ -14,7 +14,7 @@
 - name: 'Set more facts.'
   ansible.builtin.set_fact:
     host_uses_apk: "{{ ansible_distribution == 'Alpine' }}"
-    host_uses_apt: "{{ ansible_distribution == 'Debian' }}"
+    host_uses_apt: "{{ ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu' }}"
     host_uses_homebrew: "{{ ansible_distribution == 'MacOSX' }}"
     host_is_alpine: "{{ ansible_distribution == 'Alpine' }}"
     host_is_raspbian: "{{ ansible_distribution == 'Debian' and 'id' in ansible_lsb and ansible_lsb.id == 'Raspbian' }}"

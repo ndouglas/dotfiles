@@ -10,11 +10,13 @@ beets_declutter() {
       -iname '*.accurip' \
       -o -iname '*.bmp' \
       -o -iname '*.cue' \
+      -o -iname '*.ffp' \
       -o -iname '*.jpg' \
       -o -iname '*.jpeg' \
       -o -iname '*.log' \
       -o -iname '*.m3u' \
       -o -iname '*.m3u8' \
+      -o -iname '*.md5' \
       -o -iname '*.mp3' \
       -o -iname '*.nfo' \
       -o -iname '*.pdf' \
