@@ -18,6 +18,10 @@
     mode: 0440
   when: 'user != "root"'
 
+- name: 'Set time zone to America/New_York'
+  community.general.timezone:
+    name: 'America/New_York'
+
 - name: 'Install some universally useful packages.'
   ansible.builtin.include: 'install_common_packages.yaml'
 
