@@ -74,7 +74,7 @@
       - 'requests'
       - 'torrent_parser'
       - 'virtualenv'
-    virtualenv_command: 'python3 -v venv'
+    virtualenv_command: 'python3 -m venv'
     virtualenv: "{{ dotfiles_home }}/.venv"
     virtualenv_site_packages: no
 
