@@ -19,6 +19,7 @@
   when: 'user != "root"'
 
 - name: 'Set time zone to America/New_York'
+  become: yes
   community.general.timezone:
     name: 'America/New_York'
 
