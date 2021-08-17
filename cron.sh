@@ -9,6 +9,6 @@ pushd "${directory}" > /dev/null;
 git fetch --quiet;
 if [ $(git rev-parse HEAD) != $(git rev-parse @{u}) ]; then
   ./update.sh > "${directory}"/.last_log;
-  date +'%Y-%m-%d %H:%M:%S' > "${directory}"/.last_updated;
+  TZ='America/New_York' date +'%Y-%m-%d %H:%M:%S' > "${directory}"/.last_updated;
 fi;
-date +'%Y-%m-%d %H:%M:%S' > "${directory}"/.last_checked;
+TZ='America/New_York' date +'%Y-%m-%d %H:%M:%S' > "${directory}"/.last_checked;
