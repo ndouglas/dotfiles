@@ -37,7 +37,6 @@
       - 'mailutils'
       - 'python3'
       - 'python3-pip'
-      - 'python3-venv'
       - 'rsync'
     update_cache: yes
   when: 'host_uses_apt'
@@ -71,8 +70,11 @@
       - 'bdfr'
       - 'boto3'
       - 'proxmoxer'
-      - 'torrent_parser'
       - 'requests'
+      - 'torrent_parser'
+      - 'virtualenv'
+    virtualenv: "{{ dotfiles_home }}/.venv"
+    virtualenv_site_packages: no
 
 - name: 'Install non-Synology Pip packages.'
   ansible.builtin.pip:
