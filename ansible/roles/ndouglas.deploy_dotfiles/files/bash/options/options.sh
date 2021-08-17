@@ -48,3 +48,6 @@ shopt -s nocaseglob 2>/dev/null;
 
 # Fail pipes ASAP.
 set -o pipefail;
+
+# Allow Bash to diverge more from POSIX compatibility.
+set +o posix;
