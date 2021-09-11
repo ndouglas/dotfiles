@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
 {% for key, value in terraform.variables.items() %}
-export TF_VAR_{{ key }}={{value}};
+export TF_VAR_{{ key }}='{{value}}';
 {% endfor %}
