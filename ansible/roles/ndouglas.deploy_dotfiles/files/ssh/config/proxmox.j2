@@ -1,5 +1,5 @@
 # Proxmox
-{% for host in groups['pve'] %}
+{% for host in groups['pve_nodes'] %}
   # {{ host }}
   Host {{ host }}
     User {{ user }}

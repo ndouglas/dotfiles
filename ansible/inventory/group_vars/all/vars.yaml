@@ -80,6 +80,12 @@ software_versions:
 #   feeds:
 #     - 'some-feed'
 
+# Proxmox
+#
+# proxmox:
+#   pve_api_username: 'some-string'
+#   pve_api_password: 'some-string'
+
 # Reddit
 #
 # reddit:

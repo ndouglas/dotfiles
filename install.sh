@@ -76,7 +76,7 @@ nd_cleanup() {
 }
 
 nd_install_dotfiles() {
-  if [ "${USER}" != 'root' ]; then
+  if [[ $- == *i* ]] && [ "${USER}" != 'root' ]; then
     sudo -v;
   fi;
   nd_check_requirements;

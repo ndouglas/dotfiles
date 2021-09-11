@@ -1,0 +1,133 @@
+---
+- name: 'Use a local connection to gather facts.'
+  ansible.builtin.set_fact:
+    ansible_connection: 'local'
+
+- name: 'Create and start the container.'
+  delegate_to: 'localhost'
+  block:
+
+  - name: 'Gather facts about this host.'
+    ansible.builtin.setup:
+    delegate_facts: yes
+
+  - name: 'Set the host ID.'
+    ansible.builtin.set_fact:
+      pve_host_id: "{{ index }}"
+    when: 'item == inventory_hostname'
+    loop: "{{ groups[hostvars[inventory_hostname].pve_cluster_id] }}"
+    loop_control:
+      index_var: 'index'
+
+  - name: 'Set the desired IP address.'
+    ansible.builtin.set_fact:
+      pve_vm_id: "{{ 100 + pve_host_id }}"
+      pve_ip_address: "10.{{ pve_network_id }}.0.{{ 100 + pve_host_id }}"
+      pve_mac_address: "de:fe:c8:{{ ('%x' % pve_network_id).zfill(2) }}:00:{{ ('%x' % (100 + pve_host_id)).zfill(2) }}"
+
+  - name: 'Debug stuff.'
+    ansible.builtin.debug:
+      var: 'hostvars[inventory_hostname]'
+
+  - name: 'Create container.'
+    community.general.proxmox:
+      vmid: "{{ pve_vm_id }}"
+      node: "{{ pve_node }}"
+      cores: "{{ pve_cores | default(4) }}"
+      cpus: "{{ pve_cpus | default(1) }}"
+      memory: "{{ pve_memory_size | default(16384) }}"
+      swap: "{{ pve_swap_size | default(0) }}"
+      api_user: "{{ proxmox.pve_api_username }}"
+      api_password: "{{ proxmox.pve_api_password }}"
+      api_host: "{{ pve_node }}"
+      password: "{{ password }}"
+      hostname: "{{ inventory_hostname }}"
+      onboot: "{{ pve_onboot | default('yes') }}"
+      ostemplate: "local:vztmpl/{{ proxmox.pve_ostemplate }}"
+      description: "{{ inventory_hostname }}"
+      netif: '{"net0":"type=veth,name=eth0,ip=dhcp,bridge=vmbr0,firewall=1,hwaddr={{ pve_mac_address }}"}'
+      unprivileged: "{{ pve_unprivileged | default('no') }}"
+      disk: "local-lvm:{{ pve_rootfs_size | default('16') }}"
+      features: 'mount=nfs,keyctl=1,nesting=1'
+      state: 'present'
+      storage: 'local'
+      pubkey: "{{ proxmox.pve_ssh_pub_key }}"
+      proxmox_default_behavior: 'no_defaults'
+
+  - name: 'Start container.'
+    community.general.proxmox:
+      vmid: "{{ pve_vm_id }}"
+      api_user: "{{ proxmox.pve_api_username }}"
+      api_password: "{{ proxmox.pve_api_password }}"
+      api_host: "{{ pve_node }}"
+      state: 'started'
+      proxmox_default_behavior: 'no_defaults'
+
+- name: 'Resume SSH connections.'
+  ansible.builtin.set_fact:
+    ansible_connection: 'ssh'
+
+- name: 'Gather facts about this host (again).'
+  ansible.builtin.setup:
+  remote_user: 'root'
+
+- name: 'Prepare to install dotfiles.'
+  remote_user: 'root'
+  block:
+
+  - name: 'Install Apt packages.'
+    ansible.builtin.apt:
+      name:
+        - 'curl'
+        - 'git'
+        - 'python3'
+        - 'python3-pip'
+        - 'ssh'
+        - 'sudo'
+      update_cache: yes
+
+  - name: 'Install Pip packages.'
+    ansible.builtin.pip:
+      name:
+        - 'ansible'
+
+- name: 'Install dotfiles.'
+  remote_user: 'root'
+  block:
+
+  - name: 'Store vault password (as root).'
+    ansible.builtin.copy:
+      dest: '~/.dotfiles_vault_password'
+      content: "{{ password }}"
+      mode: '0600'
+
+  - name: 'Execute install script (as root).'
+    ansible.builtin.shell: '/bin/bash <(curl -sL "https://raw.githubusercontent.com/ndouglas/dotfiles/main/install.sh")'
+    args:
+      chdir: '~'
+      executable: '/bin/bash'
+      creates: '~/.dotfiles'
+
+  - name: 'Enable passwordless sudo.'
+    ansible.builtin.copy:
+      content: "{{ my.name.lower }} ALL=(ALL:ALL) NOPASSWD:ALL"
+      dest: "/etc/sudoers.d/{{ my.name.lower }}"
+      mode: 0440
+
+- name: 'Install dotfiles as normal user.'
+  vars:
+    ansible_ssh_pass: "{{ password }}"
+  block:
+
+  - name: 'Store vault password (as normal user).'
+    ansible.builtin.copy:
+      dest: '~/.dotfiles_vault_password'
+      content: "{{ password }}"
+      mode: '0600'
+
+  - name: 'Execute install script (as normal user).'
+    ansible.builtin.shell: '/bin/bash <(curl -sL "https://raw.githubusercontent.com/ndouglas/dotfiles/main/install.sh")'
+    args:
+      chdir: '~'
+      executable: '/bin/bash'
+      creates: '~/.dotfiles'

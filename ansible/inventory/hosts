@@ -2,12 +2,15 @@ all:
   hosts:
     fossoway:
   children:
-    pve:
+    pve_nodes:
       hosts:
         celtigar:
+          pve_cluster_id: old_anchor
         lefford:
+          pve_cluster_id: rain_house
         ryswell:
-    pbs:
+          pve_cluster_id: grey_garden
+    pbs_nodes:
       hosts:
         lefford:
     opnsense:
@@ -54,6 +57,10 @@ all:
     pve_clusters:
       children:
         grey_garden:
+          vars:
+            pve_cluster_id: grey_garden
+            pve_node: ryswell
+            pve_network_id: 1
           hosts:
             algood:
             ball:
@@ -79,6 +86,10 @@ all:
             vaith:
             waxley:
         old_anchor:
+          vars:
+            pve_cluster_id: old_anchor
+            pve_node: celtigar
+            pve_network_id: 2
           hosts:
             allyrion:
             bettley:
@@ -104,6 +115,10 @@ all:
             vance:
             webber:
         rain_house:
+          vars:
+            pve_cluster_id: rain_house
+            pve_node: lefford
+            pve_network_id: 3
           hosts:
             ambrose:
             blackbar:
