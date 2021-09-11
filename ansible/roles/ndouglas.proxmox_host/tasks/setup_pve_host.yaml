@@ -131,3 +131,15 @@
       chdir: '~'
       executable: '/bin/bash'
       creates: '~/.dotfiles'
+
+- name: 'Run host-specific setup (if applicable).'
+  block:
+
+  - name: 'Check for existence of host-specific task.'
+    ansible.builtin.stat:
+      path: "{{ role_path }}/tasks/hosts/{{ hostname }}.yaml"
+    register: host_task_path
+
+  - name: 'Execute host-specific task.'
+    ansible.builtin.include: "tasks/hosts/{{ hostname }}.yaml"
+    when: 'host_task_path.stat.exists'
