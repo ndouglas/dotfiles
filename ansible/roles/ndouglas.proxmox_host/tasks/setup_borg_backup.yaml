@@ -60,7 +60,23 @@
     ansible.builtin.include_role:
       name: 'm3nu.ansible_role_borgbackup'
 
+  - name: 'Read SSH public key.'
+    ansible.builtin.shell: 'cat ~/.ssh/id_rsa.pub'
+    register: ssh_pub_key
+    changed_when: no
 
-  remote_path: /usr/local/bin/borg
-  exclude_nodump: true
-  borgmatic_source_directory: /tmp/borgmatic
+  - name: 'Copy SSH key to server.'
+    delegate_to: "{{ borg.defaults.server }}"
+    remote_user: "{{ my.name.lower }}"
+    become: yes
+    ansible.posix.authorized_key:
+      user: "{{ my.name.lower }}"
+      key: "{{ ssh_pub_key.stdout }}"
+      state: 'present'
+
+  - name: 'Init the Borg backup.'
+    ansible.builtin.shell: 'borgmatic init --encryption repokey-blake2 && touch ~/.borg_repo_init'
+    args:
+      chdir: '~'
+      executable: '/bin/bash'
+      creates: '~/.borg_repo_init'

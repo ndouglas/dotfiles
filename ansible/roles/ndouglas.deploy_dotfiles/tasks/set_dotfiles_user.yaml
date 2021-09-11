@@ -10,18 +10,21 @@
     cmd: "id -gn"
   register: 'group_command'
   when: 'group is not defined'
+  changed_when: no
 
 - name: 'Run a command to determine the user''s uid.'
   ansible.builtin.command:
     cmd: "id -u"
   register: 'uid_command'
   when: 'uid is not defined'
+  changed_when: no
 
 - name: 'Run a command to determine the user''s gid.'
   ansible.builtin.command:
     cmd: "id -g"
   register: 'gid_command'
   when: 'gid is not defined'
+  changed_when: no
 
 - name: 'Set a fact for the group.'
   ansible.builtin.set_fact:
