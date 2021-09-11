@@ -1,0 +1,19 @@
+- name: 'Set up Borg backups.'
+  ansible.builtin.include_role:
+    name: 'm3nu.ansible_role_borgbackup'
+  vars:
+    borg_repository: "{{ borg_repository | default("{{ borg.defaults.username }}@{{ borg.defaults.server }}:{{ borg.defaults.path }}/{{ inventory_hostname }}") }}"
+    borg_source_directories: "{{ borg_source_directories | default(borg.defaults.source_directories) }}"
+    borg_encryption_passphrase: "{{ borg_encryption_passphrase | default(borg.defaults.encryption_passphrase) }}"
+    borgmatic_checks: "{{ borgmatic_checks | default(borg.defaults.checks) }}"
+    borgmatic_check_last: "{{ borgmatic_check_last | default(borg.defaults.check_last) }}"
+    borgmatic_store_atime: "{{ borgmatic_store_atime | default(borg.defaults.store_atime) }}"
+    borgmatic_store_ctime: "{{ borgmatic_store_ctime | default(borg.defaults.store_ctime) }}"
+    borgmatic_relocated_repo_access_is_ok: "{{ borgmatic_relocated_repo_access_is_ok | default(borg.defaults.relocated_repo_access_is_ok) }}"
+    borgmatic_cron_hour: "{{ 6 | random(seed=user_at_hostname) }}"
+    borgmatic_cron_minute: "{{ 60 | random(seed=user_at_hostname) }}"
+    borgmatic_cron_checks_day: "{{ 28 | random(seed=user_at_hostname) }}"
+    borgmatic_cron_checks_hour: "{{ range(7, 24) | random(seed=user_at_hostname) }}"
+    borgmatic_cron_checks_minute: "{{ 59 | random(seed=user_at_hostname) }}"
+    borg_exclude_patterns: "{{ borg_exclude_patterns | default(borg.defaults.exclude_patterns) }}"
+    borg_retention_policy: "{{ borg_retention_policy | default(borg.defaults.retention_policy) }}"

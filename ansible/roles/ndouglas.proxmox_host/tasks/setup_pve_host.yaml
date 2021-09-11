@@ -135,11 +135,24 @@
 - name: 'Run host-specific setup (if applicable).'
   block:
 
+  - name: 'Set user and group.'
+    ansible.builtin.include_role:
+      name: 'ndouglas.deploy_dotfiles'
+      tasks_from: 'set_dotfiles_user.yaml'
+    when: 'user is not defined or group is not defined'
+
   - name: 'Check for existence of host-specific task.'
+    delegate_to: 'localhost'
     ansible.builtin.stat:
-      path: "{{ role_path }}/tasks/hosts/{{ hostname }}.yaml"
+      path: "{{ role_path }}/tasks/hosts/{{ inventory_hostname }}.yaml"
     register: host_task_path
 
+  - name: 'Set common facts.'
+    ansible.builtin.include_role:
+      name: 'ndouglas.deploy_dotfiles'
+      tasks_from: 'set_common_facts.yaml'
+    when: 'host_task_path.stat.exists'
+
   - name: 'Execute host-specific task.'
-    ansible.builtin.include: "tasks/hosts/{{ hostname }}.yaml"
+    ansible.builtin.include: "tasks/hosts/{{ inventory_hostname }}.yaml"
     when: 'host_task_path.stat.exists'
