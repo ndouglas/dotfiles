@@ -15,6 +15,7 @@
         keep_daily: 7
         keep_weekly: 4
         keep_monthly: 6
+      ssh_key_path: '~/.ssh/id_rsa'
 
   - name: 'Set source directories.'
     ansible.builtin.set_fact:
