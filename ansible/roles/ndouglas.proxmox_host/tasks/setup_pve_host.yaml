@@ -3,7 +3,7 @@
   ansible.builtin.set_fact:
     ansible_connection: 'local'
 
-- name: 'Create and start the container.'
+- name: 'Compile facts for the container.'
   delegate_to: 'localhost'
   block:
 
@@ -29,6 +29,11 @@
     ansible.builtin.debug:
       var: 'hostvars[inventory_hostname]'
 
+- name: 'Create and start the container.'
+  delegate_to: "{{ pve_node }}"
+  become: yes
+  block:
+
   - name: 'Create container.'
     community.general.proxmox:
       vmid: "{{ pve_vm_id }}"
@@ -53,6 +58,13 @@
       storage: 'local'
       pubkey: "{{ proxmox.pve_ssh_pub_key }}"
       proxmox_default_behavior: 'no_defaults'
+
+  - name: 'Append additional options to VM configuration.'
+    ansible.builtin.blockinfile:
+      path: "/etc/pve/lxc/{{ pve_vm_id }}.conf"
+      block: |
+        lxc.apparmor.profile: unconfined
+        lxc.apparmor.raw: mount,
 
   - name: 'Start container.'
     community.general.proxmox:
