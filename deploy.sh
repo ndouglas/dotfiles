@@ -6,6 +6,6 @@
 set -e;
 script_path="$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )";
 pushd "${script_path}/ansible" > /dev/null;
-ansible-galaxy install -r requirements.yml;
+ansible-galaxy install -r requirements.yml >/dev/null 2>&1;
 ansible-playbook ./playbooks/deploy_dotfiles.yaml -v "${@}";
 popd > /dev/null;
