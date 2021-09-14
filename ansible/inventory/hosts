@@ -65,6 +65,12 @@ all:
             pve_network_id: 1
           hosts:
             algood:
+              pve_cores: 2
+              pve_memory_size: 2048
+              pve_rootfs_size: 16
+              description: |
+                Currently an experimental machine which I'm building/rebuilding on a more-or-less continual basis as I develop
+                this.
             ball:
             cafferen:
             dalt:
