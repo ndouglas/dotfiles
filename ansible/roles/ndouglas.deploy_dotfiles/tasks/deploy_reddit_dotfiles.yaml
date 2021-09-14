@@ -12,6 +12,7 @@
   ansible.builtin.file:
     path: "{{ reddit_config_dir }}"
     state: absent
+  changed_when: no
 
 - name: 'Create the Reddit config directory.'
   ansible.builtin.file:
@@ -20,6 +21,7 @@
     group: "{{ group }}"
     mode: '0700'
     state: directory
+  changed_when: no
 
 - name: 'Deploy Reddit subreddits.txt'
   ansible.builtin.copy:
@@ -30,3 +32,4 @@
     mode: '0600'
     backup: yes
     force: yes
+  changed_when: no

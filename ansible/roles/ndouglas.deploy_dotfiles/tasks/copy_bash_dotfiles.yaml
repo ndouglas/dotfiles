@@ -12,12 +12,14 @@
   ansible.builtin.tempfile:
     state: 'directory'
   register: 'temporary_directory'
+  changed_when: no
 
 - name: "Copy Bash static dotfiles {{ source }} -> temporary directory."
   ansible.builtin.assemble:
     src: "{{ source }}"
     dest: "{{ temporary_directory.path }}/_{{ id }}.sh"
     regexp: ".*\\.sh$"
+  changed_when: no
 
 - name: 'Find template files in path.'
   ansible.builtin.find:
@@ -31,12 +33,14 @@
     src: "{{ item.path }}"
     dest: "{{ temporary_directory.path }}/{{ item.path | basename | splitext | first }}"
   with_items: "{{ template_files.files }}"
+  changed_when: no
 
 - name: "Remove Bash dotfiles directory {{ dest }}."
   ansible.builtin.file:
     path: "{{ dest }}"
     force: yes
     state: absent
+  changed_when: no
 
 - name: "Create Bash dotfiles directory {{ dest }}."
   ansible.builtin.file:
@@ -46,6 +50,7 @@
     mode: '0700'
     force: yes
     state: 'directory'
+  changed_when: no
 
 - name: "Copy Bash dotfiles temporary directory -> {{ dest }}."
   ansible.builtin.copy:
@@ -57,3 +62,4 @@
     force: yes
   with_fileglob:
     - "{{ temporary_directory.path }}/*.sh"
+  changed_when: no

@@ -1,33 +1,10 @@
 ---
-- name: 'Use a local connection to gather facts.'
-  ansible.builtin.set_fact:
-    ansible_connection: 'local'
+- name: 'Gather host facts.'
+  ansible.builtin.include: 'set_pve_host_facts.yaml'
 
-- name: 'Compile facts for the container.'
-  delegate_to: 'localhost'
-  block:
-
-  - name: 'Gather facts about this host.'
-    ansible.builtin.setup:
-    delegate_facts: yes
-
-  - name: 'Set the host ID.'
-    ansible.builtin.set_fact:
-      pve_host_id: "{{ index }}"
-    when: 'item == inventory_hostname'
-    loop: "{{ groups[hostvars[inventory_hostname].pve_cluster_id] }}"
-    loop_control:
-      index_var: 'index'
-
-  - name: 'Set the desired IP address.'
-    ansible.builtin.set_fact:
-      pve_vm_id: "{{ 100 + pve_host_id }}"
-      pve_ip_address: "10.{{ pve_network_id }}.0.{{ 100 + pve_host_id }}"
-      pve_mac_address: "de:fe:c8:{{ ('%x' % pve_network_id).zfill(2) }}:00:{{ ('%x' % (100 + pve_host_id)).zfill(2) }}"
-
-  - name: 'Debug stuff.'
-    ansible.builtin.debug:
-      var: 'hostvars[inventory_hostname]'
+- name: 'Debug stuff.'
+  ansible.builtin.debug:
+    var: 'hostvars[inventory_hostname]'
 
 - name: 'Create and start the container.'
   delegate_to: "{{ pve_node }}"
@@ -58,6 +35,7 @@
       storage: 'local'
       pubkey: "{{ proxmox.pve_ssh_pub_key }}"
       proxmox_default_behavior: 'no_defaults'
+      force: yes
 
   - name: 'Append additional options to VM configuration.'
     ansible.builtin.blockinfile:

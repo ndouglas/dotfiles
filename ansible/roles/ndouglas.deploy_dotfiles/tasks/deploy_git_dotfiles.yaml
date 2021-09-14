@@ -6,3 +6,4 @@
     value: "{{ item.value }}"
   loop:
     "{{ gitconfig | dict2items }}"
+  changed_when: no

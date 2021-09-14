@@ -12,6 +12,7 @@
   ansible.builtin.tempfile:
     state: 'directory'
   register: 'temporary_directory'
+  changed_when: no
 
 - name: "Copy Filebot template dotfiles {{ role_path }}/files/filebot/ -> temporary directory."
   ansible.builtin.template:
@@ -19,11 +20,13 @@
     dest: "{{ temporary_directory.path }}/{{ item | basename | splitext | first }}"
   with_fileglob:
     - "{{ role_path }}/files/filebot/*.j2"
+  changed_when: no
 
 - name: 'Delete the Filebot config directory.'
   ansible.builtin.file:
     path: "{{ filebot_config_dir }}"
     state: absent
+  changed_when: no
 
 - name: 'Create the Filebot config directory.'
   ansible.builtin.file:
@@ -32,6 +35,7 @@
     group: "{{ group }}"
     mode: '0700'
     state: directory
+  changed_when: no
 
 - name: "Copy Filebot dotfiles temporary directory -> {{ filebot_config_dir }}."
   ansible.builtin.copy:
@@ -43,3 +47,4 @@
     force: yes
   with_fileglob:
     - "{{ temporary_directory.path }}/*"
+  changed_when: no

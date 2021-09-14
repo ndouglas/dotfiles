@@ -74,6 +74,8 @@
         - 'echo'
         - 'sed'
         - 'stat'
+      changed_when: no
+
 
     - name: 'Create alias for md5sum.'
       ansible.builtin.copy:
@@ -82,6 +84,7 @@
           #!/usr/bin/env bash
 
           alias md5sum="md5";
+      changed_when: no
 
   when: 'host_is_mac'
 

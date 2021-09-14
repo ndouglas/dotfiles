@@ -11,6 +11,7 @@
   ansible.builtin.file:
     path: "{{ aws_config_dir }}"
     state: absent
+  changed_when: no
 
 - name: 'Create the AWS config directory.'
   ansible.builtin.file:
@@ -19,6 +20,7 @@
     group: "{{ group }}"
     mode: '0700'
     state: directory
+  changed_when: no
 
 - name: "Copy AWS template dotfiles {{ role_path }}/files/aws/ -> {{ aws_config_dir }}"
   ansible.builtin.template:
@@ -26,3 +28,4 @@
     dest: "{{ aws_config_dir }}/{{ item | basename | splitext | first }}"
   with_fileglob:
     - "{{ role_path }}/files/aws/*.j2"
+  changed_when: no
