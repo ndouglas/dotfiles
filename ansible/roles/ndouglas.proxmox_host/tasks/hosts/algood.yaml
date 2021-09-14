@@ -1,5 +1,6 @@
 - name: 'Set up Borg backups.'
-  ansible.builtin.include: "{{ role_path }}/tasks/setup_borg_backup.yaml"
+  ansible.builtin.include_role:
+    name: 'ndouglas.host_role.borg'
   vars:
     borg_source_directories:
       - '/home/nathan/test'

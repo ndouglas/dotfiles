@@ -1,0 +1,89 @@
+- name: 'Gather facts about this host.'
+  ansible.builtin.setup:
+  remote_user: 'root'
+
+- name: 'Prepare to install dotfiles.'
+  remote_user: 'root'
+  block:
+
+  - name: 'Install Apt packages.'
+    ansible.builtin.apt:
+      name:
+        - 'curl'
+        - 'git'
+        - 'python3'
+        - 'python3-pip'
+        - 'ssh'
+        - 'sudo'
+      update_cache: yes
+
+  - name: 'Install Pip packages.'
+    ansible.builtin.pip:
+      name:
+        - 'ansible'
+
+- name: 'Install dotfiles.'
+  remote_user: 'root'
+  block:
+
+  - name: 'Store vault password (as root).'
+    ansible.builtin.copy:
+      dest: '~/.dotfiles_vault_password'
+      content: "{{ password }}"
+      mode: '0600'
+
+  - name: 'Execute install script (as root).'
+    ansible.builtin.shell: '/bin/bash <(curl -sL "https://raw.githubusercontent.com/ndouglas/dotfiles/main/install.sh")'
+    args:
+      chdir: '~'
+      executable: '/bin/bash'
+      creates: '~/.dotfiles'
+
+  - name: 'Enable passwordless sudo.'
+    ansible.builtin.copy:
+      content: "{{ my.name.lower }} ALL=(ALL:ALL) NOPASSWD:ALL"
+      dest: "/etc/sudoers.d/{{ my.name.lower }}"
+      mode: 0440
+
+- name: 'Install dotfiles as normal user.'
+  vars:
+    ansible_ssh_pass: "{{ password }}"
+  block:
+
+  - name: 'Store vault password (as normal user).'
+    ansible.builtin.copy:
+      dest: '~/.dotfiles_vault_password'
+      content: "{{ password }}"
+      mode: '0600'
+
+  - name: 'Execute install script (as normal user).'
+    ansible.builtin.shell: '/bin/bash <(curl -sL "https://raw.githubusercontent.com/ndouglas/dotfiles/main/install.sh")'
+    args:
+      chdir: '~'
+      executable: '/bin/bash'
+      creates: '~/.dotfiles'
+
+  - name: 'Set user and group.'
+    ansible.builtin.include_role:
+      name: 'ndouglas.deploy_dotfiles'
+      tasks_from: 'set_dotfiles_user.yaml'
+    when: 'user is not defined or group is not defined'
+
+- name: 'Run host-specific setup (if applicable).'
+  block:
+
+  - name: 'Check for existence of host-specific task.'
+    delegate_to: 'localhost'
+    ansible.builtin.stat:
+      path: "{{ role_path }}/tasks/hosts/{{ inventory_hostname }}.yaml"
+    register: host_task_path
+
+  - name: 'Set common facts.'
+    ansible.builtin.include_role:
+      name: 'ndouglas.deploy_dotfiles'
+      tasks_from: 'set_common_facts.yaml'
+    when: 'host_task_path.stat.exists'
+
+  - name: 'Execute host-specific task.'
+    ansible.builtin.include: "tasks/hosts/{{ inventory_hostname }}.yaml"
+    when: 'host_task_path.stat.exists'
