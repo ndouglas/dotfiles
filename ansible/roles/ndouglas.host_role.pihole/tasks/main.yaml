@@ -8,6 +8,19 @@
     sysctl_set: yes
     sysctl_file: '/etc/sysctl.conf'
 
+- name: 'Unblock port 53.'
+  ansible.builtin.lineinfile:
+    path: '/etc/systemd/resolved.conf'
+    regexp: '^#?DNSStubListener=yes'
+    line: 'DNSStubListener=no'
+  register: 'resolved_conf'
+
+- name: 'Restart resolved.'
+  ansible.builtin.service:
+    name: 'systemd-resolved'
+    state: 'restarted'
+  when: 'resolved_conf.changed'
+
 - name: 'Pi-Hole directories.'
   become: yes
   file:
