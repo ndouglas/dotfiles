@@ -1,6 +1,14 @@
+- name: 'Set up Docker.'
+  ansible.builtin.include_role:
+    name: 'ndouglas.host_role.docker'
+
+- name: 'Set up Pi-Hole.'
+  ansible.builtin.include_role:
+    name: 'ndouglas.host_role.pihole'
+
 - name: 'Set up Borg backups.'
   ansible.builtin.include_role:
     name: 'ndouglas.host_role.borg'
   vars:
     borg_source_directories:
-      - '/home/nathan/test'
+      - '/opt/pihole/etc'

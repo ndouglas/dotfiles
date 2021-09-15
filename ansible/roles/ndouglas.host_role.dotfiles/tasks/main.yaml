@@ -1,0 +1,35 @@
+- name: 'Install Apt packages.'
+  become: yes
+  ansible.builtin.apt:
+    name:
+      - 'curl'
+      - 'git'
+      - 'python3'
+      - 'python3-pip'
+      - 'ssh'
+      - 'sudo'
+    update_cache: yes
+
+- name: 'Install Pip packages.'
+  ansible.builtin.pip:
+    name:
+      - 'ansible'
+
+- name: 'Store vault password (as root).'
+  ansible.builtin.copy:
+    dest: '~/.dotfiles_vault_password'
+    content: "{{ password }}"
+    mode: '0600'
+
+- name: 'Enable passwordless sudo.'
+  ansible.builtin.copy:
+    content: "{{ my.name.lower }} ALL=(ALL:ALL) NOPASSWD:ALL"
+    dest: "/etc/sudoers.d/{{ my.name.lower }}"
+    mode: 0440
+
+- name: 'Execute install script (as root).'
+  ansible.builtin.shell: '/bin/bash <(curl -sL "https://raw.githubusercontent.com/ndouglas/dotfiles/main/install.sh")'
+  args:
+    chdir: '~'
+    executable: '/bin/bash'
+    creates: '~/.dotfiles'

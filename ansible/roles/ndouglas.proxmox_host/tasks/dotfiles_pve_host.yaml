@@ -1,5 +1,20 @@
 - name: 'Gather facts about this host.'
   ansible.builtin.setup:
+  remote_user: 'root'
+
+- name: 'Install dotfiles.'
+  remote_user: 'root'
+  ansible.builtin.include_role:
+    name: 'ndouglas.host_role.dotfiles'
+
+- name: 'Install dotfiles as normal user.'
+  ansible.builtin.include_role:
+    name: 'ndouglas.host_role.dotfiles'
+  vars:
+    ansible_ssh_pass: "{{ password }}"
+
+- name: 'Gather facts about this host.'
+  ansible.builtin.setup:
 
 - name: 'Set user and group.'
   ansible.builtin.include_role:
@@ -8,14 +23,13 @@
   when: 'user is not defined or group is not defined'
 
 - name: 'Run host-specific setup (if applicable).'
-  remote_user: 'root'
   block:
 
   - name: 'Check for existence of host-specific task.'
     delegate_to: 'localhost'
     ansible.builtin.stat:
       path: "{{ role_path }}/tasks/hosts/{{ inventory_hostname }}.yaml"
-    register: 'host_task_path'
+    register: host_task_path
 
   - name: 'Set common facts.'
     ansible.builtin.include_role:

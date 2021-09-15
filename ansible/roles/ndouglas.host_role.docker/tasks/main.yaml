@@ -1,0 +1,21 @@
+- name: 'Install Docker.'
+  become: yes
+  ansible.builtin.apt:
+    pkg:
+      - 'docker.io'
+    state: 'latest'
+    update_cache: yes
+
+- name: 'Docker Python packages.'
+  become: yes
+  ansible.builtin.pip:
+    name:
+      - 'docker'
+    state: 'latest'
+
+- name: 'Start the Docker service.'
+  become: yes
+  ansible.builtin.systemd:
+    name: 'docker'
+    state: 'started'
+    enabled: yes

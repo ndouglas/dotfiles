@@ -2,10 +2,6 @@
 - name: 'Gather host facts.'
   ansible.builtin.include: 'set_pve_host_facts.yaml'
 
-- name: 'Debug stuff.'
-  ansible.builtin.debug:
-    var: 'hostvars[inventory_hostname]'
-
 - name: 'Create and start the container.'
   delegate_to: "{{ pve_node }}"
   become: yes
