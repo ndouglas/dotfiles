@@ -7,6 +7,11 @@
   become: yes
   block:
 
+  - name: 'Download template if it does not already exist.'
+    ansible.builtin.shell:
+      cmd: "pveam download local {{ pve_ostemplate | default(proxmox.pve_ostemplate) }}"
+      creates: "/var/lib/vz/template/cache/{{ pve_ostemplate | default(proxmox.pve_ostemplate) }}"
+
   - name: 'Create container.'
     community.general.proxmox:
       vmid: "{{ pve_vm_id }}"
@@ -21,7 +26,7 @@
       password: "{{ password }}"
       hostname: "{{ inventory_hostname }}"
       onboot: "{{ pve_onboot | default('yes') }}"
-      ostemplate: "local:vztmpl/{{ proxmox.pve_ostemplate }}"
+      ostemplate: "local:vztmpl/{{ pve_ostemplate | default(proxmox.pve_ostemplate) }}"
       description: "{{ inventory_hostname }}"
       netif: '{"net0":"type=veth,name=eth0,ip=dhcp,bridge=vmbr0,firewall=1,hwaddr={{ pve_mac_address }}"}'
       unprivileged: "{{ pve_unprivileged | default('no') }}"
