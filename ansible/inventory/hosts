@@ -69,7 +69,7 @@ all:
               pve_memory_size: 2048
               pve_rootfs_size: 16
               description: |
-                Pi-Hole, currently unused.
+                Pi-Hole.
             ball:
               pve_cores: 2
               pve_memory_size: 2048
