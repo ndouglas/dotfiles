@@ -17,7 +17,7 @@
   become: yes
   ansible.builtin.hostname:
     name: "{{ hostname }}"
-  when: 'not host_is_mac'
+  when: 'not host_is_mac and not host_is_synology'
 
 - name: 'Enable passwordless sudo.'
   become: yes
