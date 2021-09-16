@@ -74,6 +74,7 @@
   ansible.builtin.pip:
     name: 'pip'
     state: 'forcereinstall'
+  changed_when: no
 
 - name: 'Install Pip packages.'
   ansible.builtin.pip:
