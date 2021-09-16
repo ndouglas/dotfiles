@@ -87,6 +87,7 @@
       - 'requests'
       - 'torrent_parser'
       - 'virtualenv'
+    extra_args: '--ignore-installed'
 
 - name: 'Install non-Synology Pip packages.'
   ansible.builtin.pip:
