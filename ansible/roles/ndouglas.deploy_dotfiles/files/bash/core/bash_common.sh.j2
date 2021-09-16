@@ -21,6 +21,6 @@ set -o pipefail;
 set +o errexit;
 
 # Source local modifications.
-if [ -e "${dotfiles_home }/.bash_local" ]; then
+if [ -e "${dotfiles_home}/.bash_local" ]; then
   source "${dotfiles_home}/.bash_local";
 fi;
