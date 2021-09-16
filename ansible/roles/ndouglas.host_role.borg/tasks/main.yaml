@@ -1,0 +1,83 @@
+- name: 'Setup Borg backups.'
+  become: yes
+  block:
+
+  - name: 'Set some normal facts.'
+    ansible.builtin.set_fact:
+      borg_repository: "{{ borg.defaults.username }}@{{ borg.defaults.server }}:{{ borg.defaults.path }}/{{ inventory_hostname }}"
+      borgmatic_cron_hour: "{{ 6 | random(seed=inventory_hostname) }}"
+      borgmatic_cron_minute: "{{ 60 | random(seed=inventory_hostname) }}"
+      borgmatic_cron_checks_day: "{{ 28 | random(seed=inventory_hostname) }}"
+      borgmatic_cron_checks_hour: "{{ range(7, 24) | random(seed=inventory_hostname) }}"
+      borgmatic_cron_checks_minute: "{{ 59 | random(seed=inventory_hostname) }}"
+      borg_retention_policy:
+        keep_hourly: 3
+        keep_daily: 7
+        keep_weekly: 4
+        keep_monthly: 6
+      ssh_key_path: '~/.ssh/id_rsa'
+
+  - name: 'Set source directories.'
+    ansible.builtin.set_fact:
+      borg_source_directories: "{{ borg.defaults.source_directories }}"
+    when: 'borg_source_directories is undefined and borg.defaults.source_directories is defined'
+
+  - name: 'Set encryption passphrase.'
+    ansible.builtin.set_fact:
+      borg_encryption_passphrase: "{{ borg.defaults.encryption_passphrase }}"
+    when: 'borg_encryption_passphrase is undefined and borg.defaults.encryption_passphrase is defined'
+
+  - name: 'Set checks.'
+    ansible.builtin.set_fact:
+      borgmatic_checks: "{{ borg.defaults.checks }}"
+    when: 'borgmatic_checks is undefined and borg.defaults.checks is defined'
+
+  - name: 'Set check-last'
+    ansible.builtin.set_fact:
+      borgmatic_check_last: "{{ borg.defaults.check_last }}"
+    when: 'borgmatic_check_last is undefined and borg.defaults.check_last is defined'
+
+  - name: 'Set store-atime'
+    ansible.builtin.set_fact:
+      borgmatic_store_atime: "{{ borg.defaults.store_atime }}"
+    when: 'borgmatic_store_atime is undefined and borg.defaults.store_atime is defined'
+
+  - name: 'Set store-ctime'
+    ansible.builtin.set_fact:
+      borgmatic_store_ctime: "{{ borg.defaults.store_ctime }}"
+    when: 'borgmatic_store_ctime is undefined and borg.defaults.store_ctime is defined'
+
+  - name: 'Set exclude-patterns.'
+    ansible.builtin.set_fact:
+      borg_exclude_patterns: "{{ borg.defaults.exclude_patterns }}"
+    when: 'borg_exclude_patterns is undefined and borg.defaults.exclude_patterns is defined'
+
+  - name: 'Set remote-path.'
+    ansible.builtin.set_fact:
+      borg_remote_path: "{{ borg.defaults.remote_path }}"
+    when: 'borg_remote_path is undefined and borg.defaults.remote_path is defined'
+
+  - name: 'Set up Borg backups.'
+    ansible.builtin.include_role:
+      name: 'm3nu.ansible_role_borgbackup'
+
+  - name: 'Read SSH public key.'
+    ansible.builtin.shell: 'cat ~/.ssh/id_rsa.pub'
+    register: ssh_pub_key
+    changed_when: no
+
+  - name: 'Copy SSH key to server.'
+    delegate_to: "{{ borg.defaults.server }}"
+    remote_user: "{{ my.name.lower }}"
+    become: yes
+    ansible.posix.authorized_key:
+      user: "{{ my.name.lower }}"
+      key: "{{ ssh_pub_key.stdout }}"
+      state: 'present'
+
+  - name: 'Init the Borg backup.'
+    ansible.builtin.shell: 'borgmatic init --encryption repokey-blake2 && touch ~/.borg_repo_init'
+    args:
+      chdir: '~'
+      executable: '/bin/bash'
+      creates: '~/.borg_repo_init'
