@@ -43,11 +43,52 @@ all:
         beesbury:
         # Nate's Pi 400
         estermont:
-    kubernetes:
-      hosts:
-        karstark:
-        kellington:
-        kettleblack:
+    k8s:
+      vars:
+        pve_cores: 4
+        pve_memory_size: 16384
+        pve_rootfs_size: 32
+      children:
+        k8s_masters:
+          vars:
+            k8s_role: 'master'
+          hosts:
+            karstark:
+            liddle:
+            manderly:
+            norcross:
+        k8s_nodes:
+          vars:
+            k8s_role: 'node'
+          hosts:
+            kellington:
+            kettleblack:
+            lightfoot:
+            lipps:
+            manwoody:
+            marsh:
+            norrey:
+            norridge:
+        karhold:
+          hosts:
+            karstark:
+            kellington:
+            kettleblack:
+        longtable:
+          hosts:
+            liddle:
+            lightfoot:
+            lipps:
+        mistwood:
+          hosts:
+            manderly:
+            manwoody:
+            marsh:
+        ninestars:
+          hosts:
+            norcross:
+            norrey:
+            norridge:
     windows:
       hosts:
         # Workshop PC
@@ -86,9 +127,17 @@ all:
             inchfield:
             jast:
             karstark:
+              description: |
+                Kubernetes Master (Karhold)
             liddle:
+              description: |
+                Kubernetes Master (Longtable)
             manderly:
+              description: |
+                Kubernetes Master (Mistwood)
             norcross:
+              description: |
+                Kubernetes Master (Ninestars)
             oakheart:
             paege:
             qoherys:
@@ -115,9 +164,17 @@ all:
             ironmaker:
             jordayne:
             kellington:
+              description: |
+                Kubernetes Node (Karhold)
             lightfoot:
+              description: |
+                Kubernetes Node (Longtable)
             manwoody:
+              description: |
+                Kubernetes Node (Mistwood)
             norrey:
+              description: |
+                Kubernetes Node (Ninestars)
             oldflowers:
             poole:
             qorgyle:
@@ -144,9 +201,17 @@ all:
             ironsmith:
             justman:
             kettleblack:
+              description: |
+                Kubernetes Node (Karhold)
             lipps:
+              description: |
+                Kubernetes Node (Longtable)
             marsh:
+              description: |
+                Kubernetes Node (Mistwood)
             norridge:
+              description: |
+                Kubernetes Node (Mistwood)
             orkwood:
             prester:
             quagg:
