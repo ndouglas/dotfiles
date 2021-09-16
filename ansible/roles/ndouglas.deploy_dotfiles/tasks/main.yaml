@@ -10,6 +10,11 @@
   ansible.builtin.include: 'create_normal_user.yaml'
   when: 'user == "root"'
 
+- name: 'Set the hostname explicitly.'
+  become: yes
+  ansible.builtin.hostname:
+    name: "{{ inventory_hostname }}"
+
 - name: 'Enable passwordless sudo.'
   become: yes
   ansible.builtin.copy:
