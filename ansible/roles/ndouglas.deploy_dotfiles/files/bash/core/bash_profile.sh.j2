@@ -1,7 +1,9 @@
 # ~/.bash_profile: executed by bash(1) for interactive login shells.
 
+dotfiles_home="{{ ansible_env.HOME }}";
+
 # Include bash_common.
-source "{{ dotfiles_home }}/.bash_common";
+source "${dotfiles_home}/.bash_common";
 
 # Create prompt.
-source "{{ dotfiles_home }}/.bash_prompt";
+source "${dotfiles_home}/.bash_prompt";

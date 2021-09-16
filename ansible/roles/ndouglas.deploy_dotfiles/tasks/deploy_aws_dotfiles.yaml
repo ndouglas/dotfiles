@@ -1,11 +1,7 @@
 ---
-- name: 'Set dotfiles_home directory.'
-  ansible.builtin.include: 'set_dotfiles_home_directory.yaml'
-  when: 'dotfiles_home is not defined'
-
 - name: 'Set facts for the AWS config file path.'
   ansible.builtin.set_fact:
-    aws_config_dir: "{{ dotfiles_home }}/.aws"
+    aws_config_dir: "{{ ansible_env.HOME }}/.aws"
 
 - name: 'Delete the AWS config directory.'
   ansible.builtin.file:

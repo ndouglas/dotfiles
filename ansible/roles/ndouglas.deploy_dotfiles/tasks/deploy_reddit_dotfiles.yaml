@@ -1,12 +1,8 @@
 ---
 
-- name: 'Set dotfiles_home directory.'
-  ansible.builtin.include: 'set_dotfiles_home_directory.yaml'
-  when: 'dotfiles_home is not defined'
-
 - name: 'Set facts for the Reddit config file path.'
   ansible.builtin.set_fact:
-    reddit_config_dir: "{{ dotfiles_home }}/.reddit.d"
+    reddit_config_dir: "{{ ansible_env.HOME }}/.reddit.d"
 
 - name: 'Delete the Reddit config directory.'
   ansible.builtin.file:

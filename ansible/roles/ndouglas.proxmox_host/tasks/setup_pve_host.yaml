@@ -1,3 +1,7 @@
+- name: 'Switch back to a normal connection method.'
+  ansible.builtin.set_fact:
+    ansible_connection: 'ssh'
+
 - name: 'Run host-specific setup (if applicable).'
   remote_user: 'root'
   block:
@@ -22,7 +26,11 @@
     ansible.builtin.include_role:
       name: 'ndouglas.deploy_dotfiles'
       tasks_from: 'set_common_facts.yaml'
-    when: 'host_task_path.stat.exists'
+
+  - name: 'Install common packages.'
+    ansible.builtin.include_role:
+      name: 'ndouglas.deploy_dotfiles'
+      tasks_from: 'install_common_packages.yaml'
 
   - name: 'Execute host-specific task.'
     ansible.builtin.include: "tasks/hosts/{{ inventory_hostname }}.yaml"

@@ -1,12 +1,8 @@
 ---
 
-- name: 'Set dotfiles_home directory.'
-  ansible.builtin.include: 'set_dotfiles_home_directory.yaml'
-  when: 'dotfiles_home is not defined'
-
 - name: 'Set facts for the Filebot config path.'
   ansible.builtin.set_fact:
-    filebot_config_dir: "{{ dotfiles_home }}/.filebot"
+    filebot_config_dir: "{{ ansible_env.HOME }}/.filebot"
 
 - name: "Create temporary directory."
   ansible.builtin.tempfile:

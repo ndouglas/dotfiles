@@ -1,0 +1,15 @@
+- name: 'Install Kubernetes.'
+  ansible.builtin.include_role:
+    name: 'geerlingguy.kubernetes'
+  vars:
+    kubernetes_packages:
+      - name: 'kubelet'
+        state: 'present'
+      - name: 'kubectl'
+        state: 'present'
+      - name: 'kubeadm'
+        state: 'present'
+      - name: 'kubernetes-cni'
+        state: 'present'
+    kubernetes_version: '1.20'
+    kubernetes_role: "{{ k8s_role }}"

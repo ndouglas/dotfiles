@@ -1,1 +1,3 @@
 - src: m3nu.ansible_role_borgbackup
+- src: geerlingguy.docker
+- src: geerlingguy.kubernetes

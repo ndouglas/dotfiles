@@ -41,7 +41,6 @@
       storage: 'local'
       pubkey: "{{ proxmox.pve_ssh_pub_key }}"
       proxmox_default_behavior: 'no_defaults'
-      force: yes
 
   - name: 'Append additional options to VM configuration.'
     ansible.builtin.blockinfile:
@@ -49,6 +48,7 @@
       block: |
         lxc.apparmor.profile: unconfined
         lxc.apparmor.raw: mount,
+      unsafe_writes: yes
 
   - name: 'Start container.'
     community.general.proxmox:

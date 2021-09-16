@@ -10,10 +10,14 @@
   ansible.builtin.include: 'create_normal_user.yaml'
   when: 'user == "root"'
 
+- name: 'Install some universally useful packages.'
+  ansible.builtin.include: 'install_common_packages.yaml'
+
 - name: 'Set the hostname explicitly.'
   become: yes
   ansible.builtin.hostname:
     name: "{{ hostname }}"
+  when: 'not host_is_mac'
 
 - name: 'Enable passwordless sudo.'
   become: yes
@@ -27,13 +31,6 @@
   become: yes
   community.general.timezone:
     name: 'America/New_York'
-
-- name: 'Set dotfiles_home directory.'
-  ansible.builtin.include: 'set_dotfiles_home_directory.yaml'
-  when: 'dotfiles_home is not defined'
-
-- name: 'Install some universally useful packages.'
-  ansible.builtin.include: 'install_common_packages.yaml'
 
 - name: 'Deploy Bash dotfiles.'
   ansible.builtin.include: 'deploy_bash_dotfiles.yaml'
@@ -81,5 +78,5 @@
     name: 'update-dotfiles'
     minute: "{{ 60 | random(seed=user_at_hostname) }}"
     job: |
-      /bin/bash -lc '"{{ dotfiles_home }}"/.dotfiles/cron.sh;'
+      /bin/bash -lc '~/.dotfiles/cron.sh;'
   when: 'not host_is_synology'

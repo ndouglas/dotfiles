@@ -1,0 +1,27 @@
+---
+- name: 'Gather host facts.'
+  ansible.builtin.include_role:
+    name: 'ndouglas.proxmox_host'
+    tasks_from: 'set_pve_host_facts.yaml'
+
+- name: 'Create hosts.'
+  ansible.builtin.include_role:
+    name: 'ndouglas.proxmox_host'
+    tasks_from: 'create_pve_host.yaml'
+
+- name: 'Setup hosts.'
+  ansible.builtin.include_role:
+    name: 'ndouglas.proxmox_host'
+    tasks_from: 'setup_pve_host.yaml'
+
+- name: 'Use the root user for the time being.'
+  remote_user: 'root'
+  block:
+
+  - name: 'Setup Docker on hosts.'
+    ansible.builtin.include_role:
+      name: 'ndouglas.host_role.docker'
+
+  - name: 'Install packages and other requirements.'
+    ansible.builtin.include_role:
+      name: 'ndouglas.host_role.k8s'

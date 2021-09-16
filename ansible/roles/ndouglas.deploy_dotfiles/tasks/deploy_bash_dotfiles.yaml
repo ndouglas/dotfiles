@@ -33,10 +33,6 @@
   ansible.builtin.include: 'set_dotfiles_user.yaml'
   when: 'user is not defined'
 
-- name: 'Set dotfiles_home directory.'
-  ansible.builtin.include: 'set_dotfiles_home_directory.yaml'
-  when: 'dotfiles_home is not defined'
-
 ###############################################################################
 # GENERIC & SPECIAL UNIVERSAL ITEMS
 ###############################################################################
@@ -46,7 +42,7 @@
   vars:
     id: "{{ dotfile_id }}"
     source: "{{ role_path }}/files/bash/{{ dotfile_id }}"
-    dest: "{{ dotfiles_home }}/.bash.{{ dotfile_id }}.d"
+    dest: "{{ ansible_env.HOME }}/.bash.{{ dotfile_id }}.d"
   with_items: "{{ bash_generic_items + bash_special_items }}"
   loop_control:
     loop_var: 'dotfile_id'
@@ -60,7 +56,7 @@
 
     - name: 'Create aliases for various BSD tools to the GNU equivalents.'
       ansible.builtin.copy:
-        dest: "{{ dotfiles_home }}/.bash.aliases.d/{{ item }}.sh"
+        dest: "{{ ansible_env.HOME }}/.bash.aliases.d/{{ item }}.sh"
         content: |
           #!/usr/bin/env bash
 
@@ -79,7 +75,7 @@
 
     - name: 'Create alias for md5sum.'
       ansible.builtin.copy:
-        dest: "{{ dotfiles_home }}/.bash.aliases.d/md5sum.sh"
+        dest: "{{ ansible_env.HOME }}/.bash.aliases.d/md5sum.sh"
         content: |
           #!/usr/bin/env bash
 
@@ -100,11 +96,11 @@
       vars:
         id: 'beets'
         source: "{{ role_path }}/files/bash/beets"
-        dest: "{{ dotfiles_home }}/.bash.beets.d"
+        dest: "{{ ansible_env.HOME }}/.bash.beets.d"
 
     - name: 'Set BEETSDIR environment variable.'
       ansible.builtin.copy:
-        dest: "{{ dotfiles_home }}/.bash.env.d/beetsdir.sh"
+        dest: "{{ ansible_env.HOME }}/.bash.env.d/beetsdir.sh"
         content: |
           #!/usr/bin/env bash
 
@@ -121,7 +117,7 @@
   vars:
     id: 'comics'
     source: "{{ role_path }}/files/bash/comics"
-    dest: "{{ dotfiles_home }}/.bash.comics.d"
+    dest: "{{ ansible_env.HOME }}/.bash.comics.d"
   when: "host_is_synology and hostname == 'dayne'"
 
 ###############################################################################
@@ -138,7 +134,7 @@
   vars:
     id: 'host'
     source: "{{ role_path }}/files/bash/host/{{ hostname }}"
-    dest: "{{ dotfiles_home }}/.bash.host.d"
+    dest: "{{ ansible_env.HOME }}/.bash.host.d"
   when: 'host_dotfiles_path.stat.exists'
 
 ###############################################################################
@@ -150,7 +146,7 @@
 
     - name: 'Syno-CLI Path Components'
       ansible.builtin.copy:
-        dest: "{{ dotfiles_home }}/.bash.path.d/syno-cli.sh"
+        dest: "{{ ansible_env.HOME }}/.bash.path.d/syno-cli.sh"
         content: |
          #!/usr/bin/env bash
 
@@ -169,7 +165,7 @@
   vars:
     id: 'pi'
     source: "{{ role_path }}/files/bash/pi"
-    dest: "{{ dotfiles_home }}/.bash.pi.d"
+    dest: "{{ ansible_env.HOME }}/.bash.pi.d"
   when: 'host_is_raspbian'
 
 ###############################################################################
@@ -184,6 +180,6 @@
     group: "{{ group }}"
     mode: '0755'
     src: "{{ item }}"
-    dest: "{{ dotfiles_home }}/.{{ item | basename | regex_replace('^([^\\.]*).*', '\\1') }}"
+    dest: "{{ ansible_env.HOME }}/.{{ item | basename | regex_replace('^([^\\.]*).*', '\\1') }}"
   with_fileglob:
     - "{{ role_path }}/files/bash/core/*.sh.j2"

@@ -4,10 +4,6 @@
   ansible.builtin.include: 'set_dotfiles_user.yaml'
   when: 'user is not defined'
 
-- name: 'Set dotfiles_home directory.'
-  ansible.builtin.include: 'set_dotfiles_home_directory.yaml'
-  when: 'dotfiles_home is not defined'
-
 - name: "Create temporary directory."
   ansible.builtin.tempfile:
     state: 'directory'

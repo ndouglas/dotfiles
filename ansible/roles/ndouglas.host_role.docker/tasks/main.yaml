@@ -1,21 +1,13 @@
 - name: 'Install Docker.'
-  become: yes
-  ansible.builtin.apt:
-    pkg:
-      - 'docker.io'
-    state: 'latest'
-    update_cache: yes
-
-- name: 'Docker Python packages.'
-  become: yes
-  ansible.builtin.pip:
-    name:
-      - 'docker'
-    state: 'latest'
-
-- name: 'Start the Docker service.'
-  become: yes
-  ansible.builtin.systemd:
-    name: 'docker'
-    state: 'started'
-    enabled: yes
+  ansible.builtin.include_role:
+    name: 'geerlingguy.docker'
+  vars:
+    docker_edition: 'ce'
+    docker_package: "docker-{{ docker_edition }}"
+    docker_package_state: 'present'
+    docker_service_state: 'started'
+    docker_service_enabled: yes
+    docker_restart_handler_state: 'restarted'
+    docker_install_compose: yes
+    docker_users:
+      - "{{ my.name.lower }}"

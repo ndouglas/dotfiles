@@ -23,10 +23,12 @@
 - name: 'Run all sysctl updates.'
   ansible.builtin.shell:
     cmd: 'sysctl --system'
+  changed_when: no
 
 - name: 'Disable swap if not already disabled.'
   ansible.builtin.shell:
     cmd: 'swapoff -a'
+  changed_when: no
 
 - name: 'Modprobe kernel modules.'
   community.general.modprobe:

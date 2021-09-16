@@ -5,7 +5,7 @@
 
 # General scripts.
 bash_segments="{{ bash_ordered_segments }}";
-dotfiles_home="{{ dotfiles_home }}";
+dotfiles_home="{{ ansible_env.HOME }}";
 for bash_dir in ${bash_segments}; do
   dotfiles_dir="${dotfiles_home}/.bash.${bash_dir}.d";
   if test -n "$(shopt -s nullglob; echo "${dotfiles_dir}"/*.sh)"; then
@@ -20,20 +20,7 @@ done;
 set -o pipefail;
 set +o errexit;
 
-# Set up Python3 venv.
-if [ -x "$(command -v python3)" ]; then
-  if [ ! -d "${HOME}/.venv" ]; then
-    pushd "${HOME}" > /dev/null;
-    python3 -m venv .venv;
-    popd > /dev/null;
-  fi
-  export VIRTUAL_ENV_DISABLE_PROMPT=1;
-  if [ -e "${HOME}/.venv/bin/activate" ]; then
-    source "${HOME}/.venv/bin/activate";
-  fi;
-fi
-
 # Source local modifications.
-if [ -e "{{ dotfiles_home }}/.bash_local" ]; then
-  source "{{ dotfiles_home }}/.bash_local";
+if [ -e "${dotfiles_home }/.bash_local" ]; then
+  source "${dotfiles_home}/.bash_local";
 fi;
