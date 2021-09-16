@@ -70,6 +70,11 @@
     update_homebrew: no
   when: 'host_uses_homebrew'
 
+- name: 'Make sure pip is at the latest version.'
+  ansible.builtin.pip:
+    name: 'pip'
+    state: 'forcereinstall'
+
 - name: 'Install Pip packages.'
   ansible.builtin.pip:
     name:
