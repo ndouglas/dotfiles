@@ -8,9 +8,14 @@
   block:
 
   - name: 'Download template if it does not already exist.'
-    ansible.builtin.shell:
-      cmd: "pveam download local {{ pve_ostemplate | default(proxmox.pve_ostemplate) }}"
-      creates: "/var/lib/vz/template/cache/{{ pve_ostemplate | default(proxmox.pve_ostemplate) }}"
+    community.general.proxmox_template:
+      node: "{{ pve_node }}"
+      api_user: "{{ proxmox.pve_api_username }}"
+      api_password: "{{ proxmox.pve_api_password }}"
+      api_host: "{{ pve_node }}"
+      storage: 'local'
+      content_type: 'vztmpl'
+      template: "{{ pve_ostemplate | default(proxmox.pve_ostemplate) }}"
 
   - name: 'Create container.'
     community.general.proxmox:
