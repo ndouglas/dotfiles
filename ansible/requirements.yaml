@@ -1,4 +1,5 @@
 collections:
+- name: community.general
 - name: community.kubernetes
 roles:
 - src: m3nu.ansible_role_borgbackup
