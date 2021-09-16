@@ -6,6 +6,9 @@
   remote_user: 'root'
   block:
 
+  - name: 'Wait until containers are reachable.'
+    ansible.builtin.wait_for_connection:
+
   - name: 'Gather facts about this host.'
     remote_user: 'root'
     ansible.builtin.setup:

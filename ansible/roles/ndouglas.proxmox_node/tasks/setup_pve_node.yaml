@@ -76,7 +76,7 @@
     name: 'pveproxy'
     state: 'restarted'
 
-- name: 'Define the docker-default apparmor profile.'
+- name: 'Define the docker-default AppArmor profile.'
   ansible.builtin.copy:
     dest: '/etc/apparmor.d/docker-default'
     content: |
@@ -113,3 +113,8 @@
         deny /sys/firmware/** rwklx,
         deny /sys/kernel/security/** rwklx,
       }
+
+- name: 'Restart AppArmor.'
+  ansible.builtin.systemd:
+    name: 'pveproxy'
+    state: 'restarted'

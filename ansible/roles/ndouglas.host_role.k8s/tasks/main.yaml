@@ -13,3 +13,7 @@
         state: 'present'
     kubernetes_version: '1.20'
     kubernetes_role: "{{ k8s_role }}"
+    kubernetes_ignore_preflight_errors: 'all'
+    kubernetes_join_command_extra_opts: "--ignore-preflight-errors={{ kubernetes_ignore_preflight_errors }}"
+    kubernetes_config_kubelet_configuration:
+      cgroupDriver: 'systemd'

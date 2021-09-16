@@ -48,6 +48,10 @@
       block: |
         lxc.apparmor.profile: unconfined
         lxc.apparmor.raw: mount,
+        lxc.cap.drop:
+        lxc.cgroup.devices.allow: a
+        lxc.mount.auto: proc:rw sys:rw
+        lxc.mount.entry: /dev/kmsg dev/kmsg none defaults,bind,create=file
       unsafe_writes: yes
 
   - name: 'Start container.'

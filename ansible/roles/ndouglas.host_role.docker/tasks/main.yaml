@@ -11,3 +11,6 @@
     docker_install_compose: yes
     docker_users:
       - "{{ my.name.lower }}"
+    docker_daemon_options:
+      exec-opts:
+        - 'native.cgroupdriver=systemd'

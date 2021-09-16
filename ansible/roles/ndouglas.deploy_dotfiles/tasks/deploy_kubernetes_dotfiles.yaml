@@ -21,7 +21,7 @@
 - name: 'Delete the Kubernetes config directory.'
   ansible.builtin.file:
     path: "{{ kubernetes_config_dir }}"
-    state: absent
+    state: 'absent'
   changed_when: no
 
 - name: 'Create the Kubernetes config directory.'
@@ -30,7 +30,7 @@
     owner: "{{ user }}"
     group: "{{ group }}"
     mode: '0700'
-    state: directory
+    state: 'directory'
   changed_when: no
 
 - name: "Copy Kubernetes dotfiles temporary directory -> {{ kubernetes_config_dir }}."
