@@ -39,7 +39,7 @@
   ansible.builtin.file:
     path: "{{ dest }}"
     force: yes
-    state: absent
+    state: 'absent'
   changed_when: no
 
 - name: "Create Bash dotfiles directory {{ dest }}."
