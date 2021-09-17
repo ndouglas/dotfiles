@@ -87,7 +87,6 @@ hostname_emoji:
   flint: '🌊'
   florent: '🦊'
   foote: '🗡️'
-  fossoway: '🍎'
   fowler: '🦅'
   frey: '⛩️'
   gardener: '🧤'
@@ -104,6 +103,7 @@ hostname_emoji:
   grell: '🦜'
   greyjoy: '🦑'
   grimm: '⛵'
+  harclay: '🌒'
   haigh: '🔱'
   harlton: '🌳'
   harroway: '🏰'
@@ -278,7 +278,6 @@ hostname_primary_colors:
   foote: 130
   footly: 188
   forrester: 59
-  fossoway: 220
   fowler: 19
   frey: 145
   gardener: 28
@@ -594,7 +593,6 @@ hostname_secondary_colors:
   foote: 59
   footly: 59
   forrester: 102
-  fossoway: 22
   fowler: 188
   frey: 19
   gardener: 102
@@ -910,7 +908,6 @@ hostname_tertiary_colors:
   foote: 102
   footly: 102
   forrester: 59
-  fossoway: 160
   fowler: 59
   frey: 59
   gardener: 108
