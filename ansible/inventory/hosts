@@ -33,7 +33,7 @@ all:
               primary: 220
               secondary: 32
               tertiary: 58
-          ryswell:
+        ryswell:
           pve_cluster_id: grey_garden
           prompt:
             emoji: '🐴'
