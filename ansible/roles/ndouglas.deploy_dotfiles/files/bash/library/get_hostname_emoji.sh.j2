@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+# Get Emoji for hostname.
+nd_get_hostname_emoji() {
+  : "${1?"Usage: ${FUNCNAME[0]} HOSTNAME"}";
+  the_hostname="${1}";
+  case "${the_hostname}" in
+  {% for item in hostvars %}
+    {{ item }}*) emoji="{{ hostvars[item].prompt.emoji }}";;
+  {% endfor %}
+    *)           emoji="❓";;
+  esac
+  echo "$(printf "${emoji}")";
+}

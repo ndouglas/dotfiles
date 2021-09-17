@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+# Get the tertiary color for the hostname.
+nd_get_hostname_tertiary_color() {
+  : "${1?"Usage: ${FUNCNAME[0]} HOSTNAME"}";
+  the_hostname="${1}";
+  case "${the_hostname}" in
+  {% for item in hostvars %}
+    {{ item }}*) color="$(tput setaf {{ hostvars[item].prompt.colors.tertiary }})";;
+  {% endfor %}
+    *)           color="$(tput setaf 4)";;
+  esac
+  echo "${color}";
+}

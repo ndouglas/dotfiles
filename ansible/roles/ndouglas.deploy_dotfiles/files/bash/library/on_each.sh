@@ -8,8 +8,11 @@ nd_on_each() {
   (
     nd_on_each_file_handler() {
       authorized_key="${1}";
-      host_at_hostname="$(basename "${authorized_key}" .pub)";
-      echo -e "$(printf "%20s" "${host_at_hostname}"):\t$(ssh "${host_at_hostname}" bash -l <<EOF
+      user_at_hostname="$(basename "${authorized_key}" .pub)";
+      user="$(echo "${user_at_hostname}" | cut -d@ -f1)";
+      hostname="$(echo "${user_at_hostname}" | cut -d@ -f2)";
+      prompt="$(nd_preview_hostname_prompt "${hostname}" "${user}" '~')";
+      echo -e "$(printf "%20s" "${prompt}"):\t$(ssh "${user_at_hostname}" bash -l <<EOF
 ${command}
 EOF
       )";
