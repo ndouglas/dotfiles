@@ -39,6 +39,8 @@ gitconfig:
 software_versions:
   python: '3.9'
 
+motd_base_url: "https://raw.githubusercontent.com/ndouglas/asoiaf-noble-house-images/master/utf8/40"
+
 # Structures Stored in the Vault
 
 # Password

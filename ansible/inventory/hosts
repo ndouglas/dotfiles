@@ -1,48 +1,121 @@
 all:
+  vars:
+    prompt:
+      emoji: ''
+      colors:
+        primary: 188
+        secondary: 159
+        tertiary: 102
   hosts:
     fossoway:
+      prompt:
+        emoji: '🍎'
+        colors:
+          primary: 220
+          secondary: 22
+          tertiary: 160
   children:
     pve_nodes:
       hosts:
         celtigar:
           pve_cluster_id: old_anchor
+          prompt:
+            emoji: '🦀'
+            colors:
+              primary: 52
+              secondary: 124
+              tertiary: 102
         lefford:
           pve_cluster_id: rain_house
-        ryswell:
+          prompt:
+            emoji: '☀️'
+            colors:
+              primary: 220
+              secondary: 32
+              tertiary: 58
+          ryswell:
           pve_cluster_id: grey_garden
+          prompt:
+            emoji: '🐴'
+            colors:
+              primary: 179
+              secondary: 160
+              tertiary: 138
     pbs_nodes:
       hosts:
         lefford:
     opnsense:
       hosts:
         marbrand:
+          prompt:
+            emoji: '🔥'
+            colors:
+              primary: 65
+              secondary: 172
+              tertiary: 52
     retropie:
       hosts:
-        peat:
+        # peat:
     synology:
       hosts:
         dayne:
           ansible_python_interpreter: /var/services/homes/nathan/python3/bin/python3
+          prompt:
+            emoji: '💫'
+            colors:
+              primary: 140
+              secondary: 225
+              tertiary: 59
         uller:
           ansible_python_interpreter: /var/services/homes/nathan/python3/bin/python3
+          prompt:
+            emoji: '🔥'
+            colors:
+              primary: 124
+              secondary: 11
+              tertiary: 136
     aquaria:
       hosts:
         # Reef-Pi (End Table)
-        graceford:
+        # graceford:
         # Reef-Pi (Credenza)
-        mertyns:
+        # mertyns:
     nates_office:
       hosts:
         # Home Assistant Client
         bridges:
+          prompt:
+            emoji: '🌉'
+            colors:
+              primary: 20
+              secondary: 223
+              tertiary: 143
     duggins_lab:
       hosts:
         # 3D Printer Controller
         ashford:
+          prompt:
+            emoji: '🌞'
+            colors:
+              primary: 208
+              secondary: 94
+              tertiary: 222
         # John's Pi 400 Desktop
         beesbury:
+          prompt:
+            emoji: '🐝'
+            colors:
+              primary: 11
+              secondary: 58
+              tertiary: 100
         # Nate's Pi 400
         estermont:
+          prompt:
+            emoji: '🐢'
+            colors:
+              primary: 114
+              secondary: 22
+              tertiary: 59
     k8s:
       vars:
         pve_cores: 4
@@ -92,11 +165,11 @@ all:
     windows:
       hosts:
         # Workshop PC
-        langward:
+        # langward:
         # John's PC
-        spicer:
+        # spicer:
         # VR Machine
-        velaryon:
+        # velaryon:
     pve_clusters:
       vars:
         description: |
@@ -112,6 +185,12 @@ all:
               pve_cores: 2
               pve_memory_size: 2048
               pve_rootfs_size: 16
+              prompt:
+                emoji: '🌿'
+                colors:
+                  primary: 184
+                  secondary: 19
+                  tertiary: 94
               description: |
                 Pi-Hole.
             ball:
@@ -119,37 +198,169 @@ all:
               pve_memory_size: 2048
               pve_rootfs_size: 16
               pve_ostemplate: 'ubuntu-18.04-standard_18.04.1-1_amd64.tar.gz'
+              prompt:
+                emoji: '☄'
+                colors:
+                  primary: 160
+                  secondary: 102
+                  tertiary: 160
               description: |
                 Unifi Controller.
             cafferen:
+              prompt:
+                emoji: '🦌'
+                colors:
+                  primary: 28
+                  secondary: 71
+                  tertiary: 102
             dalt:
+              prompt:
+                emoji: '🍋'
+                colors:
+                  primary: 127
+                  secondary: 184
+                  tertiary: 22
             egen:
+              prompt:
+                emoji: '✨'
+                colors:
+                  primary: 19
+                  secondary: 184
+                  tertiary: 145
             farman:
+              prompt:
+                emoji: '⛵'
+                colors:
+                  primary: 184
+                  secondary: 124
+                  tertiary: 19
             gardener:
+              prompt:
+                emoji: '🧤'
+                colors:
+                  primary: 28
+                  secondary: 102
+                  tertiary: 108
             haigh:
+              prompt:
+                emoji: '🔱'
+                colors:
+                  primary: 94
+                  secondary: 220
+                  tertiary: 137
             inchfield:
+              prompt:
+                emoji: '🏁'
+                colors:
+                  primary: 102
+                  secondary: 59
+                  tertiary: 102
             jast:
+              prompt:
+                emoji: '🦁'
+                colors:
+                  primary: 11
+                  secondary: 58
+                  tertiary: 145
             karstark:
+              prompt:
+                emoji: '🌟'
+                colors:
+                  primary: 102
+                  secondary: 102
+                  tertiary: 102
               description: |
                 Kubernetes Master (Karhold)
             liddle:
+              prompt:
+                emoji: '🌰'
+                colors:
+                  primary: 28
+                  secondary: 131
+                  tertiary: 108
               description: |
                 Kubernetes Master (Longtable)
             manderly:
+              prompt:
+                emoji: '🧜‍️'
+                colors:
+                  primary: 37
+                  secondary: 28
+                  tertiary: 114
               description: |
                 Kubernetes Master (Mistwood)
             norcross:
+              prompt:
+                emoji: '➕'
+                colors:
+                  primary: 102
+                  secondary: 59
+                  tertiary: 102
               description: |
                 Kubernetes Master (Ninestars)
             oakheart:
+              prompt:
+                emoji: '🍂'
+                colors:
+                  primary: 28
+                  secondary: 220
+                  tertiary: 100
             paege:
+              prompt:
+                emoji: '🐍'
+                colors:
+                  primary: 174
+                  secondary: 59
+                  tertiary: 102
             qoherys:
+              prompt:
+                emoji: '💀'
+                colors:
+                  primary: 179
+                  secondary: 124
+                  tertiary: 101
             rambton:
+              prompt:
+                emoji: '🐏'
+                colors:
+                  primary: 124
+                  secondary: 222
+                  tertiary: 88
             santagar:
+              prompt:
+                emoji: '🐆'
+                colors:
+                  primary: 188
+                  secondary: 19
+                  tertiary: 184
             tarly:
+              prompt:
+                emoji: '🏹'
+                colors:
+                  primary: 28
+                  secondary: 124
+                  tertiary: 52
             uffering:
+              prompt:
+                emoji: ''
+                colors:
+                  primary: 95
+                  secondary: 22
+                  tertiary: 145
             vaith:
+              prompt:
+                emoji: '🌞'
+                colors:
+                  primary: 208
+                  secondary: 11
+                  tertiary: 101
             waxley:
+              prompt:
+                emoji: '🕯️"'
+                colors:
+                  primary: 145
+                  secondary: 102
+                  tertiary: 160
         old_anchor:
           vars:
             pve_cluster_id: old_anchor
@@ -157,36 +368,174 @@ all:
             pve_network_id: 2
           hosts:
             allyrion:
+              prompt:
+                emoji: '✋'
+                colors:
+                  primary: 124
+                  secondary: 220
+                  tertiary: 52
             bettley:
+              prompt:
+                emoji: '🐞'
+                colors:
+                  primary: 220
+                  secondary: 18
+                  tertiary: 94
             cargyll:
+              prompt:
+                emoji: '🦢'
+                colors:
+                  primary: 124
+                  secondary: 220
+                  tertiary: 58
             darry:
+              prompt:
+                emoji: '👨‍🌾'
+                colors:
+                  primary: 94
+                  secondary: 131
+                  tertiary: 59
             erenford:
+              prompt:
+                emoji: '🦩'
+                colors:
+                  primary: 210
+                  secondary: 220
+                  tertiary: 95
             fell:
+              prompt:
+                emoji: '🌃'
+                colors:
+                  primary: 28
+                  secondary: 71
+                  tertiary: 102
             garner:
+              prompt:
+                emoji: '🦉'
+                colors:
+                  primary: 28
+                  secondary: 230
+                  tertiary: 130
             harclay:
+              prompt:
+                emoji: '🌒'
+                colors:
+                  primary: 19
+                  secondary: 104
+                  tertiary: 19
             ironmaker:
+              prompt:
+                emoji: '🗡️"'
+                colors:
+                  primary: 65
+                  secondary: 220
+                  tertiary: 22
             jordayne:
+              prompt:
+                emoji: '🪶'
+                colors:
+                  primary: 34
+                  secondary: 185
+                  tertiary: 70
             kellington:
+              prompt:
+                emoji: '📘'
+                colors:
+                  primary: 38
+                  secondary: 188
+                  tertiary: 178
               description: |
                 Kubernetes Node (Karhold)
             lightfoot:
+              prompt:
+                emoji: '👣'
+                colors:
+                  primary: 94
+                  secondary: 144
+                  tertiary: 94
               description: |
                 Kubernetes Node (Longtable)
             manwoody:
+              prompt:
+                emoji: '💀'
+                colors:
+                  primary: 223
+                  secondary: 59
+                  tertiary: 102
               description: |
                 Kubernetes Node (Mistwood)
             norrey:
+              prompt:
+                emoji: '🌿'
+                colors:
+                  primary: 22
+                  secondary: 11
+                  tertiary: 100
               description: |
                 Kubernetes Node (Ninestars)
             oldflowers:
+              prompt:
+                emoji: '✋'
+                colors:
+                  primary: 28
+                  secondary: 160
+                  tertiary: 188
             poole:
+              prompt:
+                emoji: '🔵'
+                colors:
+                  primary: 19
+                  secondary: 102
+                  tertiary: 19
             qorgyle:
+              prompt:
+                emoji: '🦂'
+                colors:
+                  primary: 124
+                  secondary: 167
+                  tertiary: 160
             redwyne:
+              prompt:
+                emoji: '🍇'
+                colors:
+                  primary: 19
+                  secondary: 22
+                  tertiary: 131
             selmy:
+              prompt:
+                emoji: '🌾'
+                colors:
+                  primary: 94
+                  secondary: 11
+                  tertiary: 137
             teague:
+              prompt:
+                emoji: '🔱'
+                colors:
+                  primary: 184
+                  secondary: 94
+                  tertiary: 100
             umber:
+              prompt:
+                emoji: '🧍‍♂️'
+                colors:
+                  primary: 160
+                  secondary: 94
+                  tertiary: 243
             vance:
+              prompt:
+                emoji: ''
+                colors:
+                  primary: 188
+                  secondary: 59
+                  tertiary: 102
             webber:
+              prompt:
+                emoji: '🕷️'
+                colors:
+                  primary: 174
+                  secondary: 59
+                  tertiary: 102
         rain_house:
           vars:
             pve_cluster_id: rain_house
@@ -194,43 +543,229 @@ all:
             pve_network_id: 3
           hosts:
             ambrose:
+              prompt:
+                emoji: '🐜'
+                colors:
+                  primary: 11
+                  secondary: 160
+                  tertiary: 172
             blackbar:
+              prompt:
+                emoji: '➖'
+                colors:
+                  primary: 188
+                  secondary: 59
+                  tertiary: 102
             caron:
+              prompt:
+                emoji: '🦜'
+                colors:
+                  primary: 11
+                  secondary: 159
+                  tertiary: 100
             donniger:
+              prompt:
+                emoji: '🌅'
+                colors:
+                  primary: 108
+                  secondary: 11
+                  tertiary: 160
             estren:
+              prompt:
+                emoji: '❎'
+                colors:
+                  primary: 28
+                  secondary: 188
+                  tertiary: 124
             fenn:
+              prompt:
+                emoji: '🌺'
+                colors:
+                  primary: 140
+                  secondary: 160
+                  tertiary: 159
             gaunt:
+              prompt:
+                emoji: '🍢'
+                colors:
+                  primary: 210
+                  secondary: 95
+                  tertiary: 59
             harlton:
+              prompt:
+                emoji: '🌳'
+                colors:
+                  primary: 28
+                  secondary: 188
+                  tertiary: 102
             ironsmith:
+              prompt:
+                emoji: '🧲'
+                colors:
+                  primary: 65
+                  secondary: 220
+                  tertiary: 22
             justman:
+              prompt:
+                emoji: '⚖️'
+                colors:
+                  primary: 19
+                  secondary: 178
+                  tertiary: 103
             kettleblack:
+              prompt:
+                emoji: '🍯'
+                colors:
+                  primary: 124
+                  secondary: 59
+                  tertiary: 52
               description: |
                 Kubernetes Node (Karhold)
             lipps:
+              prompt:
+                emoji: '👄'
+                colors:
+                  primary: 18
+                  secondary: 210
+                  tertiary: 61
               description: |
                 Kubernetes Node (Longtable)
             marsh:
+              prompt:
+                emoji: '🐸'
+                colors:
+                  primary: 184
+                  secondary: 28
+                  tertiary: 94
               description: |
                 Kubernetes Node (Mistwood)
             norridge:
+              prompt:
+                emoji: '🏹'
+                colors:
+                  primary: 19
+                  secondary: 173
+                  tertiary: 60
               description: |
                 Kubernetes Node (Ninestars)
             orkwood:
+              prompt:
+                emoji: '🌲'
+                colors:
+                  primary: 11
+                  secondary: 22
+                  tertiary: 100
             prester:
+              prompt:
+                emoji: '🐂'
+                colors:
+                  primary: 160
+                  secondary: 102
+                  tertiary: 160
             quagg:
+              prompt:
+                emoji: ''
+                colors:
+                  primary: 208
+                  secondary: 173
+                  tertiary: 59
             reed:
+              prompt:
+                emoji: '🐊'
+                colors:
+                  primary: 65
+                  secondary: 59
+                  tertiary: 108
             shadrich:
+              prompt:
+                emoji: '🐁'
+                colors:
+                  primary: 19
+                  secondary: 94
+                  tertiary: 188
             tudbury:
+              prompt:
+                emoji: '🐢'
+                colors:
+                  primary: 185
+                  secondary: 28
+                  tertiary: 106
             upcliff:
+              prompt:
+                emoji: ''
+                colors:
+                  primary: 37
+                  secondary: 23
+                  tertiary: 30
             varner:
+              prompt:
+                emoji: ''
+                colors:
+                  primary: 188
+                  secondary: 59
+                  tertiary: 102
             wode:
+              prompt:
+                emoji: '🦔'
+                colors:
+                  primary: 11
+                  secondary: 188
+                  tertiary: 100
         golden_tooth:
           hosts:
             appleton:
+              prompt:
+                emoji: '🌳'
+                colors:
+                  primary: 58
+                  secondary: 184
+                  tertiary: 102
             blanetree:
+              prompt:
+                emoji: '🍁'
+                colors:
+                  primary: 28
+                  secondary: 11
+                  tertiary: 94
             cassel:
+              prompt:
+                emoji: '🐺'
+                colors:
+                  primary: 145
+                  secondary: 102
+                  tertiary: 145
             drox:
+              prompt:
+                emoji: '🏹'
+                colors:
+                  primary: 220
+                  secondary: 59
+                  tertiary: 101
             elesham:
+              prompt:
+                emoji: '🌄'
+                colors:
+                  primary: 59
+                  secondary: 210
+                  tertiary: 95
             fiddler:
+              prompt:
+                emoji: '🎻'
+                colors:
+                  primary: 19
+                  secondary: 220
+                  tertiary: 100
             glover:
+              prompt:
+                emoji: '🧤'
+                colors:
+                  primary: 202
+                  secondary: 145
+                  tertiary: 102
             harroway:
+              prompt:
+                emoji: '🏰'
+                colors:
+                  primary: 208
+                  secondary: 94
+                  tertiary: 95

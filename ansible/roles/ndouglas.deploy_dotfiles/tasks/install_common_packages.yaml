@@ -72,12 +72,14 @@
   when: 'host_uses_homebrew'
 
 - name: 'Make sure pip is at the latest version.'
+  become: yes
   ansible.builtin.pip:
     name: 'pip'
     state: 'forcereinstall'
   changed_when: no
 
 - name: 'Install Pip packages.'
+  become: yes
   ansible.builtin.pip:
     name:
       - 'ansible'
