@@ -1,0 +1,7 @@
+- name: 'Use a local connection to gather facts.'
+  ansible.builtin.set_fact:
+    ansible_connection: 'local'
+
+- name: 'Display information about the container.'
+  ansible.builtin.debug:
+    var: 'hostvars[inventory_hostname].description'

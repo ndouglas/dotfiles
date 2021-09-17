@@ -14,6 +14,8 @@ all:
           primary: 220
           secondary: 22
           tertiary: 160
+      description: |
+        My primary personal laptop.
   children:
     pve_nodes:
       hosts:
@@ -25,6 +27,8 @@ all:
               primary: 52
               secondary: 124
               tertiary: 102
+          description: |
+            Dell R720 Proxmox Server #2
         lefford:
           pve_cluster_id: rain_house
           prompt:
@@ -33,6 +37,8 @@ all:
               primary: 220
               secondary: 32
               tertiary: 58
+          description: |
+            Dell R720XD Proxmox Server #3
         ryswell:
           pve_cluster_id: grey_garden
           prompt:
@@ -41,6 +47,8 @@ all:
               primary: 179
               secondary: 160
               tertiary: 138
+          description: |
+            Dell R720 Proxmox Server #1
     pbs_nodes:
       hosts:
         lefford:
@@ -53,6 +61,8 @@ all:
               primary: 65
               secondary: 172
               tertiary: 52
+          description: |
+            Dell R210 II Firewall/Router (OpnSense)
     retropie:
       hosts:
         # peat:
@@ -66,6 +76,8 @@ all:
               primary: 140
               secondary: 225
               tertiary: 59
+          description: |
+            Synology DS1813+ NAS
         uller:
           ansible_python_interpreter: /var/services/homes/nathan/python3/bin/python3
           prompt:
@@ -74,6 +86,8 @@ all:
               primary: 124
               secondary: 11
               tertiary: 136
+          description: |
+            Synology DS2415+ NAS
     aquaria:
       hosts:
         # Reef-Pi (End Table)
@@ -82,7 +96,6 @@ all:
         # mertyns:
     nates_office:
       hosts:
-        # Home Assistant Client
         bridges:
           prompt:
             emoji: '🌉'
@@ -90,9 +103,10 @@ all:
               primary: 20
               secondary: 223
               tertiary: 143
+          description: |
+            Raspberry Pi 3B+ (Home Assistant Client)
     duggins_lab:
       hosts:
-        # 3D Printer Controller
         ashford:
           prompt:
             emoji: '🌞'
@@ -100,7 +114,8 @@ all:
               primary: 208
               secondary: 94
               tertiary: 222
-        # John's Pi 400 Desktop
+          description: |
+            Raspberry Pi 3B+ 3D-Printer Controller
         beesbury:
           prompt:
             emoji: '🐝'
@@ -108,7 +123,8 @@ all:
               primary: 11
               secondary: 58
               tertiary: 100
-        # Nate's Pi 400
+          description: |
+            Raspberry Pi 400 John's Desktop
         estermont:
           prompt:
             emoji: '🐢'
@@ -116,6 +132,8 @@ all:
               primary: 114
               secondary: 22
               tertiary: 59
+          description: |
+            Raspberry Pi 400 Nate's Desktop
     k8s:
       vars:
         pve_cores: 4
@@ -173,7 +191,7 @@ all:
     pve_clusters:
       vars:
         description: |
-          Currently unused.
+          Proxmox LXC Container - Currently Unused
       children:
         grey_garden:
           vars:
@@ -192,7 +210,7 @@ all:
                   secondary: 19
                   tertiary: 94
               description: |
-                Pi-Hole.
+                Proxmox LXC Container - Pi-Hole
             ball:
               pve_cores: 2
               pve_memory_size: 2048
@@ -205,7 +223,7 @@ all:
                   secondary: 102
                   tertiary: 160
               description: |
-                Unifi Controller.
+                Proxmox LXC Container - UniFi Controller
             cafferen:
               prompt:
                 emoji: '🦌'
@@ -213,6 +231,8 @@ all:
                   primary: 28
                   secondary: 71
                   tertiary: 102
+              description: |
+                Proxmox LXC Container - Currently Unused
             dalt:
               prompt:
                 emoji: '🍋'
@@ -220,6 +240,8 @@ all:
                   primary: 127
                   secondary: 184
                   tertiary: 22
+              description: |
+                Proxmox LXC Container - Currently Unused
             egen:
               prompt:
                 emoji: '✨'
@@ -227,6 +249,8 @@ all:
                   primary: 19
                   secondary: 184
                   tertiary: 145
+              description: |
+                Proxmox LXC Container - Currently Unused
             farman:
               prompt:
                 emoji: '⛵'
@@ -234,6 +258,8 @@ all:
                   primary: 184
                   secondary: 124
                   tertiary: 19
+              description: |
+                Proxmox LXC Container - Currently Unused
             gardener:
               prompt:
                 emoji: '🧤'
@@ -241,6 +267,8 @@ all:
                   primary: 28
                   secondary: 102
                   tertiary: 108
+              description: |
+                Proxmox LXC Container - Currently Unused
             haigh:
               prompt:
                 emoji: '🔱'
@@ -248,6 +276,8 @@ all:
                   primary: 94
                   secondary: 220
                   tertiary: 137
+              description: |
+                Proxmox LXC Container - Currently Unused
             inchfield:
               prompt:
                 emoji: '🏁'
@@ -255,6 +285,8 @@ all:
                   primary: 102
                   secondary: 59
                   tertiary: 102
+              description: |
+                Proxmox LXC Container - Currently Unused
             jast:
               prompt:
                 emoji: '🦁'
@@ -262,6 +294,8 @@ all:
                   primary: 11
                   secondary: 58
                   tertiary: 145
+              description: |
+                Proxmox LXC Container - Currently Unused
             karstark:
               prompt:
                 emoji: '🌟'
@@ -270,7 +304,7 @@ all:
                   secondary: 102
                   tertiary: 102
               description: |
-                Kubernetes Master (Karhold)
+                Proxmox LXC Container - Kubernetes Master (Karhold)
             liddle:
               prompt:
                 emoji: '🌰'
@@ -279,7 +313,7 @@ all:
                   secondary: 131
                   tertiary: 108
               description: |
-                Kubernetes Master (Longtable)
+                Proxmox LXC Container - Kubernetes Master (Longtable)
             manderly:
               prompt:
                 emoji: '🧜‍️'
@@ -288,7 +322,7 @@ all:
                   secondary: 28
                   tertiary: 114
               description: |
-                Kubernetes Master (Mistwood)
+                Proxmox LXC Container - Kubernetes Master (Mistwood)
             norcross:
               prompt:
                 emoji: '➕'
@@ -297,7 +331,7 @@ all:
                   secondary: 59
                   tertiary: 102
               description: |
-                Kubernetes Master (Ninestars)
+                Proxmox LXC Container - Kubernetes Master (Ninestars)
             oakheart:
               prompt:
                 emoji: '🍂'
@@ -374,6 +408,8 @@ all:
                   primary: 124
                   secondary: 220
                   tertiary: 52
+              description: |
+                Proxmox LXC Container - Currently Unused
             bettley:
               prompt:
                 emoji: '🐞'
@@ -381,6 +417,8 @@ all:
                   primary: 220
                   secondary: 18
                   tertiary: 94
+              description: |
+                Proxmox LXC Container - Currently Unused
             cargyll:
               prompt:
                 emoji: '🦢'
@@ -388,6 +426,8 @@ all:
                   primary: 124
                   secondary: 220
                   tertiary: 58
+              description: |
+                Proxmox LXC Container - Currently Unused
             darry:
               prompt:
                 emoji: '👨‍🌾'
@@ -395,6 +435,8 @@ all:
                   primary: 94
                   secondary: 131
                   tertiary: 59
+              description: |
+                Proxmox LXC Container - Currently Unused
             erenford:
               prompt:
                 emoji: '🦩'
@@ -402,6 +444,8 @@ all:
                   primary: 210
                   secondary: 220
                   tertiary: 95
+              description: |
+                Proxmox LXC Container - Currently Unused
             fell:
               prompt:
                 emoji: '🌃'
@@ -409,6 +453,8 @@ all:
                   primary: 28
                   secondary: 71
                   tertiary: 102
+              description: |
+                Proxmox LXC Container - Currently Unused
             garner:
               prompt:
                 emoji: '🦉'
@@ -416,6 +462,8 @@ all:
                   primary: 28
                   secondary: 230
                   tertiary: 130
+              description: |
+                Proxmox LXC Container - Currently Unused
             harclay:
               prompt:
                 emoji: '🌒'
@@ -423,6 +471,8 @@ all:
                   primary: 19
                   secondary: 104
                   tertiary: 19
+              description: |
+                Proxmox LXC Container - Currently Unused
             ironmaker:
               prompt:
                 emoji: '🗡️"'
@@ -430,6 +480,8 @@ all:
                   primary: 65
                   secondary: 220
                   tertiary: 22
+              description: |
+                Proxmox LXC Container - Currently Unused
             jordayne:
               prompt:
                 emoji: '🪶'
@@ -437,6 +489,8 @@ all:
                   primary: 34
                   secondary: 185
                   tertiary: 70
+              description: |
+                Proxmox LXC Container - Currently Unused
             kellington:
               prompt:
                 emoji: '📘'
@@ -445,7 +499,7 @@ all:
                   secondary: 188
                   tertiary: 178
               description: |
-                Kubernetes Node (Karhold)
+                Proxmox LXC Container - Kubernetes Node (Karhold)
             lightfoot:
               prompt:
                 emoji: '👣'
@@ -454,7 +508,7 @@ all:
                   secondary: 144
                   tertiary: 94
               description: |
-                Kubernetes Node (Longtable)
+                Proxmox LXC Container - Kubernetes Node (Longtable)
             manwoody:
               prompt:
                 emoji: '💀'
@@ -463,7 +517,7 @@ all:
                   secondary: 59
                   tertiary: 102
               description: |
-                Kubernetes Node (Mistwood)
+                Proxmox LXC Container - Kubernetes Node (Mistwood)
             norrey:
               prompt:
                 emoji: '🌿'
@@ -472,7 +526,7 @@ all:
                   secondary: 11
                   tertiary: 100
               description: |
-                Kubernetes Node (Ninestars)
+                Proxmox LXC Container - Kubernetes Node (Ninestars)
             oldflowers:
               prompt:
                 emoji: '✋'
@@ -549,6 +603,8 @@ all:
                   primary: 11
                   secondary: 160
                   tertiary: 172
+              description: |
+                Proxmox LXC Container - Transmission Cluster; FileBot; Beets
             blackbar:
               prompt:
                 emoji: '➖'
@@ -556,6 +612,8 @@ all:
                   primary: 188
                   secondary: 59
                   tertiary: 102
+              description: |
+                Proxmox LXC Container - Jellyfin
             caron:
               prompt:
                 emoji: '🦜'
@@ -563,6 +621,8 @@ all:
                   primary: 11
                   secondary: 159
                   tertiary: 100
+              description: |
+                Proxmox LXC Container - NextCloud
             donniger:
               prompt:
                 emoji: '🌅'
@@ -570,6 +630,8 @@ all:
                   primary: 108
                   secondary: 11
                   tertiary: 160
+              description: |
+                Proxmox LXC Container - Currently Unused
             estren:
               prompt:
                 emoji: '❎'
@@ -577,6 +639,8 @@ all:
                   primary: 28
                   secondary: 188
                   tertiary: 124
+              description: |
+                Proxmox LXC Container - Gitea
             fenn:
               prompt:
                 emoji: '🌺'
@@ -584,6 +648,8 @@ all:
                   primary: 140
                   secondary: 160
                   tertiary: 159
+              description: |
+                Proxmox LXC Container - Plex
             gaunt:
               prompt:
                 emoji: '🍢'
@@ -591,6 +657,8 @@ all:
                   primary: 210
                   secondary: 95
                   tertiary: 59
+              description: |
+                Proxmox LXC Container - Currently Unused
             harlton:
               prompt:
                 emoji: '🌳'
@@ -598,6 +666,8 @@ all:
                   primary: 28
                   secondary: 188
                   tertiary: 102
+              description: |
+                Proxmox LXC Container - Plex
             ironsmith:
               prompt:
                 emoji: '🧲'
@@ -605,6 +675,8 @@ all:
                   primary: 65
                   secondary: 220
                   tertiary: 22
+              description: |
+                Proxmox LXC Container - Currently Unused
             justman:
               prompt:
                 emoji: '⚖️'
@@ -612,6 +684,8 @@ all:
                   primary: 19
                   secondary: 178
                   tertiary: 103
+              description: |
+                Proxmox LXC Container - Currently Unused
             kettleblack:
               prompt:
                 emoji: '🍯'
@@ -620,7 +694,7 @@ all:
                   secondary: 59
                   tertiary: 52
               description: |
-                Kubernetes Node (Karhold)
+                Proxmox LXC Container - Kubernetes Node (Karhold)
             lipps:
               prompt:
                 emoji: '👄'
@@ -629,7 +703,7 @@ all:
                   secondary: 210
                   tertiary: 61
               description: |
-                Kubernetes Node (Longtable)
+                Proxmox LXC Container - Kubernetes Node (Longtable)
             marsh:
               prompt:
                 emoji: '🐸'
@@ -638,7 +712,7 @@ all:
                   secondary: 28
                   tertiary: 94
               description: |
-                Kubernetes Node (Mistwood)
+                Proxmox LXC Container - Kubernetes Node (Mistwood)
             norridge:
               prompt:
                 emoji: '🏹'
@@ -647,7 +721,7 @@ all:
                   secondary: 173
                   tertiary: 60
               description: |
-                Kubernetes Node (Ninestars)
+                Proxmox LXC Container - Kubernetes Node (Ninestars)
             orkwood:
               prompt:
                 emoji: '🌲'

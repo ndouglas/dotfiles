@@ -52,6 +52,7 @@
 - name: 'Install Homebrew packages.'
   community.general.homebrew:
     name:
+      - 'argocd'
       - 'bat'
       - 'coreutils'
       - 'findutils'
