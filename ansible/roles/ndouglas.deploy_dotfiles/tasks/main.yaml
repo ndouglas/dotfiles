@@ -50,9 +50,6 @@
 - name: 'Deploy Reddit dotfiles.'
   ansible.builtin.include: 'deploy_reddit_dotfiles.yaml'
 
-- name: 'Deploy Kubernetes dotfiles.'
-  ansible.builtin.include: 'deploy_kubernetes_dotfiles.yaml'
-
 - name: 'Deploy Torrents role.'
   ansible.builtin.include_role:
     name: 'ndouglas.torrents'
