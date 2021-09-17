@@ -21,6 +21,7 @@
   args:
     warn: no
   when: 'host_uses_apt'
+  changed_when: no
 
 - name: 'Install Apt packages.'
   become: yes

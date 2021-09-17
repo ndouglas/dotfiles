@@ -98,6 +98,9 @@ all:
         # VR Machine
         velaryon:
     pve_clusters:
+      vars:
+        description: |
+          Currently unused.
       children:
         grey_garden:
           vars:
@@ -211,7 +214,7 @@ all:
                 Kubernetes Node (Mistwood)
             norridge:
               description: |
-                Kubernetes Node (Mistwood)
+                Kubernetes Node (Ninestars)
             orkwood:
             prester:
             quagg:

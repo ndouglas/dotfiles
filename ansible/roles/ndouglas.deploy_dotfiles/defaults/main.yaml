@@ -395,6 +395,7 @@ hostname_primary_colors:
   pyle: 188
   qoherys: 179
   qorgyle: 124
+  quagg: 208
   rambton: 124
   redding: 131
   redfort: 124
@@ -711,6 +712,7 @@ hostname_secondary_colors:
   pyle: 59
   qoherys: 124
   qorgyle: 167
+  quagg: 173
   rambton: 222
   redding: 220
   redfort: 52
@@ -1025,6 +1027,7 @@ hostname_tertiary_colors:
   pyle: 102
   qoherys: 101
   qorgyle: 160
+  quagg: 59
   rambton: 88
   redding: 188
   redfort: 174
