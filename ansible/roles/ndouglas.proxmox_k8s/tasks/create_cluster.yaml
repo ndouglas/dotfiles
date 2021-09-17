@@ -22,6 +22,6 @@
     ansible.builtin.include_role:
       name: 'ndouglas.host_role.docker'
 
-  - name: 'Install packages and other requirements.'
+  - name: 'Setup Kubernetes cluster.'
     ansible.builtin.include_role:
       name: 'ndouglas.host_role.k8s'
