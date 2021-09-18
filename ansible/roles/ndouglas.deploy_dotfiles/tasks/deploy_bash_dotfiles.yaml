@@ -68,6 +68,7 @@
         - 'date'
         - 'du'
         - 'echo'
+        - 'paste'
         - 'sed'
         - 'stat'
       changed_when: no
