@@ -33,6 +33,12 @@
         name: 'ndouglas.deploy_dotfiles'
         tasks_from: 'set_common_facts.yaml'
 
+    - name: 'Install Pip packages.'
+      become: yes
+      ansible.builtin.pip:
+        name:
+          - 'kubernetes'
+
     - name: 'Execute cluster-specific task.'
       ansible.builtin.include: "tasks/clusters/{{ k8s_cluster }}.yaml"
       when: 'cluster_task_path.stat.exists'
