@@ -8,13 +8,11 @@
   ansible.builtin.include_role:
     name: 'ndouglas.proxmox_host'
     tasks_from: 'create_pve_host.yaml'
-  when: no
 
 - name: 'Setup hosts.'
   ansible.builtin.include_role:
     name: 'ndouglas.proxmox_host'
     tasks_from: 'setup_pve_host.yaml'
-  when: no
 
 - name: 'Switch back to a normal connection method.'
   ansible.builtin.set_fact:
@@ -27,19 +25,33 @@
   - name: 'Setup Docker on hosts.'
     ansible.builtin.include_role:
       name: 'ndouglas.host_role.docker'
-    when: no
 
   - name: 'Install packages and other requirements.'
     ansible.builtin.include_role:
       name: 'ndouglas.host_role.k8s'
-    when: no
 
-  - name: 'Copy configuration.'
-    ansible.builtin.slurp:
-      src: '/etc/kubernetes/kubelet.conf'
-    register: 'kube_config'
+  - name: 'Copy the Kubeconfig locally.'
+    when: 'k8s_role == "master"'
+    block:
 
-  - name: 'Write kube config.'
-    ansible.builtin.copy:
-      content: "{{ kube_config['content'] | b64decode }}"
-      dest: '~/.kube/config'
+    - name: 'Copy configuration.'
+      ansible.builtin.slurp:
+        src: '/etc/kubernetes/admin.conf'
+      register: 'kube_config_slurp'
+
+    - name: 'Set fact for the configuration.'
+      ansible.builtin.set_fact:
+        kube_config: "{{ kube_config_slurp['content'] | b64decode | from_yaml }}"
+
+    - name: "Create config destination directory."
+      delegate_to: 'localhost'
+      ansible.builtin.file:
+        path: '~/.kube'
+        mode: '0700'
+        state: 'directory'
+
+    - name: 'Write the kubeconfig locally.'
+      delegate_to: 'localhost'
+      ansible.builtin.copy:
+        content: "{{ kube_config | to_nice_yaml }}"
+        dest: "~/.kube/{{ k8s_cluster }}.cluster.config"
