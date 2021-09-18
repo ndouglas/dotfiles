@@ -1,0 +1,14 @@
+- name: 'Setup Argo CD.'
+  ansible.builtin.include_role:
+    name: 'ndouglas.k8s'
+    tasks_from: 'argocd.yaml'
+
+- name: 'Setup Helm.'
+  ansible.builtin.include_role:
+    name: 'ndouglas.k8s'
+    tasks_from: 'helm.yaml'
+
+- name: 'Setup Traefik.'
+  ansible.builtin.include_role:
+    name: 'ndouglas.k8s'
+    tasks_from: 'traefik.yaml'

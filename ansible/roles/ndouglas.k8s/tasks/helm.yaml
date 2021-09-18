@@ -1,0 +1,17 @@
+- name: 'Retrieve the Helm binary.'
+  ansible.builtin.shell:
+    cmd: |
+      curl -fsSL -o get_helm.sh 'https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3';
+      chmod 700 get_helm.sh;
+      ./get_helm.sh;
+    creates: '/usr/local/bin/helm'
+
+- name: 'Add Bitnami chart repository.'
+  kubernetes.core.helm_repository:
+    name: 'bitnami'
+    repo_url: 'https://charts.bitnami.com/bitnami'
+
+- name: 'Add ArtifactHub chart repository.'
+  kubernetes.core.helm_repository:
+    name: 'artifacthub'
+    repo_url: 'https://artifacthub.github.io/helm-charts'
