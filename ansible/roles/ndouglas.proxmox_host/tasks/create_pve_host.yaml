@@ -17,6 +17,22 @@
       content_type: 'vztmpl'
       template: "{{ pve_ostemplate | default(proxmox.pve_ostemplate) }}"
 
+  - name: 'Ensure mountpoints exist on host.'
+    ansible.builtin.file:
+      path: "{{ item.host_path }}"
+      state: 'directory'
+      mode: "{{ item.host_perms | default('0755') }}"
+      owner: "{{ item.host_owner | default('1000') }}"
+      group: "{{ item.host_group | default('1000') }}"
+    loop: "{{ pve_mounts }}"
+
+  - name: 'Build mounts.'
+    ansible.builtin.set_fact:
+      pve_mounts_dict: "{{ pve_mounts_dict | default({}) | combine({ 'mp' + index | string : item.host_path + ',mp=' + item.guest_path }) }}"
+    loop_control:
+      index_var: 'index'
+    loop: "{{ pve_mounts | default([]) }}"
+
   - name: 'Create container.'
     community.general.proxmox:
       vmid: "{{ pve_vm_id }}"
@@ -30,6 +46,7 @@
       api_host: "{{ pve_node }}"
       password: "{{ password }}"
       hostname: "{{ inventory_hostname }}"
+      mounts: "{{ pve_mounts_dict | default({}) | to_json }}"
       onboot: "{{ pve_onboot | default('yes') }}"
       ostemplate: "local:vztmpl/{{ pve_ostemplate | default(proxmox.pve_ostemplate) }}"
       description: "{{ inventory_hostname }}"

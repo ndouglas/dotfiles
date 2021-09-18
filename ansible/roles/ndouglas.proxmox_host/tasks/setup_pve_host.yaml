@@ -30,11 +30,6 @@
       name: 'ndouglas.deploy_dotfiles'
       tasks_from: 'set_common_facts.yaml'
 
-  - name: 'Install common packages.'
-    ansible.builtin.include_role:
-      name: 'ndouglas.deploy_dotfiles'
-      tasks_from: 'install_common_packages.yaml'
-
   - name: 'Execute host-specific task.'
     ansible.builtin.include: "tasks/hosts/{{ inventory_hostname }}.yaml"
     when: 'host_task_path.stat.exists'

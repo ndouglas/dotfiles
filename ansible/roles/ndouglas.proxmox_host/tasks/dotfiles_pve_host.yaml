@@ -1,10 +1,15 @@
 - name: 'Gather facts about this host.'
-  ansible.builtin.setup:
   remote_user: 'root'
+  ansible.builtin.setup:
 
 - name: 'Install dotfiles.'
   remote_user: 'root'
   block:
+
+  - name: 'Install common packages.'
+    ansible.builtin.include_role:
+      name: 'ndouglas.deploy_dotfiles'
+      tasks_from: 'install_common_packages.yaml'
 
   - name: 'Install dotfiles (as root).'
     ansible.builtin.include_role:

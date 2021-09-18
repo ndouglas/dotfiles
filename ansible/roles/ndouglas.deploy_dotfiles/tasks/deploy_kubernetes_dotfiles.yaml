@@ -1,0 +1,45 @@
+---
+- name: 'Set facts for the Kubernetes config path.'
+  ansible.builtin.set_fact:
+    kubernetes_config_dir: "{{ ansible_env.HOME }}/.kube"
+
+- name: "Create temporary directory."
+  ansible.builtin.tempfile:
+    state: 'directory'
+  register: 'temporary_directory'
+  changed_when: no
+
+- name: "Copy Kubernetes template dotfiles {{ role_path }}/files/kubernetes/ -> temporary directory."
+  ansible.builtin.template:
+    src: "{{ item }}"
+    dest: "{{ temporary_directory.path }}/{{ item | basename | splitext | first }}"
+  with_fileglob:
+    - "{{ role_path }}/files/kubernetes/*.j2"
+  changed_when: no
+
+- name: 'Delete the Kubernetes config directory.'
+  ansible.builtin.file:
+    path: "{{ kubernetes_config_dir }}"
+    state: 'absent'
+  changed_when: no
+
+- name: 'Create the Kubernetes config directory.'
+  ansible.builtin.file:
+    path: "{{ kubernetes_config_dir }}"
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    mode: '0700'
+    state: 'directory'
+  changed_when: no
+
+- name: "Copy Kubernetes dotfiles temporary directory -> {{ kubernetes_config_dir }}."
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: "{{ kubernetes_config_dir }}"
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    mode: '0600'
+    force: yes
+  with_fileglob:
+    - "{{ temporary_directory.path }}/*"
+  changed_when: no

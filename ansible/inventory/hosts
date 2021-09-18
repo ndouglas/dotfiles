@@ -161,21 +161,29 @@ all:
             norrey:
             norridge:
         karhold:
+          vars:
+            k8s_cluster: 'karhold'
           hosts:
             karstark:
             kellington:
             kettleblack:
         longtable:
+          vars:
+            k8s_cluster: 'longtable'
           hosts:
             liddle:
             lightfoot:
             lipps:
         mistwood:
+          vars:
+            k8s_cluster: 'mistwood'
           hosts:
             manderly:
             manwoody:
             marsh:
         ninestars:
+          vars:
+            k8s_cluster: 'ninestars'
           hosts:
             norcross:
             norrey:
@@ -623,6 +631,11 @@ all:
                   tertiary: 100
               description: |
                 Proxmox LXC Container - NextCloud
+              pve_ostemplate: 'debian-10-turnkey-gitea_16.1-1_amd64.tar.gz'
+              pve_mounts:
+                - name: 'Git'
+                  guest_path: '/home/git'
+                  host_path: '/leo/caron/home_git'
             donniger:
               prompt:
                 emoji: '🌅'
