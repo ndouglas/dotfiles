@@ -1,0 +1,7 @@
+---
+- name: 'Copy Bash Beets dotfiles to destination.'
+  ansible.builtin.include: "{{ role_path }}/tasks/copy_bash_dotfiles.yaml"
+  vars:
+    id: 'beets'
+    source: "{{ role_path }}/files/bash/beets"
+    dest: "{{ ansible_env.HOME }}/.bash.beets.d"

@@ -1,0 +1,5 @@
+---
+- name: 'Set timezone to local timezone.'
+  become: yes
+  community.general.timezone:
+    name: "{{ local_timezone }}"

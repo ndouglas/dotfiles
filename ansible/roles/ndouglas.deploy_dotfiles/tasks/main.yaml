@@ -1,36 +1,7 @@
 ---
-- name: 'Set user and group.'
-  ansible.builtin.include: 'set_dotfiles_user.yaml'
-  when: 'user is not defined or group is not defined'
-
-- name: 'Set common facts.'
-  ansible.builtin.include: 'set_common_facts.yaml'
-
-- name: 'Create a normal user.'
-  ansible.builtin.include: 'create_normal_user.yaml'
-  when: 'user == "root"'
-
-- name: 'Install some universally useful packages.'
-  ansible.builtin.include: 'install_common_packages.yaml'
-
-- name: 'Set the hostname explicitly.'
-  become: yes
-  ansible.builtin.hostname:
-    name: "{{ hostname }}"
-  when: 'not host_is_mac and not host_is_synology'
-
-- name: 'Enable passwordless sudo.'
-  become: yes
-  ansible.builtin.copy:
-    content: "{{ my.name.lower }} ALL=(ALL:ALL) NOPASSWD:ALL"
-    dest: "/etc/sudoers.d/{{ my.name.lower }}"
-    mode: 0440
-  when: 'user != "root"'
-
-- name: 'Set time zone to America/New_York'
-  become: yes
-  community.general.timezone:
-    name: 'America/New_York'
+- name: 'Perform some common tasks.'
+  ansible.builtin.include_role:
+    name: 'ndouglas.common'
 
 - name: 'Deploy Bash dotfiles.'
   ansible.builtin.include: 'deploy_bash_dotfiles.yaml'
@@ -50,12 +21,6 @@
 - name: 'Deploy Reddit dotfiles.'
   ansible.builtin.include: 'deploy_reddit_dotfiles.yaml'
 
-- name: 'Deploy Torrents role.'
-  ansible.builtin.include_role:
-    name: 'ndouglas.torrents'
-    tasks_from: 'deploy_transmission.yaml'
-  when: 'hostname == "ambrose" and user != "root"'
-
 - name: 'Deploy TriggerHappy role.'
   ansible.builtin.include: 'deploy_triggerhappy_dotfiles.yaml'
   when: 'hostname == "bridges" and user != "root"'
@@ -63,11 +28,20 @@
 - name: 'Set the MOTD.'
   ansible.builtin.include: 'set_motd.yaml'
 
+- name: 'Check for existence of host-specific task.'
+  ansible.builtin.stat:
+    path: "{{ role_path }}/tasks/hosts/{{ inventory_hostname }}.yaml"
+  register: 'host_task_path'
+
+- name: 'Execute host-specific task.'
+  ansible.builtin.include: "tasks/hosts/{{ inventory_hostname }}.yaml"
+  when: 'host_task_path.stat.exists'
+
 - name: 'Set the email address appropriately for cron jobs.'
   ansible.builtin.cron:
     name: MAILTO
     env: yes
-    job: "{{ hostname }}@hellholt.net"
+    job: "{{ host_email_address }}"
   when: 'not host_is_synology'
 
 - name: 'Install the update cronjob.'

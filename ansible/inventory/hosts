@@ -1,3 +1,8 @@
+local:
+  hosts:
+    localhost:
+      ansible_connection: 'local'
+      ansible_python_interpreter: 'python3'
 all:
   vars:
     prompt:
@@ -6,6 +11,11 @@ all:
         primary: 188
         secondary: 159
         tertiary: 102
+    pve_mounts: []
+    host_roles:
+      - 'dotfiles_root'
+      - 'dotfiles'
+      - 'route53'
   hosts:
     fossoway:
       prompt:
@@ -18,6 +28,8 @@ all:
         My primary personal laptop.
   children:
     pve_nodes:
+      vars:
+        ansible_ssh_user: 'root'
       hosts:
         celtigar:
           pve_cluster_id: old_anchor
@@ -139,6 +151,18 @@ all:
         pve_cores: 4
         pve_memory_size: 16384
         pve_rootfs_size: 32
+        host_roles:
+          - 'dotfiles_root'
+          - 'dotfiles'
+          - 'route53'
+          - 'docker'
+          - 'k8s'
+        k8s_cluster_roles:
+          - 'argocd'
+          - 'helm'
+          - 'traefik'
+          - 'route53'
+          - 'get_config'
       children:
         k8s_masters:
           vars:

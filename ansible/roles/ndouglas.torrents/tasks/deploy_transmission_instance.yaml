@@ -1,9 +1,4 @@
 ---
-- name: 'Set some user/group facts...'
-  ansible.builtin.include_role:
-    name: 'ndouglas.deploy_dotfiles'
-    tasks_from: 'set_dotfiles_user.yaml'
-
 - name: 'Set some important facts...'
   ansible.builtin.set_fact:
     torrents_root_path: '/torrents'
@@ -67,7 +62,7 @@
 
 - name: 'Prepare directory structure.'
   ansible.builtin.file:
-    path: "{{ instance_storage_path }}/{{ item }}"
+    path: "{{ instance_storage_path }}/{{ directory_name }}"
     state: 'directory'
     mode: '0755'
   loop:
@@ -75,6 +70,8 @@
     - "watch"
     - "incomplete"
     - "downloads"
+  loop_control:
+    loop_var: 'directory_name'
 
 - name: "Copy Transmission template files {{ role_path }}/files/config/ -> {{ instance_storage_path }}/config/."
   ansible.builtin.template:

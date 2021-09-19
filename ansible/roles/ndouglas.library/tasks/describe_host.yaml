@@ -1,3 +1,4 @@
+---
 - name: 'Use a local connection to gather facts.'
   ansible.builtin.set_fact:
     ansible_connection: 'local'

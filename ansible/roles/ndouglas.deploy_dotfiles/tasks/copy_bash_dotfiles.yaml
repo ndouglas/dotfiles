@@ -1,9 +1,4 @@
 ---
-
-- name: 'Set user and group.'
-  ansible.builtin.include: 'set_dotfiles_user.yaml'
-  when: 'user is not defined'
-
 - name: "Create temporary directory."
   ansible.builtin.tempfile:
     state: 'directory'

@@ -1,0 +1,19 @@
+---
+install_common_packages: yes
+
+create_normal_user: yes
+normal_user_name: "{{ my.name.lower }}"
+
+set_hostname: yes
+
+enable_passwordless_sudo: yes
+
+local_timezone: "{{ my.local.timezone }}"
+
+host_email_domain: "{{ my.domains.private }}"
+
+software_versions:
+  python: '3.9'
+
+ssh_private_key_path: '~/.ssh/id_rsa'
+ssh_public_key_path: "{{ ssh_private_key_path }}.pub"

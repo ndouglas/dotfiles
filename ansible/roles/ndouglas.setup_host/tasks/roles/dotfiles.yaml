@@ -1,0 +1,13 @@
+---
+- name: 'Store vault password.'
+  ansible.builtin.copy:
+    dest: "{{ vault_password_file }}"
+    content: "{{ vault_password }}"
+    mode: '0600'
+
+- name: 'Execute install script.'
+  ansible.builtin.shell: '/bin/bash <(curl -sL "https://raw.githubusercontent.com/ndouglas/dotfiles/main/install.sh")'
+  args:
+    chdir: '~'
+    executable: '/bin/bash'
+    creates: '~/.dotfiles'

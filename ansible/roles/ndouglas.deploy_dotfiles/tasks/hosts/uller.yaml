@@ -1,0 +1,11 @@
+---
+- name: 'Syno-CLI Path Components'
+  ansible.builtin.copy:
+    dest: "{{ ansible_env.HOME }}/.bash.path.d/syno-cli.sh"
+    content: |
+     #!/usr/bin/env bash
+
+      # Syno-CLI provides nano, tput, etc.
+      if [ -d "/volume1/@appstore/synocli-file/bin" ]; then
+        PATH="${PATH}:/volume1/@appstore/synocli-file/bin";
+      fi

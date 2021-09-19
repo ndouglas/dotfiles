@@ -1,0 +1,29 @@
+---
+- name: 'Run host-specific setup (if applicable).'
+  remote_user: 'root'
+  block:
+
+  - name: 'Wait until containers are reachable.'
+    ansible.builtin.wait_for_connection:
+
+  - name: 'Run setup for this host.'
+    remote_user: 'root'
+    ansible.builtin.setup:
+
+  - name: 'Perform common tasks.'
+    ansible.builtin.include_role:
+      name: 'ndouglas.common'
+
+  - name: 'Execute host-specific roles.'
+    ansible.builtin.include: "tasks/roles/{{ item }}.yaml"
+    loop: "{{ hostvars[inventory_hostname].host_roles }}"
+
+  - name: 'Check for existence of host-specific task.'
+    delegate_to: 'localhost'
+    ansible.builtin.stat:
+      path: "{{ role_path }}/tasks/hosts/{{ inventory_hostname }}.yaml"
+    register: 'host_task_path'
+
+  - name: 'Execute host-specific task.'
+    ansible.builtin.include: "tasks/hosts/{{ inventory_hostname }}.yaml"
+    when: 'host_task_path.stat.exists'

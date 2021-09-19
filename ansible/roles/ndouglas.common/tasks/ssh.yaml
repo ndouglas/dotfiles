@@ -1,0 +1,11 @@
+---
+- name: 'Create an SSH key if one does not already exist.'
+  community.crypto.openssh_keypair:
+    path: "{{ ssh_private_key_path }}"
+    comment: "{{ user_at_hostname }}"
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    mode: '0600'
+    regenerate: 'full_idempotence'
+    size: 4096
+    type: 'rsa'

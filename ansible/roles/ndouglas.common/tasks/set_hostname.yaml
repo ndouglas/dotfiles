@@ -1,0 +1,5 @@
+---
+- name: 'Set the hostname explicitly.'
+  become: yes
+  ansible.builtin.hostname:
+    name: "{{ hostname }}"

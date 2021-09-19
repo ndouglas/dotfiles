@@ -1,0 +1,14 @@
+---
+- name: 'Gather host facts.'
+  ansible.builtin.include_role:
+    name: 'ndouglas.proxmox'
+    tasks_from: 'set_host_facts.yaml'
+
+- name: 'Create hosts.'
+  ansible.builtin.include_role:
+    name: 'ndouglas.proxmox'
+    tasks_from: 'create_host.yaml'
+
+- name: 'Setup hosts.'
+  ansible.builtin.include_role:
+    name: 'ndouglas.setup_host'

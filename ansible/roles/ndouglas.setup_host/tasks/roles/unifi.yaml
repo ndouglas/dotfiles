@@ -1,0 +1,56 @@
+---
+- name: 'Install GNU GPG.'
+  ansible.builtin.apt:
+    name:
+      - 'gnupg'
+    state: 'present'
+    update_cache: yes
+
+- name: 'Add the APT key for Unifi.'
+  ansible.builtin.apt_key:
+    keyserver: 'keyserver.ubuntu.com'
+    id: '06E85760C0A52C50'
+
+- name: 'Add the APT key for MongoDB.'
+  ansible.builtin.apt_key:
+    keyserver: 'keyserver.ubuntu.com'
+    id: '58712A2291FA4AD5'
+
+- name: 'Install prerequisites.'
+  ansible.builtin.apt:
+    name:
+      - 'ca-certificates'
+      - 'apt-transport-https'
+    state: 'present'
+    update_cache: yes
+  when: 'host_uses_apt'
+
+- name: 'Add APT repository for MongoDB.'
+  ansible.builtin.apt_repository:
+    repo: 'deb http://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/3.6 multiverse'
+    state: 'present'
+  when: 'host_uses_apt'
+
+- name: 'Add APT repository for Unifi.'
+  ansible.builtin.apt_repository:
+    repo: 'deb https://www.ui.com/downloads/unifi/debian stable ubiquiti'
+    state: 'present'
+  when: 'host_uses_apt'
+
+- name: 'Hold Java 11 packages.'
+  ansible.builtin.shell:
+    cmd: 'apt-mark hold openjdk-11-*'
+  when: 'host_uses_apt'
+
+- name: 'Install Unifi Controller.'
+  ansible.builtin.apt:
+    name:
+      - 'unifi'
+    state: 'present'
+    update_cache: yes
+  when: 'host_uses_apt'
+
+- name: 'Start Unifi Controller.'
+  ansible.builtin.service:
+    name: 'unifi'
+    state: 'started'

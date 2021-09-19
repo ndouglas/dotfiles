@@ -1,0 +1,28 @@
+---
+- name: 'Set user and group facts.'
+  ansible.builtin.include: 'set_user_facts.yaml'
+
+- name: 'Set OS and distribution facts.'
+  ansible.builtin.include: 'set_os_facts.yaml'
+
+- name: 'Set host facts.'
+  ansible.builtin.include: 'set_host_facts.yaml'
+
+- name: 'Install some universally useful packages.'
+  ansible.builtin.include: 'install_packages.yaml'
+  when: 'install_common_packages is true and common_packages_installed is not defined'
+
+- name: 'Create a normal user account.'
+  ansible.builtin.include: 'create_normal_user.yaml'
+  when: 'create_normal_user is true and normal_user_name is defined and user == "root"'
+
+- name: 'Set the hostname explicitly.'
+  ansible.builtin.include: 'set_hostname.yaml'
+  when: 'set_hostname is true and not host_is_mac and not host_is_synology'
+
+- name: 'Enable passwordless sudo.'
+  ansible.builtin.include: 'enable_passwordless_sudo.yaml'
+  when: 'enable_passwordless_sudo and normal_user_name is defined and user != "root"'
+
+- name: 'Create an SSH key.'
+  ansible.builtin.include: 'ssh.yaml'

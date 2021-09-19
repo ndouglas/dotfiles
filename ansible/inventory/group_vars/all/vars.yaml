@@ -7,15 +7,6 @@ domains:
   public: 'darkdell.net'
   private: 'hellholt.net'
 
-# Lowercase hostname.
-hostname: "{{ ansible_hostname | lower }}"
-
-# Calculated FQDNs for the current hostname.
-fqdns:
-  personal: "{{ hostname }}.{{ domains.personal }}"
-  public: "{{ hostname }}.{{ domains.public }}"
-  private: "{{ hostname }}.{{ domains.private }}"
-
 # Calculated IPv4 address.  Doesn't always work, usually does.
 ipv4_address: "{{ ansible_default_ipv4.address | default(ansible_all_ipv4_addresses[0]) }}"
 
@@ -28,6 +19,21 @@ my:
     full: 'Nathan Douglas'
   email:
     github: 'github@tenesm.us'
+  local:
+    timezone: 'America/New_York'
+  domains:
+    personal: 'bitterbridge.net'
+    public: 'darkdell.net'
+    private: 'hellholt.net'
+
+# Lowercase hostname.
+hostname: "{{ ansible_hostname | lower }}"
+
+# Calculated FQDNs for the current hostname.
+fqdns:
+  personal: "{{ hostname }}.{{ my.domains.personal }}"
+  public: "{{ hostname }}.{{ my.domains.public }}"
+  private: "{{ hostname }}.{{ my.domains.private }}"
 
 # My Gitconfig.
 gitconfig:
@@ -35,9 +41,6 @@ gitconfig:
   user.name: "{{ my.name.full }}"
   user.email: "{{ my.email.github }}"
   pull.rebase: 'true'
-
-software_versions:
-  python: '3.9'
 
 motd_base_url: "https://raw.githubusercontent.com/ndouglas/asoiaf-noble-house-images/master/utf8/40"
 
@@ -65,36 +68,6 @@ motd_base_url: "https://raw.githubusercontent.com/ndouglas/asoiaf-noble-house-im
 #         personal: 'personal-domain-zone-id'
 #         public: 'public-domain-zone-id'
 #         private: 'private-domain-zone-id'
-
-# Borg
-#
-# borg:
-#   defaults:
-#     checks: ['repository']
-#     check_last: '3'
-#     store_atime: no
-#     store_ctime: no
-#     relocated_repo_access_is_ok: no
-#     config_name: 'config.yaml'
-#     large_repo: yes
-#     failure_command: null
-#     before_backup_command: null
-#     after_backup_command: null
-#     hooks: null
-#     one_file_system: yes
-#     exclude_from: null
-#     lock_wait_time: 5
-#     username: 'nathan'
-#     server: 'uller'
-#     path: '/volume1/Borg'
-#     encryption_passphrase: "some-string"
-#     source_directories: []
-#     exclude_patterns: []
-#     retention_policy:
-#       keep_hourly: 3
-#       keep_daily: 7
-#       keep_weekly: 4
-#       keep_monthly: 6
 
 # Filebot
 #

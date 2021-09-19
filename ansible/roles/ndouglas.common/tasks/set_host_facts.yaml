@@ -1,0 +1,23 @@
+---
+- name: 'Set a fact for the host email address.'
+  ansible.builtin.set_fact:
+    host_email_address: "{{ hostname }}@{{ host_email_domain }}"
+
+- name: 'Set Proxmox-specific host facts.'
+  delegate_to: 'localhost'
+  when: 'pve_cluster_id is defined'
+  block:
+
+  - name: 'Set the host ID.'
+    ansible.builtin.set_fact:
+      pve_host_id: "{{ index }}"
+    when: 'item == inventory_hostname'
+    loop: "{{ groups[hostvars[inventory_hostname].pve_cluster_id] }}"
+    loop_control:
+      index_var: 'index'
+
+  - name: 'Set some important facts.'
+    ansible.builtin.set_fact:
+      pve_vm_id: "{{ 100 + pve_host_id }}"
+      pve_ip_address: "10.{{ pve_network_id }}.0.{{ 100 + pve_host_id }}"
+      pve_mac_address: "de:fe:c8:{{ ('%x' % pve_network_id).zfill(2) }}:00:{{ ('%x' % (100 + pve_host_id)).zfill(2) }}"

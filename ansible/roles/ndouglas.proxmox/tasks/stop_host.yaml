@@ -1,0 +1,14 @@
+---
+- name: 'Gather host facts.'
+  ansible.builtin.include: 'set_host_facts.yaml'
+
+- name: 'Stop the container.'
+  delegate_to: "{{ pve_node }}"
+  community.general.proxmox:
+    vmid: "{{ pve_vm_id }}"
+    api_user: "{{ proxmox.pve_api_username }}"
+    api_password: "{{ proxmox.pve_api_password }}"
+    api_host: "{{ pve_node }}"
+    state: 'stopped'
+    force: yes
+    proxmox_default_behavior: 'no_defaults'

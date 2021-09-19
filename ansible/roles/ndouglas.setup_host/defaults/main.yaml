@@ -1,0 +1,32 @@
+---
+normal_user_name: "{{ my.name.lower }}"
+
+vault_password: '{{ password }}'
+vault_password_file: '~/.dotfiles_vault_password'
+
+ssh_private_key_path: '~/.ssh/id_rsa'
+ssh_public_key_path: "{{ ssh_private_key_path }}.pub"
+
+borg_username: "{{ normal_user_name }}"
+borg_server: 'uller'
+borg_path: '/volume1/Borg'
+borg_repository: "{{ borg_username }}@{{ borg_server }}:{{ borg_path }}/{{ inventory_hostname }}"
+borgmatic_cron_hour: "{{ 6 | random(seed=inventory_hostname) }}"
+borgmatic_cron_minute: "{{ 60 | random(seed=inventory_hostname) }}"
+borgmatic_cron_checks_day: "{{ 28 | random(seed=inventory_hostname) }}"
+borgmatic_cron_checks_hour: "{{ range(7, 24) | random(seed=inventory_hostname) }}"
+borgmatic_cron_checks_minute: "{{ 59 | random(seed=inventory_hostname) }}"
+borg_source_directories: []
+borg_encryption_passphrase: "{{ password }}"
+borg_remote_path: '/usr/local/bin/borg'
+borg_ssh_key_path: '~/.ssh/id_rsa'
+
+route53_key_id: "{{ aws.profiles.route53.key_id }}"
+route53_secret_key: "{{ aws.profiles.route53.secret_key }}"
+route53_private_zone_id: "{{ aws.profiles.route53.zone_ids.private }}"
+route53_personal_zone_id: "{{ aws.profiles.route53.zone_ids.personal }}"
+route53_personal_domain: "{{ my.domains.personal }}"
+route53_private_domain: "{{ my.domains.private }}"
+route53_personal_fqdn: "{{ inventory_hostname }}.{{ route53_personal_domain }}"
+route53_private_fqdn: "{{ inventory_hostname }}.{{ route53_private_domain }}"
+route53_ipv4_address: "{{ ansible_default_ipv4.address | default(ansible_all_ipv4_addresses[0]) }}"
