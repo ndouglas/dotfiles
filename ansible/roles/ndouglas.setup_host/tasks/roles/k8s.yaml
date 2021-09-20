@@ -12,6 +12,9 @@
         state: 'present'
       - name: 'kubernetes-cni'
         state: 'present'
+    kubernetes_pod_network:
+      cni: 'weave'
+      cidr: '192.168.0.0/16'
     kubernetes_version: '1.20'
     kubernetes_role: "{{ k8s_role }}"
     kubernetes_ignore_preflight_errors: 'all'
@@ -24,6 +27,3 @@
       kubernetesVersion: "{{ kubernetes_version_kubeadm }}"
     kubernetes_config_kubelet_configuration:
       cgroupDriver: 'systemd'
-    kubernetes_pod_network:
-      cni: 'weave'
-      cidr: '192.168.0.0/16'

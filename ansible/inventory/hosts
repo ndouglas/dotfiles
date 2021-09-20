@@ -152,15 +152,15 @@ all:
         pve_memory_size: 16384
         pve_rootfs_size: 32
         host_roles:
-          - 'dotfiles_root'
-          - 'dotfiles'
+        #  - 'dotfiles_root'
+        #  - 'dotfiles'
           - 'route53'
           - 'docker'
           - 'k8s'
         k8s_cluster_roles:
-          - 'argocd'
           - 'helm'
-          - 'traefik'
+        #  - 'argocd'
+        #  - 'traefik'
           - 'route53'
           - 'get_config'
       children:

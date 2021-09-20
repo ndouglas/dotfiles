@@ -35,3 +35,10 @@
         path: "~/.kube/{{ k8s_cluster }}.cluster.config"
         regexp: 'kubernetes(-admin)?'
         replace: "{{ k8s_cluster }}"
+
+    - name: 'Replace crap values in kubeconfig (pt. 2).'
+      delegate_to: 'localhost'
+      ansible.builtin.replace:
+        path: "~/.kube/{{ k8s_cluster }}.cluster.config"
+        regexp: '{{ k8s_cluster }}@{{ k8s_cluster }}'
+        replace: "{{ k8s_cluster }}"
