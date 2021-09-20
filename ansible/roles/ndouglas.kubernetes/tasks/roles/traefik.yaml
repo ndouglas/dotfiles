@@ -11,20 +11,49 @@
     release_namespace: 'traefik'
     create_namespace: yes
     values:
-      additionalArguments:
-        - --serversTransport.insecureskipverify=true
-        - --entrypoints.websecure.http.tls.domains[0].main={{ k8s_cluster }}.{{ my.domains.private }}
-        - --entrypoints.websecure.http.tls.domains[0].sans=*.{{ k8s_cluster }}.{{ my.domains.private }}
-        - --certificatesResolvers.{{ my.domains.private | splitext | first }}.acme.dnsChallenge
-        - --certificatesResolvers.{{ my.domains.private | splitext | first }}.acme.dnsChallenge.provider='route53'
-        - --certificatesresolvers.cloudflare.acme.email=letsencrypt@{{ domains.private }}
-        - --certificatesresolvers.cloudflare.acme.dnschallenge.resolvers=1.1.1.1
-        - --certificatesresolvers.cloudflare.acme.storage=/certs/acme.json
       ingressRoute:
         dashboard:
           enabled: yes
+      providers:
+        kubernetesCRD:
+          enabled: yes
+          allowCrossNamespace: yes
+          namespaces:
+            - 'default'
+            - 'argocd'
+        kubernetesIngress:
+          enabled: yes
+          namespaces:
+            - 'default'
+            - 'argocd'
+          publishedService:
+            enabled: yes
+      logs:
+        general:
+          level: INFO
+        access:
+          enabled: yes
+      ports:
+        traefik:
+          port: 9000
+          hostPort: 9000
+          expose: yes
+          exposedPort: 9000
+          protocol: TCP
+        web:
+          port: 8000
+          expose: yes
+          exposedPort: 80
+          protocol: TCP
+          nodePort: 32080
+        websecure:
+          port: 8443
+          expose: yes
+          exposedPort: 443
+          protocol: TCP
+          nodePort: 32443
+          tls:
+            enabled: no
       service:
         enabled: yes
-        type: 'LoadBalancer'
-        externalIPs:
-          - "{{ ipv4_address }}"
+        type: NodePort
