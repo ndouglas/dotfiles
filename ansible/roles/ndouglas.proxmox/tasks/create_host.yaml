@@ -19,18 +19,22 @@
 
   - name: 'Ensure mountpoints exist on host.'
     ansible.builtin.file:
-      path: "{{ item.host_path }}"
+      path: "{{ mount_item.host_path }}"
       state: 'directory'
-      mode: "{{ item.host_perms | default('0755') }}"
-      owner: "{{ item.host_owner | default('1000') }}"
-      group: "{{ item.host_group | default('1000') }}"
+      mode: "{{ mount_item.host_perms | default('0755') }}"
+      owner: "{{ mount_item.host_owner | default('1000') }}"
+      group: "{{ mount_item.host_group | default('1000') }}"
+    loop_control:
+      index_var: 'index'
+      loop_var: 'mount_item'
     loop: "{{ pve_mounts }}"
 
   - name: 'Build mounts.'
     ansible.builtin.set_fact:
-      pve_mounts_dict: "{{ pve_mounts_dict | default({}) | combine({ 'mp' + index | string : item.host_path + ',mp=' + item.guest_path }) }}"
+      pve_mounts_dict: "{{ pve_mounts_dict | default({}) | combine({ 'mp' + index | string : mount_item.host_path + ',mp=' + mount_item.guest_path }) }}"
     loop_control:
       index_var: 'index'
+      loop_var: 'mount_item'
     loop: "{{ pve_mounts | default([]) }}"
 
   - name: 'Create container.'

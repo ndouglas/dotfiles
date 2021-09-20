@@ -9,9 +9,10 @@
     - name: 'Set the host ID.'
       ansible.builtin.set_fact:
         pve_host_id: "{{ index }}"
-      when: 'item == inventory_hostname'
+      when: 'current_hostname == inventory_hostname'
       loop: "{{ groups[hostvars[inventory_hostname].pve_cluster_id] }}"
       loop_control:
+        loop_var: 'current_hostname'
         index_var: 'index'
 
     - name: 'Set some important facts.'

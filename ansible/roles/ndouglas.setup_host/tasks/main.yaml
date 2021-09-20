@@ -15,8 +15,10 @@
       name: 'ndouglas.common'
 
   - name: 'Execute host-specific roles.'
-    ansible.builtin.include: "tasks/roles/{{ item }}.yaml"
+    ansible.builtin.include: "tasks/roles/{{ host_role }}.yaml"
     loop: "{{ hostvars[inventory_hostname].host_roles }}"
+    loop_control:
+      loop_var: 'host_role'
 
   - name: 'Check for existence of host-specific task.'
     delegate_to: 'localhost'
