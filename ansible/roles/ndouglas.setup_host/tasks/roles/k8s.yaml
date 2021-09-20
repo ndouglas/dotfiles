@@ -24,3 +24,6 @@
       kubernetesVersion: "{{ kubernetes_version_kubeadm }}"
     kubernetes_config_kubelet_configuration:
       cgroupDriver: 'systemd'
+    kubernetes_pod_network:
+      cni: 'weave'
+      cidr: '192.168.0.0/16'
