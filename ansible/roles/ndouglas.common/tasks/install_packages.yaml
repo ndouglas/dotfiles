@@ -50,6 +50,7 @@
       - 'gnutls'
       - 'grep'
       - 'gnu-tar'
+      - 'helm'
       - 'jq'
       - 'parallel'
       - "python@{{ software_versions.python }}"
