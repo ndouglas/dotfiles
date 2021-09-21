@@ -158,11 +158,12 @@ all:
           - 'docker'
           - 'k8s'
         k8s_cluster_roles:
-          - 'helm'
-        #  - 'argocd'
-        #  - 'traefik'
           - 'route53'
           - 'get_config'
+          - 'helm'
+          - 'argocd'
+          - 'traefik'
+          - 'whoami'
       children:
         k8s_masters:
           vars:
