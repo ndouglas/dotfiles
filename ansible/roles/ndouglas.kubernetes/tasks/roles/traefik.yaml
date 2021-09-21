@@ -21,16 +21,20 @@
           namespaces:
             - 'default'
             - 'argocd'
+            - 'traefik'
+            - 'whoami'
         kubernetesIngress:
           enabled: yes
           namespaces:
             - 'default'
             - 'argocd'
+            - 'traefik'
+            - 'whoami'
           publishedService:
             enabled: yes
       logs:
         general:
-          level: INFO
+          level: ERROR
         access:
           enabled: yes
       ports:
