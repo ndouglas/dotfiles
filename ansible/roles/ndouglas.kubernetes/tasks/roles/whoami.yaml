@@ -57,7 +57,7 @@
         namespace: whoami
       spec:
         rules:
-        - host: "whoami2.{{ route53_private_fqdn }}"
+        - host: "whoami.{{ route53_private_fqdn }}"
           http:
             paths:
             - pathType: Prefix
@@ -67,7 +67,7 @@
                   name: whoami
                   port:
                     number: 80
-        - host: "whoami2.{{ route53_personal_fqdn }}"
+        - host: "whoami.{{ route53_personal_fqdn }}"
           http:
             paths:
             - pathType: Prefix
