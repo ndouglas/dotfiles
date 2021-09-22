@@ -7,6 +7,11 @@
       ./get_helm.sh;
     creates: '/usr/local/bin/helm'
 
+- name: 'Install the Helm diff plugin.'
+  community.kubernetes.helm_plugin:
+    plugin_path: 'https://github.com/databus23/helm-diff'
+    state: 'present'
+
 - name: 'Add Bitnami chart repository.'
   kubernetes.core.helm_repository:
     name: 'bitnami'

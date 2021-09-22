@@ -1,9 +1,4 @@
 ---
-- name: 'Gather host facts.'
-  ansible.builtin.include_role:
-    name: 'ndouglas.proxmox'
-    tasks_from: 'set_host_facts.yaml'
-
 - name: 'Set a fact for the master node.'
   ansible.builtin.set_fact:
     k8s_master: "{{ node_hostname }}"

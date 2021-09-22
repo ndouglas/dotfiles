@@ -14,3 +14,6 @@ k8s_cluster_roles:
   - 'argocd'
   - 'traefik'
   - 'whoami'
+  - 'nfs_provisioner'
+  - 'aws_ssm_policy'
+  - 'external_secrets'

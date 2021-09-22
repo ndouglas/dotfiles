@@ -1,9 +1,4 @@
 ---
-- name: 'Gather host facts.'
-  ansible.builtin.include_role:
-    name: 'ndouglas.proxmox'
-    tasks_from: 'set_host_facts.yaml'
-
 - name: 'Stop hosts.'
   ansible.builtin.include_role:
     name: 'ndouglas.proxmox'
