@@ -7,7 +7,6 @@ dot_get_date_last_updated_all() {
     dot_get_date_last_updated_all_file_handler() {
       authorized_key="${1}";
       user_at_hostname="$(basename "${authorized_key}" .pub)";
-      user_at_hostname="$(basename "${authorized_key}" .pub)";
       user="$(echo "${user_at_hostname}" | cut -d\@ -f1)";
       hostname="$(echo "${user_at_hostname}" | cut -d\@ -f2)";
       prompt="$(bash -lc "nd_preview_hostname_prompt ${hostname} ${user} ~")";
