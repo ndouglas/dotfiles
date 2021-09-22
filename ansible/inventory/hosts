@@ -4,102 +4,27 @@ local:
       ansible_connection: 'local'
       ansible_python_interpreter: 'python3'
 all:
-  vars:
-    prompt:
-      emoji: ''
-      colors:
-        primary: 188
-        secondary: 159
-        tertiary: 102
-    pve_mounts: []
-    host_roles:
-      - 'dotfiles_root'
-      - 'dotfiles'
-      - 'route53'
   hosts:
     fossoway:
-      prompt:
-        emoji: '🍎'
-        colors:
-          primary: 220
-          secondary: 22
-          tertiary: 160
-      description: |
-        My primary personal laptop.
   children:
     pve_nodes:
-      vars:
-        ansible_ssh_user: 'root'
       hosts:
         celtigar:
-          pve_cluster_id: old_anchor
-          prompt:
-            emoji: '🦀'
-            colors:
-              primary: 52
-              secondary: 124
-              tertiary: 102
-          description: |
-            Dell R720 Proxmox Server #2
         lefford:
-          pve_cluster_id: rain_house
-          prompt:
-            emoji: '☀️'
-            colors:
-              primary: 220
-              secondary: 32
-              tertiary: 58
-          description: |
-            Dell R720XD Proxmox Server #3
         ryswell:
-          pve_cluster_id: grey_garden
-          prompt:
-            emoji: '🐴'
-            colors:
-              primary: 179
-              secondary: 160
-              tertiary: 138
-          description: |
-            Dell R720 Proxmox Server #1
     pbs_nodes:
       hosts:
         lefford:
     opnsense:
       hosts:
         marbrand:
-          prompt:
-            emoji: '🔥'
-            colors:
-              primary: 65
-              secondary: 172
-              tertiary: 52
-          description: |
-            Dell R210 II Firewall/Router (OpnSense)
     retropie:
       hosts:
         # peat:
     synology:
       hosts:
         dayne:
-          ansible_python_interpreter: /var/services/homes/nathan/python3/bin/python3
-          prompt:
-            emoji: '💫'
-            colors:
-              primary: 140
-              secondary: 225
-              tertiary: 59
-          description: |
-            Synology DS1813+ NAS
         uller:
-          ansible_python_interpreter: /var/services/homes/nathan/python3/bin/python3
-          prompt:
-            emoji: '🔥'
-            colors:
-              primary: 124
-              secondary: 11
-              tertiary: 136
-          description: |
-            Synology DS2415+ NAS
     aquaria:
       hosts:
         # Reef-Pi (End Table)
@@ -109,73 +34,20 @@ all:
     nates_office:
       hosts:
         bridges:
-          prompt:
-            emoji: '🌉'
-            colors:
-              primary: 20
-              secondary: 223
-              tertiary: 143
-          description: |
-            Raspberry Pi 3B+ (Home Assistant Client)
     duggins_lab:
       hosts:
         ashford:
-          prompt:
-            emoji: '🌞'
-            colors:
-              primary: 208
-              secondary: 94
-              tertiary: 222
-          description: |
-            Raspberry Pi 3B+ 3D-Printer Controller
         beesbury:
-          prompt:
-            emoji: '🐝'
-            colors:
-              primary: 11
-              secondary: 58
-              tertiary: 100
-          description: |
-            Raspberry Pi 400 John's Desktop
         estermont:
-          prompt:
-            emoji: '🐢'
-            colors:
-              primary: 114
-              secondary: 22
-              tertiary: 59
-          description: |
-            Raspberry Pi 400 Nate's Desktop
     k8s:
-      vars:
-        pve_cores: 4
-        pve_memory_size: 16384
-        pve_rootfs_size: 32
-        host_roles:
-        #  - 'dotfiles_root'
-        #  - 'dotfiles'
-          - 'route53'
-          - 'docker'
-          - 'k8s'
-        k8s_cluster_roles:
-          - 'route53'
-          - 'get_config'
-          - 'helm'
-          - 'argocd'
-          - 'traefik'
-          - 'whoami'
       children:
         k8s_masters:
-          vars:
-            k8s_role: 'master'
           hosts:
             karstark:
             liddle:
             manderly:
             norcross:
         k8s_nodes:
-          vars:
-            k8s_role: 'node'
           hosts:
             kellington:
             kettleblack:
@@ -186,29 +58,21 @@ all:
             norrey:
             norridge:
         karhold:
-          vars:
-            k8s_cluster: 'karhold'
           hosts:
             karstark:
             kellington:
             kettleblack:
         longtable:
-          vars:
-            k8s_cluster: 'longtable'
           hosts:
             liddle:
             lightfoot:
             lipps:
         mistwood:
-          vars:
-            k8s_cluster: 'mistwood'
           hosts:
             manderly:
             manwoody:
             marsh:
         ninestars:
-          vars:
-            k8s_cluster: 'ninestars'
           hosts:
             norcross:
             norrey:
@@ -221,663 +85,90 @@ all:
         # spicer:
         # VR Machine
         # velaryon:
-    pve_clusters:
-      vars:
-        description: |
-          Proxmox LXC Container - Currently Unused
+    pve_hosts:
       children:
         grey_garden:
-          vars:
-            pve_cluster_id: grey_garden
-            pve_node: ryswell
-            pve_network_id: 1
           hosts:
             algood:
-              pve_cores: 2
-              pve_memory_size: 2048
-              pve_rootfs_size: 16
-              prompt:
-                emoji: '🌿'
-                colors:
-                  primary: 184
-                  secondary: 19
-                  tertiary: 94
-              description: |
-                Proxmox LXC Container - Pi-Hole
             ball:
-              pve_cores: 2
-              pve_memory_size: 2048
-              pve_rootfs_size: 16
-              pve_ostemplate: 'ubuntu-18.04-standard_18.04.1-1_amd64.tar.gz'
-              prompt:
-                emoji: '☄'
-                colors:
-                  primary: 160
-                  secondary: 102
-                  tertiary: 160
-              description: |
-                Proxmox LXC Container - UniFi Controller
             cafferen:
-              prompt:
-                emoji: '🦌'
-                colors:
-                  primary: 28
-                  secondary: 71
-                  tertiary: 102
-              description: |
-                Proxmox LXC Container - Currently Unused
             dalt:
-              prompt:
-                emoji: '🍋'
-                colors:
-                  primary: 127
-                  secondary: 184
-                  tertiary: 22
-              description: |
-                Proxmox LXC Container - Currently Unused
             egen:
-              prompt:
-                emoji: '✨'
-                colors:
-                  primary: 19
-                  secondary: 184
-                  tertiary: 145
-              description: |
-                Proxmox LXC Container - Currently Unused
             farman:
-              prompt:
-                emoji: '⛵'
-                colors:
-                  primary: 184
-                  secondary: 124
-                  tertiary: 19
-              description: |
-                Proxmox LXC Container - Currently Unused
             gardener:
-              prompt:
-                emoji: '🧤'
-                colors:
-                  primary: 28
-                  secondary: 102
-                  tertiary: 108
-              description: |
-                Proxmox LXC Container - Currently Unused
             haigh:
-              prompt:
-                emoji: '🔱'
-                colors:
-                  primary: 94
-                  secondary: 220
-                  tertiary: 137
-              description: |
-                Proxmox LXC Container - Currently Unused
             inchfield:
-              prompt:
-                emoji: '🏁'
-                colors:
-                  primary: 102
-                  secondary: 59
-                  tertiary: 102
-              description: |
-                Proxmox LXC Container - Currently Unused
             jast:
-              prompt:
-                emoji: '🦁'
-                colors:
-                  primary: 11
-                  secondary: 58
-                  tertiary: 145
-              description: |
-                Proxmox LXC Container - Currently Unused
             karstark:
-              prompt:
-                emoji: '🌟'
-                colors:
-                  primary: 102
-                  secondary: 102
-                  tertiary: 102
-              description: |
-                Proxmox LXC Container - Kubernetes Master (Karhold)
             liddle:
-              prompt:
-                emoji: '🌰'
-                colors:
-                  primary: 28
-                  secondary: 131
-                  tertiary: 108
-              description: |
-                Proxmox LXC Container - Kubernetes Master (Longtable)
             manderly:
-              prompt:
-                emoji: '🧜‍️'
-                colors:
-                  primary: 37
-                  secondary: 28
-                  tertiary: 114
-              description: |
-                Proxmox LXC Container - Kubernetes Master (Mistwood)
             norcross:
-              prompt:
-                emoji: '➕'
-                colors:
-                  primary: 102
-                  secondary: 59
-                  tertiary: 102
-              description: |
-                Proxmox LXC Container - Kubernetes Master (Ninestars)
             oakheart:
-              prompt:
-                emoji: '🍂'
-                colors:
-                  primary: 28
-                  secondary: 220
-                  tertiary: 100
             paege:
-              prompt:
-                emoji: '🐍'
-                colors:
-                  primary: 174
-                  secondary: 59
-                  tertiary: 102
             qoherys:
-              prompt:
-                emoji: '💀'
-                colors:
-                  primary: 179
-                  secondary: 124
-                  tertiary: 101
             rambton:
-              prompt:
-                emoji: '🐏'
-                colors:
-                  primary: 124
-                  secondary: 222
-                  tertiary: 88
             santagar:
-              prompt:
-                emoji: '🐆'
-                colors:
-                  primary: 188
-                  secondary: 19
-                  tertiary: 184
             tarly:
-              prompt:
-                emoji: '🏹'
-                colors:
-                  primary: 28
-                  secondary: 124
-                  tertiary: 52
             uffering:
-              prompt:
-                emoji: ''
-                colors:
-                  primary: 95
-                  secondary: 22
-                  tertiary: 145
             vaith:
-              prompt:
-                emoji: '🌞'
-                colors:
-                  primary: 208
-                  secondary: 11
-                  tertiary: 101
             waxley:
-              prompt:
-                emoji: '🕯️"'
-                colors:
-                  primary: 145
-                  secondary: 102
-                  tertiary: 160
         old_anchor:
-          vars:
-            pve_cluster_id: old_anchor
-            pve_node: celtigar
-            pve_network_id: 2
           hosts:
             allyrion:
-              prompt:
-                emoji: '✋'
-                colors:
-                  primary: 124
-                  secondary: 220
-                  tertiary: 52
-              description: |
-                Proxmox LXC Container - Currently Unused
             bettley:
-              prompt:
-                emoji: '🐞'
-                colors:
-                  primary: 220
-                  secondary: 18
-                  tertiary: 94
-              description: |
-                Proxmox LXC Container - Currently Unused
             cargyll:
-              prompt:
-                emoji: '🦢'
-                colors:
-                  primary: 124
-                  secondary: 220
-                  tertiary: 58
-              description: |
-                Proxmox LXC Container - Currently Unused
             darry:
-              prompt:
-                emoji: '👨‍🌾'
-                colors:
-                  primary: 94
-                  secondary: 131
-                  tertiary: 59
-              description: |
-                Proxmox LXC Container - Currently Unused
             erenford:
-              prompt:
-                emoji: '🦩'
-                colors:
-                  primary: 210
-                  secondary: 220
-                  tertiary: 95
-              description: |
-                Proxmox LXC Container - Currently Unused
             fell:
-              prompt:
-                emoji: '🌃'
-                colors:
-                  primary: 28
-                  secondary: 71
-                  tertiary: 102
-              description: |
-                Proxmox LXC Container - Currently Unused
             garner:
-              prompt:
-                emoji: '🦉'
-                colors:
-                  primary: 28
-                  secondary: 230
-                  tertiary: 130
-              description: |
-                Proxmox LXC Container - Currently Unused
             harclay:
-              prompt:
-                emoji: '🌒'
-                colors:
-                  primary: 19
-                  secondary: 104
-                  tertiary: 19
-              description: |
-                Proxmox LXC Container - Currently Unused
             ironmaker:
-              prompt:
-                emoji: '🗡️"'
-                colors:
-                  primary: 65
-                  secondary: 220
-                  tertiary: 22
-              description: |
-                Proxmox LXC Container - Currently Unused
             jordayne:
-              prompt:
-                emoji: '🪶'
-                colors:
-                  primary: 34
-                  secondary: 185
-                  tertiary: 70
-              description: |
-                Proxmox LXC Container - Currently Unused
             kellington:
-              prompt:
-                emoji: '📘'
-                colors:
-                  primary: 38
-                  secondary: 188
-                  tertiary: 178
-              description: |
-                Proxmox LXC Container - Kubernetes Node (Karhold)
             lightfoot:
-              prompt:
-                emoji: '👣'
-                colors:
-                  primary: 94
-                  secondary: 144
-                  tertiary: 94
-              description: |
-                Proxmox LXC Container - Kubernetes Node (Longtable)
             manwoody:
-              prompt:
-                emoji: '💀'
-                colors:
-                  primary: 223
-                  secondary: 59
-                  tertiary: 102
-              description: |
-                Proxmox LXC Container - Kubernetes Node (Mistwood)
             norrey:
-              prompt:
-                emoji: '🌿'
-                colors:
-                  primary: 22
-                  secondary: 11
-                  tertiary: 100
-              description: |
-                Proxmox LXC Container - Kubernetes Node (Ninestars)
             oldflowers:
-              prompt:
-                emoji: '✋'
-                colors:
-                  primary: 28
-                  secondary: 160
-                  tertiary: 188
             poole:
-              prompt:
-                emoji: '🔵'
-                colors:
-                  primary: 19
-                  secondary: 102
-                  tertiary: 19
             qorgyle:
-              prompt:
-                emoji: '🦂'
-                colors:
-                  primary: 124
-                  secondary: 167
-                  tertiary: 160
             redwyne:
-              prompt:
-                emoji: '🍇'
-                colors:
-                  primary: 19
-                  secondary: 22
-                  tertiary: 131
             selmy:
-              prompt:
-                emoji: '🌾'
-                colors:
-                  primary: 94
-                  secondary: 11
-                  tertiary: 137
             teague:
-              prompt:
-                emoji: '🔱'
-                colors:
-                  primary: 184
-                  secondary: 94
-                  tertiary: 100
             umber:
-              prompt:
-                emoji: '🧍‍♂️'
-                colors:
-                  primary: 160
-                  secondary: 94
-                  tertiary: 243
             vance:
-              prompt:
-                emoji: ''
-                colors:
-                  primary: 188
-                  secondary: 59
-                  tertiary: 102
             webber:
-              prompt:
-                emoji: '🕷️'
-                colors:
-                  primary: 174
-                  secondary: 59
-                  tertiary: 102
         rain_house:
-          vars:
-            pve_cluster_id: rain_house
-            pve_node: lefford
-            pve_network_id: 3
           hosts:
             ambrose:
-              prompt:
-                emoji: '🐜'
-                colors:
-                  primary: 11
-                  secondary: 160
-                  tertiary: 172
-              description: |
-                Proxmox LXC Container - Transmission Cluster; FileBot; Beets
             blackbar:
-              prompt:
-                emoji: '➖'
-                colors:
-                  primary: 188
-                  secondary: 59
-                  tertiary: 102
-              description: |
-                Proxmox LXC Container - Jellyfin
             caron:
-              prompt:
-                emoji: '🦜'
-                colors:
-                  primary: 11
-                  secondary: 159
-                  tertiary: 100
-              description: |
-                Proxmox LXC Container - Gitea
-              pve_ostemplate: 'debian-10-turnkey-gitea_16.1-1_amd64.tar.gz'
-              pve_mounts:
-                - name: 'Git'
-                  guest_path: '/home/git'
-                  host_path: '/leo/caron/home_git'
             donniger:
-              prompt:
-                emoji: '🌅'
-                colors:
-                  primary: 108
-                  secondary: 11
-                  tertiary: 160
-              description: |
-                Proxmox LXC Container - Currently Unused
             estren:
-              prompt:
-                emoji: '❎'
-                colors:
-                  primary: 28
-                  secondary: 188
-                  tertiary: 124
-              description: |
-                Proxmox LXC Container - Gitea
             fenn:
-              prompt:
-                emoji: '🌺'
-                colors:
-                  primary: 140
-                  secondary: 160
-                  tertiary: 159
-              description: |
-                Proxmox LXC Container - Plex
             gaunt:
-              prompt:
-                emoji: '🍢'
-                colors:
-                  primary: 210
-                  secondary: 95
-                  tertiary: 59
-              description: |
-                Proxmox LXC Container - Currently Unused
             harlton:
-              prompt:
-                emoji: '🌳'
-                colors:
-                  primary: 28
-                  secondary: 188
-                  tertiary: 102
-              description: |
-                Proxmox LXC Container - Plex
             ironsmith:
-              prompt:
-                emoji: '🧲'
-                colors:
-                  primary: 65
-                  secondary: 220
-                  tertiary: 22
-              description: |
-                Proxmox LXC Container - Currently Unused
             justman:
-              prompt:
-                emoji: '⚖️'
-                colors:
-                  primary: 19
-                  secondary: 178
-                  tertiary: 103
-              description: |
-                Proxmox LXC Container - Currently Unused
             kettleblack:
-              prompt:
-                emoji: '🍯'
-                colors:
-                  primary: 124
-                  secondary: 59
-                  tertiary: 52
-              description: |
-                Proxmox LXC Container - Kubernetes Node (Karhold)
             lipps:
-              prompt:
-                emoji: '👄'
-                colors:
-                  primary: 18
-                  secondary: 210
-                  tertiary: 61
-              description: |
-                Proxmox LXC Container - Kubernetes Node (Longtable)
             marsh:
-              prompt:
-                emoji: '🐸'
-                colors:
-                  primary: 184
-                  secondary: 28
-                  tertiary: 94
-              description: |
-                Proxmox LXC Container - Kubernetes Node (Mistwood)
             norridge:
-              prompt:
-                emoji: '🏹'
-                colors:
-                  primary: 19
-                  secondary: 173
-                  tertiary: 60
-              description: |
-                Proxmox LXC Container - Kubernetes Node (Ninestars)
             orkwood:
-              prompt:
-                emoji: '🌲'
-                colors:
-                  primary: 11
-                  secondary: 22
-                  tertiary: 100
             prester:
-              prompt:
-                emoji: '🐂'
-                colors:
-                  primary: 160
-                  secondary: 102
-                  tertiary: 160
             quagg:
-              prompt:
-                emoji: ''
-                colors:
-                  primary: 208
-                  secondary: 173
-                  tertiary: 59
             reed:
-              prompt:
-                emoji: '🐊'
-                colors:
-                  primary: 65
-                  secondary: 59
-                  tertiary: 108
             shadrich:
-              prompt:
-                emoji: '🐁'
-                colors:
-                  primary: 19
-                  secondary: 94
-                  tertiary: 188
             tudbury:
-              prompt:
-                emoji: '🐢'
-                colors:
-                  primary: 185
-                  secondary: 28
-                  tertiary: 106
             upcliff:
-              prompt:
-                emoji: ''
-                colors:
-                  primary: 37
-                  secondary: 23
-                  tertiary: 30
             varner:
-              prompt:
-                emoji: ''
-                colors:
-                  primary: 188
-                  secondary: 59
-                  tertiary: 102
             wode:
-              prompt:
-                emoji: '🦔'
-                colors:
-                  primary: 11
-                  secondary: 188
-                  tertiary: 100
         golden_tooth:
           hosts:
             appleton:
-              prompt:
-                emoji: '🌳'
-                colors:
-                  primary: 58
-                  secondary: 184
-                  tertiary: 102
             blanetree:
-              prompt:
-                emoji: '🍁'
-                colors:
-                  primary: 28
-                  secondary: 11
-                  tertiary: 94
             cassel:
-              prompt:
-                emoji: '🐺'
-                colors:
-                  primary: 145
-                  secondary: 102
-                  tertiary: 145
             drox:
-              prompt:
-                emoji: '🏹'
-                colors:
-                  primary: 220
-                  secondary: 59
-                  tertiary: 101
             elesham:
-              prompt:
-                emoji: '🌄'
-                colors:
-                  primary: 59
-                  secondary: 210
-                  tertiary: 95
             fiddler:
-              prompt:
-                emoji: '🎻'
-                colors:
-                  primary: 19
-                  secondary: 220
-                  tertiary: 100
             glover:
-              prompt:
-                emoji: '🧤'
-                colors:
-                  primary: 202
-                  secondary: 145
-                  tertiary: 102
             harroway:
-              prompt:
-                emoji: '🏰'
-                colors:
-                  primary: 208
-                  secondary: 94
-                  tertiary: 95

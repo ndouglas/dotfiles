@@ -1,0 +1,17 @@
+description: |-
+    Dell R720XD Proxmox Server #3
+prompt:
+    colors:
+        primary: 220
+        secondary: 32
+        tertiary: 58
+    emoji: ☀️
+pve_cluster_id: rain_house
+host_roles:
+  - 'dotfiles_root'
+  - 'dotfiles'
+  - 'route53'
+  - 'proxmox_node'
+  - 'proxmox_nfs_server'
+  - 'k8s_nfs_server'
+zfs_nfs_root: 'leo'

@@ -1,0 +1,8 @@
+description: |-
+    Synology DS1813+ NAS
+prompt:
+    colors:
+        primary: 140
+        secondary: 225
+        tertiary: 59
+    emoji: 💫

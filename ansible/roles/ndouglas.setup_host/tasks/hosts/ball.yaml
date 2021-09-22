@@ -1,4 +1,0 @@
-- name: 'Set up Unifi Controller.'
-  ansible.builtin.include_role:
-    name: 'ndouglas.setup_host'
-    tasks_from: 'roles/unifi.yaml'

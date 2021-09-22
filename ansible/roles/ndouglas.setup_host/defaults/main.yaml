@@ -30,3 +30,6 @@ route53_private_domain: "{{ my.domains.private }}"
 route53_personal_fqdn: "{{ inventory_hostname }}.{{ route53_personal_domain }}"
 route53_private_fqdn: "{{ inventory_hostname }}.{{ route53_private_domain }}"
 route53_ipv4_address: "{{ ansible_default_ipv4.address | default(ansible_all_ipv4_addresses[0]) }}"
+
+nfs_exports: []
+nfs_mount_options: 'rw,async,no_subtree_check,no_wdelay,crossmnt,insecure,all_squash,insecure_locks,sec=sys,anonuid=1000,anongid=1000'

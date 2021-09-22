@@ -1,0 +1,3 @@
+description: |
+  Proxmox LXC Container - Currently Unused
+pve_role: 'host'

@@ -1,0 +1,9 @@
+description: |-
+    Dell R720 Proxmox Server #2
+prompt:
+    colors:
+        primary: 52
+        secondary: 124
+        tertiary: 102
+    emoji: 🦀
+pve_cluster_id: old_anchor

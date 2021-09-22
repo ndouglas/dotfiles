@@ -1,7 +1,4 @@
 ---
-- name: 'Gather host facts.'
-  ansible.builtin.include: 'set_host_facts.yaml'
-
 - name: 'Stop the container.'
   delegate_to: "{{ pve_node }}"
   community.general.proxmox:

@@ -1,0 +1,16 @@
+pve_cores: 4
+pve_memory_size: 16384
+pve_rootfs_size: 32
+host_roles:
+#  - 'dotfiles_root'
+#  - 'dotfiles'
+  - 'route53'
+  - 'docker'
+  - 'k8s'
+k8s_cluster_roles:
+  - 'route53'
+  - 'get_config'
+  - 'helm'
+  - 'argocd'
+  - 'traefik'
+  - 'whoami'

@@ -1,0 +1,16 @@
+description: |
+  Proxmox LXC Container - UniFi Controller
+prompt:
+    colors:
+        primary: 160
+        secondary: 102
+        tertiary: 160
+    emoji: ☄
+pve_host_index: 1
+pve_ip_address: 10.1.0.101
+pve_mac_address: de:fe:c8:01:00:65
+pve_vm_id: '101'
+pve_cores: 2
+pve_memory_size: 2048
+pve_rootfs_size: 16
+pve_ostemplate: 'ubuntu-18.04-standard_18.04.1-1_amd64.tar.gz'

@@ -44,6 +44,18 @@ gitconfig:
 
 motd_base_url: "https://raw.githubusercontent.com/ndouglas/asoiaf-noble-house-images/master/utf8/40"
 
+prompt:
+  emoji: ''
+  colors:
+    primary: 188
+    secondary: 159
+    tertiary: 102
+pve_mounts: []
+host_roles:
+  - 'dotfiles_root'
+  - 'dotfiles'
+  - 'route53'
+
 # Structures Stored in the Vault
 
 # Password

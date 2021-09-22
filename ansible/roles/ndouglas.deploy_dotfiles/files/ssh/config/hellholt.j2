@@ -1,5 +1,5 @@
 # Hellholt
-{% for host in groups['pve_clusters']  %}
+{% for host in groups['pve_hosts']  %}
   # {{ host }}
   Host {{ host }}
     User {{ hostvars[host].ansible_user | default(user) }}
