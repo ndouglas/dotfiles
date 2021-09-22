@@ -13,8 +13,6 @@
   - name: 'Perform common tasks.'
     ansible.builtin.include_role:
       name: 'ndouglas.common'
-    vars:
-      install_common_packages: no
 
   - name: 'Execute host-specific roles.'
     ansible.builtin.include: "tasks/roles/{{ host_role }}.yaml"

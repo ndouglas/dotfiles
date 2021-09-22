@@ -6,5 +6,5 @@ if test -n "$(shopt -s nullglob; echo ~/.kube/*.cluster.config)"; then
   done;
   unset config;
 fi;
-KUBECONFIG="$(printf %s "${KUBECONFIG}" | awk -vRS=: '!a[$0]++' | paste -s -d:)";
+KUBECONFIG="$(printf %s "${KUBECONFIG}" | awk -vRS=: '!a[$0]++' | paste -s -d: -)";
 export KUBECONFIG;
