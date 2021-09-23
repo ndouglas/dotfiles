@@ -1,3 +1,4 @@
+---
 - name: 'Create the whoami namespace.'
   kubernetes.core.k8s:
     name: 'whoami'
