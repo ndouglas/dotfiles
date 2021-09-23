@@ -11,6 +11,7 @@ k8s_cluster_roles:
   - 'route53'                     # Add DNS records.
   - 'get_config'                  # Get Kubectl config.
   - 'helm'                        # Install Helm for package control.
+  - 'metrics_server'              # Local metrics gathering and reporting.
   - 'nfs_provisioner'             # Allow provisioning persistent network storage.
   - 'local_storage_provisioner'   # Allow provisioning persistent local storage.
   - 'cert_manager'                # Permit TLS cert generation.
