@@ -34,9 +34,17 @@
             enabled: yes
       logs:
         general:
-          level: ERROR
+          level: DEBUG
         access:
           enabled: yes
+      hostNetwork: no
+      initContainers:
+        - name: 'volume-permissions'
+          image: 'busybox:1.31.1'
+          command: ["sh", "-c", "touch /data/acme.json ; chown 65532:65532 /data/acme.json ; chmod -Rv 600 /data"]
+          volumeMounts:
+            - name: 'data'
+              mountPath: '/data'
       ports:
         traefik:
           port: 9000
@@ -49,15 +57,44 @@
           expose: yes
           exposedPort: 80
           protocol: TCP
-          nodePort: 32080
+          hostPort: 32080
         websecure:
           port: 8443
           expose: yes
           exposedPort: 443
           protocol: TCP
-          nodePort: 32443
+          hostPort: 32443
           tls:
-            enabled: no
+            enabled: yes
+            options: ""
+            certResolver: "{{ route53_private_domain_basename }}"
+            domains:
+              - main: "{{ route53_private_fqdn }}"
+                sans:
+                  - "*.{{ route53_private_fqdn }}"
+      persistence:
+        enabled: yes
+        name: 'data'
+        accessMode: 'ReadWriteMany'
+        storageClass: 'nfs-client'
+        size: '128Mi'
+        path: '/data'
+        annotations:
+          pv.beta.kubernetes.io/gid: "65532"
+      additionalArguments:
+        - "--certificatesResolvers.{{ route53_private_domain_basename }}.acme.email=\"letsencrypt@{{ route53_private_domain }}\""
+        - "--certificatesResolvers.{{ route53_private_domain_basename }}.acme.dnsChallenge"
+        - "--certificatesResolvers.{{ route53_private_domain_basename }}.acme.dnsChallenge.provider='route53'"
+        - "--certificatesResolvers.{{ route53_private_domain_basename }}.acme.storage='/data/acme.json'"
+      podSecurityContext:
+        fsGroup: 65532
+      env:
+        - name: 'AWS_ACCESS_KEY_ID'
+          value: "{{ route53_key_id }}"
+        - name: 'AWS_SECRET_ACCESS_KEY'
+          value: "{{ route53_secret_key }}"
+        - name: 'AWS_HOSTED_ZONE_ID'
+          value: "{{ route53_private_zone_id }}"
       service:
         enabled: yes
-        type: NodePort
+        type: 'NodePort'
