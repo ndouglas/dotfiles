@@ -8,12 +8,13 @@ host_roles:
   - 'docker'
   - 'k8s'
 k8s_cluster_roles:
-  - 'route53'
-  - 'get_config'
-  - 'helm'
-  - 'argocd'
-  - 'traefik'
-  - 'whoami'
-  - 'nfs_provisioner'
-  - 'aws_ssm_policy'
-  - 'external_secrets'
+  - 'route53'              # Add DNS records.
+  - 'get_config'           # Get Kubectl config.
+  - 'helm'                 # Install Helm for package control.
+  - 'nfs_provisioner'      # Allow provisioning persistent storage.
+  - 'cert_manager'         # Permit TLS cert generation.
+  - 'traefik'              # Install and setup Traefik as Ingress Controller.
+  - 'argocd'               # Install ArgoCD as GitOps controller.
+  - 'whoami'               # Install Whoami as test service.
+  - 'aws_ssm_policy'       # Allow retrieval of secrets from AWS SSM Parameter Store.
+  - 'external_secrets'     # Allow secrets to persist past cluster lifetimes.
