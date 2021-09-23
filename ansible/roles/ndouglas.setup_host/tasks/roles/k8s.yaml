@@ -1,4 +1,26 @@
 ---
+- name: 'Install K8s custom service.'
+  remote_user: 'root'
+  block:
+
+    - name: 'Create K8s custom service.'
+      ansible.builtin.copy:
+        dest: '/etc/systemd/system/multi-user.target.wants/k8s-custom.service'
+        content: |
+          [Unit]
+          Description=Kubernetes Custom Actions
+          [Service]
+          ExecStart=mount --make-rshared /
+          [Install]
+          WantedBy=multi-user.target
+
+    - name: 'Start K8s custom service.'
+      ansible.builtin.systemd:
+        name: 'k8s-custom.service'
+        daemon_reload: yes
+        state: 'started'
+        enabled: yes
+
 - name: 'Install Kubernetes.'
   ansible.builtin.include_role:
     name: 'geerlingguy.kubernetes'
