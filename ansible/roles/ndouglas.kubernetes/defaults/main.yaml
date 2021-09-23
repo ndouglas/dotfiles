@@ -2,6 +2,7 @@
 nfs_server_ip_address: '10.3.0.2'
 zfs_nfs_root: 'leo'
 
+route53_region: "{{ aws.defaults.region }}"
 route53_key_id: "{{ aws.profiles.route53.key_id }}"
 route53_secret_key: "{{ aws.profiles.route53.secret_key }}"
 route53_private_zone_id: "{{ aws.profiles.route53.zone_ids.private }}"

@@ -12,47 +12,76 @@
     create_namespace: yes
     values:
       service:
-        type: ClusterIP
+        type: 'ClusterIP'
       secret:
         createSecret: yes
         argocdServerAdminPassword: "{{ password | password_hash('bcrypt') }}"
-      extraArgs:
-        - '--insecure'
+      server:
+        extraArgs:
+          - '--insecure'
 
 - name: 'Argo CD Server ingress.'
   kubernetes.core.k8s:
     kubeconfig: '~/.kube/config'
     namespace: 'argocd'
     definition:
-      apiVersion: traefik.containo.us/v1alpha1
-      kind: IngressRoute
+      apiVersion: 'networking.k8s.io/v1'
+      kind: 'Ingress'
       metadata:
-        name: argocd-server
-        namespace: argocd
+        annotations:
+          cert-manager.io/cluster-issuer: 'letsencrypt'
+        name: 'argocd'
+      spec:
+        rules:
+          - host: "argocd.{{ route53_personal_fqdn }}"
+            http:
+              paths:
+                - pathType: 'Prefix'
+                  path: '/'
+                  backend:
+                    service:
+                      name: 'argocd-server'
+                      port:
+                        number: 80
+          - host: "argocd.{{ route53_private_fqdn }}"
+            http:
+              paths:
+                - pathType: 'Prefix'
+                  path: '/'
+                  backend:
+                    service:
+                      name: 'argocd-server'
+                      port:
+                        number: 80
+        tls:
+          - hosts:
+              - "argocd.{{ route53_personal_fqdn }}"
+              - "*.argocd.{{ route53_personal_fqdn }}"
+            secretName: "argocd.{{ route53_personal_fqdn }}-certificate"
+          - hosts:
+              - "argocd.{{ route53_private_fqdn }}"
+              - "*.argocd.{{ route53_private_fqdn }}"
+            secretName: "argocd.{{ route53_private_fqdn }}-certificate"
+
+- name: 'Argo CD Server ingress route.'
+  kubernetes.core.k8s:
+    kubeconfig: '~/.kube/config'
+    namespace: 'argocd'
+    definition:
+      apiVersion: 'traefik.containo.us/v1alpha1'
+      kind: 'IngressRoute'
+      metadata:
+        name: 'argocd-server'
+        namespace: 'argocd'
       spec:
         entryPoints:
-          - web
-          - websecure
+          - 'web'
         routes:
-          - kind: Rule
-            match: Host(`argocd.{{ route53_personal_fqdn }}`, `argocd.{{ route53_private_fqdn }}`)
-            priority: 10
-            services:
-              - name: argocd-server
-                port: 80
-          - kind: Rule
-            match: Host(`argocd.{{ route53_personal_fqdn }}`, `argocd.{{ route53_private_fqdn }}`) && Headers(`Content-Type`, `application/grpc`)
+          - kind: 'Rule'
+            match: "Host(`argocdgrpc.{{ route53_personal_fqdn }}`, `argocdgrpc.{{ route53_private_fqdn }}`)"
             priority: 11
             services:
-              - name: argocd-server
+              - name: 'argocd-server'
+                namespace: 'argocd'
                 port: 80
-                scheme: h2c
-        tls:
-          certResolver: "{{ route53_private_domain_basename }}"
-          domains:
-            - main: "argocd.{{ route53_personal_fqdn }}"
-              sans:
-              - "*.argocd.{{ route53_personal_fqdn }}"
-            - main: "argocd.{{ route53_private_fqdn }}"
-              sans:
-              - "*.argocd.{{ route53_private_fqdn }}"
+                scheme: 'h2c'

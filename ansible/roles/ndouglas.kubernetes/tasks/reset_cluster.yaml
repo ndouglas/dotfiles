@@ -1,0 +1,19 @@
+---
+- name: 'Reset and reinitialize the cluster.'
+  remote_user: 'root'
+  block:
+
+    - name: 'Run setup for this host.'
+      ansible.builtin.setup:
+
+    - name: 'Reset the cluster nodes.'
+      ansible.builtin.command:
+        cmd: 'kubeadm reset --force'
+
+    - name: 'Rebuild the cluster.'
+      ansible.builtin.include_role:
+        name: 'ndouglas.setup_host'
+        tasks_from: 'roles/k8s.yaml'
+
+    - name: 'Retrieve the config.'
+      ansible.builtin.include: 'roles/get_config.yaml'
