@@ -8,7 +8,7 @@
     creates: '/usr/local/bin/helm'
 
 - name: 'Install the Helm diff plugin.'
-  community.kubernetes.helm_plugin:
+  kubernetes.core.helm_plugin:
     plugin_path: 'https://github.com/databus23/helm-diff'
     state: 'present'
 
