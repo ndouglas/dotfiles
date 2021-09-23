@@ -5,7 +5,7 @@
 
     - name: 'Create K8s custom service.'
       ansible.builtin.copy:
-        dest: '/etc/systemd/system/multi-user.target.wants/k8s-custom.service'
+        dest: '/etc/systemd/system/k8s-custom.service'
         content: |
           [Unit]
           Description=Kubernetes Custom Actions
@@ -16,7 +16,7 @@
 
     - name: 'Start K8s custom service.'
       ansible.builtin.systemd:
-        name: 'k8s-custom.service'
+        name: 'k8s-custom'
         daemon_reload: yes
         state: 'started'
         enabled: yes
