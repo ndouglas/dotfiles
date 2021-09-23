@@ -74,9 +74,12 @@
     name:
       - 'ansible'
       - 'awscli'
+      - 'bcrypt'
       - 'bdfr'
       - 'boto3'
+      - 'docker'
       - 'kubernetes'
+      - 'passlib'
       - 'proxmoxer'
       - 'requests'
       - 'torrent_parser'
