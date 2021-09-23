@@ -1,0 +1,30 @@
+---
+- name: 'Create the local-storage namespace.'
+  kubernetes.core.k8s:
+    name: 'local-storage'
+    api_version: 'v1'
+    kind: 'Namespace'
+    state: 'present'
+
+- name: 'Clone the local-static-provisioner repo.'
+  ansible.builtin.git:
+    repo: 'https://github.com/kubernetes-sigs/sig-storage-local-static-provisioner.git'
+    dest: '/tmp/local-static-provisioner'
+
+- name: 'Deploy the local-static-provisioner chart.'
+  kubernetes.core.helm:
+    name: 'local-storage-provisioner'
+    chart_ref: '/tmp/local-static-provisioner/helm/provisioner'
+    release_namespace: 'local-storage'
+    values:
+      classes:
+      - name: 'local-storage'
+        hostDir: '/mnt/host'
+        volumeMode: 'Filesystem'
+        fsType: 'ext4'
+        namePattern: "*"
+        blockCleanerCommand:
+          - "/scripts/quick_reset.sh"
+        storageClass:
+          reclaimPolicy: Delete
+          isDefaultClass: no
