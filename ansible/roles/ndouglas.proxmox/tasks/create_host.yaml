@@ -26,9 +26,17 @@
       loop_var: 'mount_item'
     loop: "{{ pve_mounts }}"
 
+  - name: 'Set fact for default mountpoint.'
+    ansible.builtin.set_fact:
+      default_pve_mount: "{{ 'local-lvm:32,mp=mnt/host,backup=1,size=32G' }}"
+
+  - name: 'Set fact for the mountpoint dictionary.'
+    ansible.builtin.set_fact:
+      pve_mounts_dict: "{ \"mp0\": \"{{ default_pve_mount }}\" }"
+
   - name: 'Build mounts.'
     ansible.builtin.set_fact:
-      pve_mounts_dict: "{{ pve_mounts_dict | default({}) | combine({ 'mp' + index | string : mount_item.host_path + ',mp=' + mount_item.guest_path }) }}"
+      pve_mounts_dict: "{{ pve_mounts_dict | combine({ 'mp' + ( index + 1 ) | string : mount_item.host_path + ',mp=' + mount_item.guest_path }) }}"
     loop_control:
       index_var: 'index'
       loop_var: 'mount_item'
