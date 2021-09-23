@@ -15,3 +15,8 @@
     docker_daemon_options:
       exec-opts:
         - 'native.cgroupdriver=systemd'
+
+- name: 'Log in to Docker Hub.'
+  community.docker.docker_login:
+    username: "{{ docker.hub.username }}"
+    password: "{{ docker.hub.password }}"
