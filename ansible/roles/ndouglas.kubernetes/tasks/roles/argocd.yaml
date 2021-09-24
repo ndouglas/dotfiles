@@ -63,28 +63,45 @@
               - "*.argocd.{{ route53_private_fqdn }}"
             secretName: "argocd.{{ route53_private_fqdn }}-certificate"
 
-- name: 'Argo CD Server ingress route.'
+- name: 'Argo CD Server gRPC ingress.'
   kubernetes.core.k8s:
     kubeconfig: '~/.kube/config'
     namespace: 'argocd'
     definition:
-      apiVersion: 'traefik.containo.us/v1alpha1'
-      kind: 'IngressRoute'
+      apiVersion: 'networking.k8s.io/v1'
+      kind: 'Ingress'
       metadata:
-        name: 'argocd-server'
-        namespace: 'argocd'
+        name: 'argocd-serve-grpc'
         annotations:
-          cert-manager.io/cluster-issuer: 'letsencrypt'
+          ingress.kubernetes.io/protocol: 'h2c'
       spec:
-        entryPoints:
-          - 'web'
-          - 'websecure'
-        routes:
-          - kind: 'Rule'
-            match: "Host(`argocdgrpc.{{ route53_personal_fqdn }}`, `argocdgrpc.{{ route53_private_fqdn }}`)"
-            priority: 11
-            services:
-              - name: 'argocd-server'
-                namespace: 'argocd'
-                port: 80
-                scheme: 'h2c'
+        rules:
+          - host: "argocd-grpc.{{ route53_personal_fqdn }}"
+            http:
+              paths:
+                - pathType: 'Prefix'
+                  path: '/'
+                  backend:
+                    service:
+                      name: 'argocd-server'
+                      port:
+                        number: 80
+          - host: "argocd-grpc.{{ route53_private_fqdn }}"
+            http:
+              paths:
+                - pathType: 'Prefix'
+                  path: '/'
+                  backend:
+                    service:
+                      name: 'argocd-server'
+                      port:
+                        number: 80
+        tls:
+          - hosts:
+              - "argocd-grpc.{{ route53_personal_fqdn }}"
+              - "*.argocd-grpc.{{ route53_personal_fqdn }}"
+            secretName: 'argocd-secret'
+          - hosts:
+              - "argocd-grpc.{{ route53_private_fqdn }}"
+              - "*.argocd-grpc.{{ route53_private_fqdn }}"
+            secretName: 'argocd-secret'
