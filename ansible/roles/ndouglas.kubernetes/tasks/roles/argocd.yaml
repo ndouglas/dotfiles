@@ -30,8 +30,7 @@
       metadata:
         name: 'argocd-server'
         annotations:
-          kubernetes.io/ingress.class: 'traefik-cert-manager'
-          cert-manager.io/cluster-issuer: 'letsencrypt'
+          cert-manager.io/cluster-issuer: 'letsencrypt-prod'
       spec:
         rules:
           - host: "argocd.{{ route53_personal_fqdn }}"
@@ -75,7 +74,6 @@
         name: 'argocd-server'
         namespace: 'argocd'
         annotations:
-          kubernetes.io/ingress.class: 'traefik-cert-manager'
           cert-manager.io/cluster-issuer: 'letsencrypt'
       spec:
         entryPoints:

@@ -114,6 +114,7 @@
           enabled: yes
           namespaces:
             - 'default'
+            - 'argocd'
             - 'whoami'
       #     # IP used for Kubernetes Ingress endpoints
       #     publishedService:
