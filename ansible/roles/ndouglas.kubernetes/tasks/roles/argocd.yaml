@@ -11,12 +11,12 @@
     release_namespace: 'argocd'
     create_namespace: yes
     values:
-      service:
-        type: 'ClusterIP'
       secret:
         createSecret: yes
         argocdServerAdminPassword: "{{ password | password_hash('bcrypt') }}"
       server:
+        service:
+          type: 'ClusterIP'
         extraArgs:
           - '--insecure'
 
@@ -28,9 +28,10 @@
       apiVersion: 'networking.k8s.io/v1'
       kind: 'Ingress'
       metadata:
+        name: 'argocd-server'
         annotations:
+          kubernetes.io/ingress.class: 'traefik-cert-manager'
           cert-manager.io/cluster-issuer: 'letsencrypt'
-        name: 'argocd'
       spec:
         rules:
           - host: "argocd.{{ route53_personal_fqdn }}"
@@ -73,9 +74,13 @@
       metadata:
         name: 'argocd-server'
         namespace: 'argocd'
+        annotations:
+          kubernetes.io/ingress.class: 'traefik-cert-manager'
+          cert-manager.io/cluster-issuer: 'letsencrypt'
       spec:
         entryPoints:
           - 'web'
+          - 'websecure'
         routes:
           - kind: 'Rule'
             match: "Host(`argocdgrpc.{{ route53_personal_fqdn }}`, `argocdgrpc.{{ route53_private_fqdn }}`)"
