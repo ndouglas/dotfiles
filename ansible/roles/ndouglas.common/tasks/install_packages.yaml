@@ -53,6 +53,7 @@
       - 'grep'
       - 'gnu-tar'
       - 'helm'
+      - 'jc'
       - 'jq'
       - 'parallel'
       - "python@{{ software_versions.python }}"

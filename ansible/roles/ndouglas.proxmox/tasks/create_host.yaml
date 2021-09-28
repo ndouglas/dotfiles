@@ -67,6 +67,7 @@
       storage: 'local'
       pubkey: "{{ proxmox.pve_ssh_pub_key }}"
       proxmox_default_behavior: 'no_defaults'
+      timeout: 600
 
   - name: 'Append additional options to VM configuration.'
     ansible.builtin.blockinfile:
