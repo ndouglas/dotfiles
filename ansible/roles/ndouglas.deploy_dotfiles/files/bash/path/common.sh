@@ -8,8 +8,6 @@ common_paths=(
   "$HOME/python3/bin"
   '/usr/local/bin'
   '/usr/local/sbin'
-  './bin'
-  './scripts'
 )
 
 for common_path in "${common_paths[@]}"; do
