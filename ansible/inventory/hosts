@@ -5,6 +5,7 @@ local:
       ansible_python_interpreter: 'python3'
 all:
   hosts:
+    belmore:
     fossoway:
   children:
     pve_nodes:

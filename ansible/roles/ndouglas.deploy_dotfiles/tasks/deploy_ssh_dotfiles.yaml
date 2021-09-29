@@ -89,3 +89,4 @@
     name: "{{ user_at_hostname }}"
     token: "{{ github_access_token }}"
     pubkey: "{{ lookup('file', ssh_public_key_path) }}"
+  ignore_errors: yes
