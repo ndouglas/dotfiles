@@ -12,6 +12,7 @@ host_roles:
   - 'dotfiles'
   - 'route53'
   - 'proxmox_node'
+  - 'proxmox_local_file_server'
   - 'proxmox_nfs_server'
   - 'k8s_nfs_server'
 zfs_nfs_root: 'leo'

@@ -1,0 +1,16 @@
+---
+- name: 'Set facts as empty lists.'
+  ansible.builtin.set_fact:
+    hostnames: []
+    zfs_paths: []
+    ip_addresses: []
+
+- name: 'Ensure presence of relevant ZFS volumes for Proxmox hosts.'
+  become: yes
+  community.general.zfs:
+    name: "{{ zfs_nfs_root }}/local/hosts/{{ pve_host }}"
+    state: 'present'
+  loop: "{{ groups[pve_cluster_id] }}"
+  loop_control:
+    index_var: 'index'
+    loop_var: 'pve_host'
