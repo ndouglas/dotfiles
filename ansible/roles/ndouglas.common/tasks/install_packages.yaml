@@ -32,7 +32,6 @@
       - 'python3-setuptools'
       - 'python3-venv'
       - 'rsync'
-      - 'sshpass'
       - 'sudo'
     update_cache: yes
   when: 'host_uses_apt'
@@ -57,7 +56,6 @@
       - 'jq'
       - 'parallel'
       - "python@{{ software_versions.python }}"
-      - 'sshpass'
       - 'yq'
     update_homebrew: no
   when: 'host_uses_homebrew'
