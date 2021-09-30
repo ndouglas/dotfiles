@@ -1,6 +1,7 @@
 collections:
 - name: community.general
 - name: community.kubernetes
+- name: nginxinc.nginx_core
 roles:
 - src: m3nu.ansible_role_borgbackup
 - src: geerlingguy.docker
