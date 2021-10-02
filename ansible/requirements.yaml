@@ -1,8 +1,13 @@
 collections:
-- name: community.general
-- name: community.kubernetes
-- name: nginxinc.nginx_core
+- name: 'community.general'
+- name: 'community.kubernetes'
+- name: 'nginxinc.nginx_core'
 roles:
-- src: m3nu.ansible_role_borgbackup
-- src: geerlingguy.docker
-- src: geerlingguy.kubernetes
+- src: 'm3nu.ansible_role_borgbackup'
+- src: 'geerlingguy.docker'
+- src: 'geerlingguy.kubernetes'
+
+- src: 'ndouglas.setup_common'
+- src: 'ndouglas.setup_host'
+- src: 'ndouglas.proxmox'
+- src: 'ndouglas.kubernetes'

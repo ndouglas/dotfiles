@@ -1,7 +1,3 @@
 ansible_ssh_user: 'root'
 pve_role: 'node'
-host_roles:
-  - 'dotfiles_root'
-  - 'dotfiles'
-  - 'route53'
-  - 'proxmox_node'
+host_roles: "{{ host_roles + [ 'proxmox_node' ] }}"

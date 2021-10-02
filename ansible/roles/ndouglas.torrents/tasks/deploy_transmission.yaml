@@ -98,7 +98,7 @@
     volumes:
       - "/torrents/watch:/data"
     env:
-      USERNAME: "{{ user }}"
+      USERNAME: "{{ ndsc_user }}"
       PASSWORD: "{{ password }}"
       UID: "{{ uid }}"
       GID: "{{ gid }}"

@@ -4,8 +4,8 @@
   ansible.builtin.template:
     src: "{{ role_path }}/files/triggerhappy/triggerhappy.conf.j2"
     dest: "/etc/triggerhappy/triggers.d/triggerhappy.conf"
-    owner: "{{ user }}"
-    group: "{{ group }}"
+    owner: "{{ ndsc_user }}"
+    group: "{{ ndsc_group }}"
     mode: '0600'
     backup: yes
     force: yes

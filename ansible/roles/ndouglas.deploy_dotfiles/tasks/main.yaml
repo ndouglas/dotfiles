@@ -1,7 +1,7 @@
 ---
 - name: 'Perform some common tasks.'
   ansible.builtin.include_role:
-    name: 'ndouglas.common'
+    name: 'ndouglas.setup_common'
 
 - name: 'Deploy Bash dotfiles.'
   ansible.builtin.include: 'deploy_bash_dotfiles.yaml'
@@ -41,13 +41,13 @@
   ansible.builtin.cron:
     name: MAILTO
     env: yes
-    job: "{{ host_email_address }}"
-  when: 'not host_is_synology'
+    job: "{{ ndsc_host_email_address }}"
+  when: 'not ndsc_host_is_synology'
 
 - name: 'Install the update cronjob.'
   ansible.builtin.cron:
     name: 'update-dotfiles'
-    minute: "{{ 60 | random(seed=user_at_hostname) }}"
+    minute: "{{ 60 | random(seed=ndsc_user_at_hostname) }}"
     job: |
       /bin/bash -lc '~/.dotfiles/cron.sh;'
-  when: 'not host_is_synology'
+  when: 'not ndsc_host_is_synology'

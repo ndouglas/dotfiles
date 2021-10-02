@@ -13,8 +13,8 @@
 - name: 'Create the Reddit config directory.'
   ansible.builtin.file:
     path: "{{ reddit_config_dir }}"
-    owner: "{{ user }}"
-    group: "{{ group }}"
+    owner: "{{ ndsc_user }}"
+    group: "{{ ndsc_group }}"
     mode: '0700'
     state: directory
   changed_when: no
@@ -23,8 +23,8 @@
   ansible.builtin.copy:
     src: "{{ role_path }}/files/reddit/subreddits.txt.vault"
     dest: "{{ reddit_config_dir }}/subreddits.txt"
-    owner: "{{ user }}"
-    group: "{{ group }}"
+    owner: "{{ ndsc_user }}"
+    group: "{{ ndsc_group }}"
     mode: '0600'
     backup: yes
     force: yes

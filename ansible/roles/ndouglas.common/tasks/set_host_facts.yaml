@@ -1,4 +1,0 @@
----
-- name: 'Set a fact for the host email address.'
-  ansible.builtin.set_fact:
-    host_email_address: "{{ hostname }}@{{ host_email_domain }}"

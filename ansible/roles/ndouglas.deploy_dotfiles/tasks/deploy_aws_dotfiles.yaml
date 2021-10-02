@@ -12,8 +12,8 @@
 - name: 'Create the AWS config directory.'
   ansible.builtin.file:
     path: "{{ aws_config_dir }}"
-    owner: "{{ user }}"
-    group: "{{ group }}"
+    owner: "{{ ndsc_user }}"
+    group: "{{ ndsc_group }}"
     mode: '0700'
     state: directory
   changed_when: no

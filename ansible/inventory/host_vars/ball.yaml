@@ -5,7 +5,7 @@ prompt:
         primary: 160
         secondary: 102
         tertiary: 160
-    emoji: ☄
+    emoji: ⚪
 pve_host_index: 1
 pve_ip_address: 10.1.0.101
 pve_mac_address: de:fe:c8:01:00:65

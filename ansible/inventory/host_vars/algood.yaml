@@ -13,8 +13,4 @@ pve_vm_id: '100'
 pve_cores: 2
 pve_memory_size: 2048
 pve_rootfs_size: 16
-host_roles:
-  - 'dotfiles_root'
-  - 'dotfiles'
-  - 'route53'
-  - 'nginx_reverse_proxy'
+host_roles: "{{ host_roles + [ 'ssh_cert_server' ] }}"

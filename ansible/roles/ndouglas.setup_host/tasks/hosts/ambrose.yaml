@@ -1,4 +1,0 @@
-- name: 'Deploy Torrents role.'
-  ansible.builtin.include_role:
-    name: 'ndouglas.torrents'
-    tasks_from: 'deploy_transmission.yaml'

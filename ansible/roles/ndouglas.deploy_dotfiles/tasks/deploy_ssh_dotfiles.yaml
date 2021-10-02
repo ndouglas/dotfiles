@@ -42,8 +42,8 @@
 - name: 'Create the SSH config directory.'
   ansible.builtin.file:
     path: "{{ ssh_config_dir }}"
-    owner: "{{ user }}"
-    group: "{{ group }}"
+    owner: "{{ ndsc_user }}"
+    group: "{{ ndsc_group }}"
     mode: '0700'
     state: directory
   changed_when: no
@@ -52,8 +52,8 @@
   ansible.builtin.copy:
     src: "{{ role_path }}/files/ssh/config.ini"
     dest: "{{ ssh_config_path }}"
-    owner: "{{ user }}"
-    group: "{{ group }}"
+    owner: "{{ ndsc_user }}"
+    group: "{{ ndsc_group }}"
     mode: '0600'
     backup: yes
     force: yes
@@ -62,8 +62,8 @@
   ansible.builtin.copy:
     src: "{{ item }}"
     dest: "{{ ssh_config_dir }}"
-    owner: "{{ user }}"
-    group: "{{ group }}"
+    owner: "{{ ndsc_user }}"
+    group: "{{ ndsc_group }}"
     mode: '0600'
     force: yes
   with_fileglob:
@@ -72,13 +72,13 @@
 
 - name: 'Copy SSH public key.'
   ansible.builtin.copy:
-    dest: "{{ role_path }}/files/ssh/authorized_keys/{{ user_at_hostname }}.pub"
+    dest: "{{ role_path }}/files/ssh/authorized_keys/{{ ndsc_user_at_hostname }}.pub"
     content: "{{ lookup('file', ssh_public_key_path) }}"
     force: yes
 
 - name: 'Write SSH authorized keys.'
   ansible.posix.authorized_key:
-    user: "{{ user }}"
+    user: "{{ ndsc_user }}"
     key: "{{ lookup('file', item) }}"
     state: 'present'
   with_fileglob:
@@ -86,7 +86,7 @@
 
 - name: 'Register public key with GitHub.'
   community.general.github_key:
-    name: "{{ user_at_hostname }}"
+    name: "{{ ndsc_user_at_hostname }}"
     token: "{{ github_access_token }}"
     pubkey: "{{ lookup('file', ssh_public_key_path) }}"
   ignore_errors: yes

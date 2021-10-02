@@ -6,6 +6,14 @@
     ansible_connection: local
   tasks:
 
+    - name: 'Debug.'
+      ansible.builtin.debug:
+        msg: "{{ ansible_user_id }}"
+
+    - name: 'Debug.'
+      ansible.builtin.debug:
+        msg: "{{ ansible_env.USER }}"
+
     - name: 'Deploy dotfiles.'
       ansible.builtin.include_role:
         name: 'ndouglas.deploy_dotfiles'

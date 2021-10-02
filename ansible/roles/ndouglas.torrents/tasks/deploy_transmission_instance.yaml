@@ -28,8 +28,8 @@
     path: "{{ instance_storage_path }}"
     state: 'directory'
     mode: '0755'
-    owner: "{{ user }}"
-    group: "{{ group }}"
+    owner: "{{ ndsc_user }}"
+    group: "{{ ndsc_group }}"
 
 - name: 'Create symlink pointing to instance storage path from domain.'
   ansible.builtin.file:
@@ -57,8 +57,8 @@
     path: "{{ instance_domain_data_path }}"
     state: 'directory'
     mode: '0755'
-    owner: "{{ user }}"
-    group: "{{ group }}"
+    owner: "{{ ndsc_user }}"
+    group: "{{ ndsc_group }}"
 
 - name: 'Prepare directory structure.'
   ansible.builtin.file:

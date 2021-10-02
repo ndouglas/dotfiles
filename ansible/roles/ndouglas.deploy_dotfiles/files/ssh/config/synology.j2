@@ -2,7 +2,7 @@
 {% for host in groups['synology'] %}
   # {{ host }}
   Host {{ host }}
-    User {{ user }}
+    User {{ ndsc_user }}
     Hostname %h.hellholt.net
     IdentityFile ~/.ssh/id_rsa
 {% endfor %}

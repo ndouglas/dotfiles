@@ -36,8 +36,8 @@
 - name: "Create Bash dotfiles directory {{ dest }}."
   ansible.builtin.file:
     path: "{{ dest }}"
-    owner: "{{ user }}"
-    group: "{{ group }}"
+    owner: "{{ ndsc_user }}"
+    group: "{{ ndsc_group }}"
     mode: '0700'
     force: yes
     state: 'directory'
@@ -47,8 +47,8 @@
   ansible.builtin.copy:
     src: "{{ item }}"
     dest: "{{ dest }}"
-    owner: "{{ user }}"
-    group: "{{ group }}"
+    owner: "{{ ndsc_user }}"
+    group: "{{ ndsc_group }}"
     mode: '0600'
     force: yes
   with_fileglob:

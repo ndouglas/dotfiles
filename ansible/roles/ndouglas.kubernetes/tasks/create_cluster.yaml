@@ -1,9 +1,0 @@
----
-- name: 'Create hosts.'
-  ansible.builtin.include_role:
-    name: 'ndouglas.proxmox'
-    tasks_from: 'create_host.yaml'
-
-- name: 'Setup hosts.'
-  ansible.builtin.include_role:
-    name: 'ndouglas.setup_host'

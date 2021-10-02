@@ -80,7 +80,7 @@
           alias md5sum="md5";
       changed_when: no
 
-  when: 'host_is_mac'
+  when: 'ndsc_host_is_mac'
 
 ###############################################################################
 # HOST
@@ -109,7 +109,7 @@
     id: 'pi'
     source: "{{ role_path }}/files/bash/pi"
     dest: "{{ ansible_env.HOME }}/.bash.pi.d"
-  when: 'host_is_raspbian'
+  when: 'ndsc_host_is_raspbian'
 
 ###############################################################################
 # CORE
@@ -119,8 +119,8 @@
   ansible.builtin.template:
     backup: yes
     force: yes
-    owner: "{{ user }}"
-    group: "{{ group }}"
+    owner: "{{ ndsc_user }}"
+    group: "{{ ndsc_group }}"
     mode: '0755'
     src: "{{ item }}"
     dest: "{{ ansible_env.HOME }}/.{{ item | basename | regex_replace('^([^\\.]*).*', '\\1') }}"

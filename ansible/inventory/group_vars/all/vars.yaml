@@ -52,9 +52,12 @@ prompt:
     tertiary: 102
 pve_mounts: []
 host_roles:
+  - 'aws_iam_user'
+  - 'aws_ssm_policy'
   - 'dotfiles_root'
   - 'dotfiles'
   - 'route53'
+
 
 # Structures Stored in the Vault
 
@@ -125,3 +128,75 @@ host_roles:
 #   users:
 #     - 'some-user-name'
 #
+
+# ndouglas.setup_common
+ndsc_set_hostname: yes
+ndsc_enable_passwordless_sudo: yes
+ndsc_create_normal_user: yes
+ndsc_install_common_packages: no
+ndsc_reinstall_pip: no
+ndsc_normal_user_name: "{{ my.name.lower }}"
+ndsc_local_timezone: "{{ my.local.timezone }}"
+ndsc_host_email_domain: "{{ my.domains.private }}"
+ndsc_hostname: "{{ hostname }}"
+
+# ndouglas.setup_host
+ndsh_setup_common: no
+ndsh_normal_user_name: "{{ my.name.lower }}"
+ndsh_host_email_domain: "{{ my.domains.private }}"
+ndsh_local_timezone: "{{ my.local.timezone }}"
+ndsh_hostname: "{{ hostname }}"
+ndsh_aws_account_id: "{{ aws.defaults.account_id }}"
+ndsh_aws_master_access_key: "{{ aws.profiles.master.key_id }}"
+ndsh_aws_master_secret_key: "{{ aws.profiles.master.secret_key }}"
+ndsh_aws_iam_host_user: "{{ my.domains.private }}_hosts_{{ ndsh_hostname }}"
+ndsh_aws_iam_host_password: "{{ password }}"
+ndsh_aws_region: 'us-east-1'
+ndsh_aws_ssm_policy_pattern: "{{ my.domains.private }}.hosts.{{ ndsh_hostname }}.*"
+ndsh_docker_hub_login: yes
+ndsh_docker_hub_username: "{{ docker.hub.username }}"
+ndsh_docker_hub_password: "{{ docker.hub.password }}"
+ndsh_route53_private_zone_id: "{{ aws.profiles.route53.zone_ids.private }}"
+ndsh_route53_personal_zone_id: "{{ aws.profiles.route53.zone_ids.personal }}"
+ndsh_route53_private_domain_name: "{{ my.domains.private }}"
+ndsh_route53_personal_domain_name: "{{ my.domains.personal }}"
+ndsh_key_ip_address: 'pve_ip_address'
+ndsh_borg_username: "{{ ndsh_normal_user_name }}"
+ndsh_borg_server: 'uller'
+ndsh_borg_repo_path: '/volume1/Borg'
+ndsh_borg_source_directories: []
+ndsh_borg_passphrase: "{{ password }}"
+ndsh_k8s_nfs_prefix: '/leo/nfs/k8s_clusters'
+ndsh_nfs_mount_options: 'rw,async,no_subtree_check,no_wdelay,crossmnt,insecure,no_root_squash,insecure_locks,sec=sys'
+ndsh_local_share_prefix: '/leo/local/hosts'
+ndsh_local_share_hostnames: "{{ groups[pve_cluster_id] }}"
+ndsh_nfs_hostnames: "{{ groups['pve_hosts'] }}"
+ndsh_node_nfs_prefix: '/leo/nfs/hosts'
+ndsh_pihole_dns1: '208.67.222.222'
+ndsh_pihole_dns2: '208.67.220.220'
+ndsh_pihole_password: null
+
+# ndouglas.proxmox
+ndpve_node: "{{ pve_node }}"
+ndpve_api_username: "{{ proxmox.pve_api_username }}"
+ndpve_api_password: "{{ proxmox.pve_api_password }}"
+ndpve_template: "{{ pve_ostemplate | default('ubuntu-21.04-standard_21.04-1_amd64.tar.gz') }}"
+ndpve_node_mountpoints: "{{ pve_mounts | default([]) }}"
+ndpve_vm_id: "{{ pve_vm_id }}"
+ndpve_hostname: "{{ inventory_hostname | lower }}"
+ndpve_root_password: "{{ password }}"
+ndpve_ssh_pub_key: "{{ proxmox.pve_ssh_pub_key }}"
+ndpve_cores: "{{ pve_cores | default(4) }}"
+ndpve_memory_size: "{{ pve_memory_size | default(16384) }}"
+ndpve_swap_size: "{{ pve_swap_size | default(0) }}"
+ndpve_onboot: "{{ pve_onboot | default(yes) }}"
+ndpve_unprivileged: "{{ pve_unprivileged | default(no) }}"
+ndpve_rootfs_size: "{{ pve_rootfs_size | default(16) }}"
+ndpve_features: "{{ pve_features | default('mount=nfs,keyctl=1,nesting=1') }}"
+
+# ndouglas.kubernetes
+ndk8s_nfs_server_ip_address: '10.3.0.2'
+ndk8s_argocd_password: "{{ password }}"
+ndk8s_aws_iam_cluster_user: "ndk8s_{{ k8s_cluster }}"
+ndk8s_aws_iam_cluster_password: "{{ lookup('password', '/dev/null length=12 chars=ascii_letters,digits,punctuation') }}"
+ndk8s_aws_ssm_policy_pattern: "{{ my.domains.private }}.clusters.{{ k8s_cluster }}.*"
