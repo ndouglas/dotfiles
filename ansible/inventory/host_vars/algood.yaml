@@ -13,4 +13,4 @@ pve_vm_id: '100'
 pve_cores: 2
 pve_memory_size: 2048
 pve_rootfs_size: 16
-host_roles: "{{ host_roles + [ 'ssh_cert_server' ] }}"
+ndsh_host_roles: "{{ ndsh_host_roles + [ 'ssh_cert_server' ] }}"

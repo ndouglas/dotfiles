@@ -7,5 +7,8 @@ prompt:
         tertiary: 58
     emoji: ☀️
 pve_cluster_id: rain_house
-host_roles: "{{ host_roles + [ 'proxmox_local_file_server', 'proxmox_nfs_server', 'k8s_nfs_server' ] }}"
-zfs_nfs_root: 'leo'
+ndsh_host_roles: "{{ ndsh_host_roles + [
+  'proxmox_local_file_server',
+  'proxmox_nfs_server',
+  'k8s_nfs_server',
+  ] }}"

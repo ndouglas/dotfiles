@@ -51,13 +51,6 @@ prompt:
     secondary: 159
     tertiary: 102
 pve_mounts: []
-host_roles:
-  - 'aws_iam_user'
-  - 'aws_ssm_policy'
-  - 'dotfiles_root'
-  - 'dotfiles'
-  - 'route53'
-
 
 # Structures Stored in the Vault
 
@@ -175,6 +168,12 @@ ndsh_node_nfs_prefix: '/leo/nfs/hosts'
 ndsh_pihole_dns1: '208.67.222.222'
 ndsh_pihole_dns2: '208.67.220.220'
 ndsh_pihole_password: null
+ndsh_host_roles:
+  - 'aws_iam_user'
+  - 'aws_ssm_policy'
+  - 'route53'
+#   - 'dotfiles_root'
+#   - 'dotfiles'
 
 # ndouglas.proxmox
 ndpve_node: "{{ pve_node }}"
